@@ -4,8 +4,11 @@
   "description": "Proof of Bank Account",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  }
 }
