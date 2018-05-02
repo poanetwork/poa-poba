@@ -1,0 +1,9 @@
+{
+  "name": "poa-poba-blockchain",
+  "version": "0.0.1",
+  "scripts": {},
+  "license": "MIT",
+  "devDependencies": {
+    "truffle": "^4.1.7"
+  }
+}
