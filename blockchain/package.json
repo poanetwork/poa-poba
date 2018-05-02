@@ -1,9 +1,15 @@
 {
   "name": "poa-poba-blockchain",
   "version": "0.0.1",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint ."
+  },
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.12.1",
     "truffle": "^4.1.7"
   }
 }

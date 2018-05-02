@@ -4,7 +4,8 @@
   "description": "Proof of Bank Account",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'"
+    "dev": "concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'",
+    "lint": "npm run lint --prefix blockchain && npm run lint --prefix frontend && npm run lint --prefix server"
   },
   "author": "",
   "license": "MIT",

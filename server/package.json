@@ -4,13 +4,22 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --watch index.js"
+    "dev": "nodemon --watch index.js",
+    "lint": "eslint ."
   },
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.3"
   },
   "devDependencies": {
-    "nodemon": "^1.17.3"
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "nodemon": "^1.17.3",
+    "prettier": "^1.12.1"
+  },
+  "engines": {
+    "node": ">= 8.9"
   }
 }
