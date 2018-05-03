@@ -3,18 +3,21 @@ import './App.css'
 import contract from 'truffle-contract'
 import pobaArtifact from './artifacts/PoBA'
 import PlaidLink from 'react-plaid-link'
+import axios from 'axios'
 
 const PobaContract = contract(pobaArtifact)
 
-const privateKey = '0xa5cea1fcd2258b3e7b3d8666f36c7ff19c8dc60b198d01f491037290afbc06ef'
+const getBankAccount = async (ethAccount, token) => {
+  const result = await axios.post('/api/get-tx-data', {
+    ethAccount,
+    token
+  })
 
-const getBankAccount = (ethAccount, token) => Promise.resolve('MyAccount')
+  return result.data
+}
 
 const getTxData = async (web3, ethAccount, token) => {
-  const bankAccount = await getBankAccount(ethAccount, token)
-
-  const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount).toString('hex'))
-  const { v, r, s } = web3.eth.accounts.sign(hash, privateKey)
+  const { bankAccount, v, r, s } = await getBankAccount(ethAccount, token)
 
   return Promise.resolve({
     account: bankAccount,
