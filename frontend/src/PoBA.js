@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import './App.css'
 import contract from 'truffle-contract'
-import pobaArtifact from './artifacts/PoBA'
+
+import './App.css'
+import pobaArtifact from './artifacts/PoBA.json'
 
 const PobaContract = contract(pobaArtifact)
 
