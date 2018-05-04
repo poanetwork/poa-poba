@@ -2,7 +2,8 @@
   "name": "poa-poba-blockchain",
   "version": "0.0.1",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "migrate": "truffle migrate"
   },
   "license": "MIT",
   "devDependencies": {

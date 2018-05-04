@@ -4,13 +4,16 @@
   "description": "Proof of Bank Account",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'",
+    "dev": "npm run migrate && concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'",
     "lint": "npm run lint --prefix blockchain && npm run lint --prefix frontend && npm run lint --prefix server",
-    "postinstall": "npm install --prefix blockchain && npm install --prefix frontend && npm install --prefix server"
+    "postinstall": "npm install --prefix blockchain && npm install --prefix frontend && npm install --prefix server",
+    "migrate": "npm run migrate --prefix blockchain",
+    "ganache": "ganache-cli -m 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "ganache-cli": "^6.1.0"
   }
 }

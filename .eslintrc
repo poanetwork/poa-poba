@@ -5,6 +5,7 @@
   ],
   "rules": {
     "func-names": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "prefer-template": "off"
   }
 }
