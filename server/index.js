@@ -9,10 +9,10 @@ app.use(express.static('public'))
 
 app.use(bodyParser.json())
 
-const privateKey = '0xa5cea1fcd2258b3e7b3d8666f36c7ff19c8dc60b198d01f491037290afbc06ef'
+const privateKey = '0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5c88f9e'
 
 app.post('/api/get-tx-data', (req, res) => {
-  const { ethAccount, token } = req.body
+  const { ethAccount } = req.body
   const bankAccount = 'MyAccount-' + Math.floor(1000 * Math.random())
 
   const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount).toString('hex'))
