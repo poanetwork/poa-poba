@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PlaidLink from 'react-plaid-link'
 import axios from 'axios'
 import contract from 'truffle-contract'
-
-import './App.css'
 import pobaArtifact from './artifacts/PoBA.json'
+import Title from './ui/Title'
+import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
 
 const PobaContract = contract(pobaArtifact)
 
@@ -46,7 +46,7 @@ class PoBA extends Component {
   render() {
     return (
       <div>
-        <h1>Proof of bank account</h1>
+        <Title />
 
         <p>
           Turpis, fermentum a, aliquet quis, sodales at, dolor. Duis eget velit eget risus fringilla
@@ -63,8 +63,10 @@ class PoBA extends Component {
           publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
           product={['auth']}
           onSuccess={this.createProof}
+          className={plaidLinkButtonStyles}
+          style={{}}
         >
-          Create
+          Register bank account
         </PlaidLink>
       </div>
     )

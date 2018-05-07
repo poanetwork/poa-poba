@@ -1,22 +1,28 @@
 import React from 'react'
+import Header from './ui/Header'
+import Footer from './ui/Footer'
+import Main from './ui/Main'
 import Web3Provider from './Web3Provider'
 import PoBA from './PoBA'
-import './App.css'
 
 const App = () => (
   <div className="App">
+    <Header />
     <Web3Provider
       render={({ web3, accounts }) => {
+        let content = null
         if (!web3) {
-          return <div>No web3</div>
-        }
-        if (!accounts || accounts.length === 0) {
-          return <div>No unlocked account</div>
+          content = <div>No web3</div>
+        } else if (!accounts || accounts.length === 0) {
+          content = <div>No unlocked account</div>
+        } else {
+          content = <PoBA web3={web3} account={accounts[0]} />
         }
 
-        return <PoBA web3={web3} account={accounts[0]} />
+        return <Main>{content}</Main>
       }}
     />
+    <Footer />
   </div>
 )
 
