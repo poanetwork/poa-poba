@@ -3,5 +3,8 @@
     "plugin:node/recommended",
     "../.eslintrc"
   ],
-  "plugins": ["node"]
+  "plugins": ["node"],
+  "rules": {
+    "no-console": "error"
+  }
 }
