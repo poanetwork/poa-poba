@@ -10,7 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "pino": "^4.16.1",
+    "plaid": "^2.4.1",
     "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
