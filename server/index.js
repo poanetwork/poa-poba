@@ -1,6 +1,4 @@
-require('dotenv').config({
-  path: '../frontend/.env'
-})
+require('dotenv').config()
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -10,10 +8,7 @@ const pino = require('pino')
 
 const logger = pino()
 
-const PLAID_CLIENT_ID = process.env.REACT_APP_PLAID_CLIENT_ID
-const PLAID_SECRET = process.env.REACT_APP_PLAID_SECRET
-const PLAID_PUBLIC_KEY = process.env.REACT_APP_PLAID_PUBLIC_KEY
-const PLAID_ENV = process.env.REACT_APP_PLAID_ENV
+const { PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, PLAID_ENV } = process.env
 
 const plaidClient = new plaid.Client(
   PLAID_CLIENT_ID,
