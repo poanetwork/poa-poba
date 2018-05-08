@@ -53,10 +53,9 @@ app.post('/api/get-tx-data', (req, res) => {
     })
     .then(accountData => {
       const { numbers } = accountData
-      const bankAccounts = numbers.ach
-      const [bankAccount] = bankAccounts
+      const bankAccount = numbers[0].account
 
-      const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount.account).toString('hex'))
+      const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount).toString('hex'))
       const { v, r, s } = web3.eth.accounts.sign(hash, privateKey)
 
       res.send({ bankAccount, v, r, s })
