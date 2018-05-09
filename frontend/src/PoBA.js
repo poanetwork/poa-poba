@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PlaidLink from 'react-plaid-link'
 import axios from 'axios'
 import contract from 'truffle-contract'
-import pobaArtifact from './artifacts/PoBA.json'
+import pobaArtifact from './artifacts/PoBA.json' // eslint-disable-line import/no-unresolved
 import Title from './ui/Title'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
 
