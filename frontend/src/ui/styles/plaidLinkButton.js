@@ -16,4 +16,4 @@ export default css({
   ':focus': {
     outline: 'unset'
   }
-})
+}).toString()
