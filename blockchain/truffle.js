@@ -11,7 +11,7 @@ module.exports = {
       network_id: '*'
     },
     rinkeby: {
-      provider: new HDWalletProvider(mnemonic, rinkebyUrl),
+      provider: () => new HDWalletProvider(mnemonic, rinkebyUrl),
       network_id: 4
     }
   }
