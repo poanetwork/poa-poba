@@ -6,6 +6,7 @@ import pobaArtifact from './artifacts/PoBA.json' // eslint-disable-line import/n
 import Title from './ui/Title'
 import Loading from './ui/Loading'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
+import { successAlert, errorAlert } from './alerts'
 
 const PobaContract = contract(pobaArtifact)
 
@@ -50,6 +51,13 @@ class PoBA extends Component {
         .register(txData.account, txData.v, txData.r, txData.s, {
           from: account
         })
+        .then(
+          () => successAlert(),
+          e => {
+            console.error('There was a problem registering the address', e)
+            errorAlert()
+          }
+        )
         .finally(() => this.setState({ loading: false }))
     })
   }
