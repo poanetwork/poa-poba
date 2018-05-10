@@ -4,9 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const Web3 = require('web3')
 const plaid = require('plaid')
-const pino = require('pino')
-
-const logger = pino()
+const logger = require('./etc/logger')
 
 const { PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, PLAID_ENV, PRIVATE_KEY } = process.env
 
