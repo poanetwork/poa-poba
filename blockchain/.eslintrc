@@ -4,5 +4,8 @@
   ],
   "globals": {
     "artifacts": "false"
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
   }
 }

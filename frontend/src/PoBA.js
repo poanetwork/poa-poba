@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PlaidLink from 'react-plaid-link'
 import axios from 'axios'
 import contract from 'truffle-contract'
-import pobaArtifact from './artifacts/PoBA.json'
+import pobaArtifact from './artifacts/PoBA.json' // eslint-disable-line import/no-unresolved
 import Title from './ui/Title'
+import Loading from './ui/Loading'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
 
 const PobaContract = contract(pobaArtifact)
@@ -29,6 +30,13 @@ const getTxData = async (web3, ethAccount, token) => {
 }
 
 class PoBA extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false
+    }
+  }
+
   createProof = async token => {
     const { web3, account } = this.props
 
@@ -36,10 +44,13 @@ class PoBA extends Component {
 
     const pobaContract = await PobaContract.deployed()
 
+    this.setState({ loading: true })
     return getTxData(web3, account, token).then(txData => {
-      pobaContract.register(txData.account, txData.v, txData.r, txData.s, {
-        from: account
-      })
+      pobaContract
+        .register(txData.account, txData.v, txData.r, txData.s, {
+          from: account
+        })
+        .finally(() => this.setState({ loading: false }))
     })
   }
 
@@ -68,6 +79,7 @@ class PoBA extends Component {
         >
           Register bank account
         </PlaidLink>
+        <Loading show={this.state.loading} />
       </div>
     )
   }

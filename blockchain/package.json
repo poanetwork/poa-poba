@@ -13,6 +13,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.12.1",
-    "truffle": "^4.1.7"
+    "truffle": "^4.1.8",
+    "truffle-hdwallet-provider": "0.0.5"
   }
 }
