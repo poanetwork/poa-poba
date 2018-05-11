@@ -28,7 +28,7 @@ const getBankAccount = async accessToken => {
   const accountData = await getAuth(accessToken)
   logger.info({ accountData }, 'Got account data')
   const { numbers } = accountData
-  const bankAccount = numbers.ach[0].account
+  const bankAccount = numbers[0].account
   logger.info({ bankAccount }, 'Got bank account')
   return bankAccount
 }
