@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --watch index.js | pino -c",
+    "dev": "nodemon | pino -c",
     "lint": "eslint ."
   },
   "license": "MIT",
