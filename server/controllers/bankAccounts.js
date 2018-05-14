@@ -1,16 +1,16 @@
 const plaidClient = require('../etc/plaid')
 const logger = require('../etc/logger')
 
-const exchangePublicToken = async token => {
-  const tokenResponse = await plaidClient.exchangePublicToken(token)
-  if (tokenResponse.status_code !== 200) {
-    logger.error({ status: tokenResponse.status_code }, 'Error exchanging public token')
-    throw Error(`[exchangePublicToken] ${tokenResponse.error_code}: {tokenResponse.error_message}`)
+const getAccessToken = async publicToken => {
+  const response = await plaidClient.exchangePublicToken(publicToken)
+  if (response.status_code !== 200) {
+    logger.error({ status: response.status_code }, 'Error exchanging public token')
+    throw Error(`[exchangePublicToken] ${response.error_code}: {response.error_message}`)
   }
-  return tokenResponse
+  return response.access_token
 }
 
-const getAuth = async accessToken => {
+const getBankAccounts = async accessToken => {
   const response = await plaidClient.getAuth(accessToken)
   if (response.status_code !== 200) {
     logger.error({ status: response.status_code }, 'Error getting bank account')
@@ -19,21 +19,15 @@ const getAuth = async accessToken => {
   return response
 }
 
-const getAccessToken = async token => {
-  const tokenResponse = await exchangePublicToken(token)
-  return tokenResponse.access_token
-}
-
-const getBankAccount = async accessToken => {
-  const accountData = await getAuth(accessToken)
-  logger.info({ accountData }, 'Got account data')
-  const { numbers } = accountData
-  const bankAccount = numbers[0].account
-  logger.info({ bankAccount }, 'Got bank account')
-  return bankAccount
+const getBankAccount = async (accessToken, accountId) => {
+  const bankAccounts = await getBankAccounts(accessToken)
+  const numberBankAccount = bankAccounts.numbers.filter(account => account.account_id === accountId)
+  logger.info({ numberBankAccount }, 'Got bank account')
+  return numberBankAccount
 }
 
 module.exports = {
   getAccessToken,
+  getBankAccounts,
   getBankAccount
 }
