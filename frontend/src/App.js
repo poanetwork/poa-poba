@@ -9,7 +9,7 @@ const App = () => (
   <div className="App">
     <Header />
     <Web3Provider
-      render={({ web3, accounts }) => {
+      render={({ web3, accounts, networkId }) => {
         let content = null
         if (!web3) {
           content = <div>No web3</div>
