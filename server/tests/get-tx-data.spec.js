@@ -20,8 +20,8 @@ jest.mock('../controllers/txData', () => ({
     return { status: 400 }
   })
 }))
-jest.mock('web3', () => {
-  return jest.fn().mockImplementation(() => ({
+jest.mock('web3', () =>
+  jest.fn().mockImplementation(() => ({
     utils: {
       sha3: jest.fn(() => '0xc20eab54de62a1151b630cc74fdfc40cf58e919325e294aa124a6ec3b52f542f')
     },
@@ -31,29 +31,38 @@ jest.mock('web3', () => {
       }
     }
   }))
-})
+)
 
 describe('get-tx-data', () => {
-  it('should return error if ethAccount does not exist', () => {
-    return request(app)
+  it('should return error if ethAccount does not exist', () =>
+    request(app)
       .post('/api/get-tx-data')
-      .then(res => expect(res.status).toEqual(404))
-  })
-  it('should return error if token does not exist', () => {
-    return request(app)
+      .then(res => expect(res.status).toEqual(400)))
+  it('should return error if token does not exist', () =>
+    request(app)
       .post('/api/get-tx-data')
       .send({
         ethAccount: mockEthAccount
       })
-      .then(res => expect(res.status).toEqual(404))
-  })
-  it('should return success', () => {
-    return request(app)
+      .then(res => expect(res.status).toEqual(400)))
+  it('should return success', () =>
+    request(app)
       .post('/api/get-tx-data')
       .send({
         ethAccount: mockEthAccount,
         token: mockToken
       })
-      .then(res => expect(res.status).toEqual(200))
-  })
+      .then(res => expect(res.status).toEqual(200)))
+  it('should return error', () =>
+    request(app)
+      .post('/api/get-tx-data')
+      .send({
+        ethAccount: mockEthAccount,
+        token: `${mockToken}-bad`
+      })
+      .then(res => {
+        const { error } = res.body
+        expect(res.status).toEqual(400)
+        expect(error).toEqual('There was an error getting the transaction data')
+      }))
 })
