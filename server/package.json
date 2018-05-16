@@ -37,7 +37,8 @@
       "**/*.js",
       "!**/coverage/**",
       "!**/node_modules/**",
-      "!**/*.spec.js"
+      "!**/*.spec.js",
+      "!server/public"
     ],
     "coverageThreshold": {
       "global": {
