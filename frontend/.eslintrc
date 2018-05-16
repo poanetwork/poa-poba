@@ -2,5 +2,8 @@
   "extends": [
     "react-app",
     "../.eslintrc"
-  ]
+  ],
+  "rules": {
+    "no-plusplus": "off"
+  }
 }

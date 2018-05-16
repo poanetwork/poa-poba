@@ -8,12 +8,17 @@
     "lint": "npm run lint --prefix blockchain && npm run lint --prefix frontend && npm run lint --prefix server",
     "postinstall": "npm install --prefix blockchain && npm install --prefix frontend && npm install --prefix server",
     "migrate": "npm run migrate --prefix blockchain",
-    "ganache": "ganache-cli -m 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'"
+    "test": "npm test --prefix server",
+    "ganache": "ganache-cli -m 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'",
+    "build": "node scripts/build.js",
+    "prestart": "npm run build",
+    "start": "npm start --prefix server"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "ganache-cli": "^6.1.0"
+    "ganache-cli": "^6.1.0",
+    "shelljs": "^0.8.2"
   }
 }
