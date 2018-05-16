@@ -5,6 +5,7 @@ import contract from 'truffle-contract'
 import pobaArtifact from './artifacts/PoBA.json' // eslint-disable-line import/no-unresolved
 import Title from './ui/Title'
 import Loading from './ui/Loading'
+import RegisteredAccountsList from './ui/RegisteredAccountsList'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
 import { successAlert, errorAlert } from './alerts'
 
@@ -34,20 +35,38 @@ class PoBA extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
+      registeredAccounts: []
     }
+
+    this.pobaContract = null
+  }
+
+  async componentDidMount() {
+    const { web3, account } = this.props
+
+    PobaContract.setProvider(web3.currentProvider)
+
+    this.pobaContract = await PobaContract.deployed()
+
+    const registeredAcountsCount = await this.pobaContract.accountsLength.call(account)
+
+    const whenAccounts = []
+    for (let i = 0; i < registeredAcountsCount; i++) {
+      whenAccounts.push(this.pobaContract.accounts(account, i))
+    }
+
+    const registeredAccounts = await Promise.all(whenAccounts)
+
+    this.setState({ registeredAccounts })
   }
 
   createProof = async token => {
     const { web3, account } = this.props
 
-    PobaContract.setProvider(web3.currentProvider)
-
-    const pobaContract = await PobaContract.deployed()
-
     this.setState({ loading: true })
     return getTxData(web3, account, token).then(txData => {
-      pobaContract
+      this.pobaContract
         .register(txData.account, txData.v, txData.r, txData.s, {
           from: account
         })
@@ -87,6 +106,9 @@ class PoBA extends Component {
         >
           Register bank account
         </PlaidLink>
+
+        <RegisteredAccountsList accounts={this.state.registeredAccounts} />
+
         <Loading show={this.state.loading} />
       </div>
     )
