@@ -8,7 +8,6 @@ const getAccessToken = async token => {
     throw Error(`[exchangePublicToken] ${tokenResponse.error_code}: ${tokenResponse.error_message}`)
   }
   return tokenResponse.access_token
-
 }
 
 const getBankAccount = async accessToken => {
