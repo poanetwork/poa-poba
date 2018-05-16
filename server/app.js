@@ -10,29 +10,24 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 require('./routes')(app)
-
-// catch 404 and forward to error handler
-app.use((req, res) => {
-  return res.status(404).send({
-    message: 'Not Found',
-    error: {}
-  })
-})
-
-app.use((err, req, res) => {
-  const status = err.status || 500
-  if (status >= 500) {
-    logger.error(err.message)
-    logger.error(err)
-  } else {
-    logger.warn(err.message)
-    logger.warn(err)
-  }
-  return res.status(status).send({
-    message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-    cat: `https://http.cat/${err.status || 500}`
-  })
-})
+//
+// const logErrors = (err, req, res, next) => {
+//   logger.error(err.stack)
+//   next(err)
+// }
+// const clientErrorHandler = (err, req, res, next) => {
+//   if (req.xhr) {
+//     res.status(500).send({ error: 'Something failed!' })
+//   } else {
+//     next(err)
+//   }
+// }
+// const errorHandler = (err, req, res) => {
+//   res.status(err.status)
+//   res.send('error', { error: err.message })
+// }
+// app.use(logErrors)
+// app.use(clientErrorHandler)
+// app.use(errorHandler)
 
 module.exports = app
