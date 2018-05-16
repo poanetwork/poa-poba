@@ -27,8 +27,8 @@ jest.mock('../controllers/accounts', () => ({
     throw new Error('There was an error getting the transaction data')
   })
 }))
-jest.mock('web3', () => {
-  return jest.fn().mockImplementation(() => ({
+jest.mock('web3', () =>
+  jest.fn().mockImplementation(() => ({
     utils: {
       sha3: jest.fn(() => '0xc20eab54de62a1151b630cc74fdfc40cf58e919325e294aa124a6ec3b52f542f')
     },
@@ -38,27 +38,25 @@ jest.mock('web3', () => {
       }
     }
   }))
-})
+)
 
 describe('[routes] accounts', () => {
-  it('should return all bank accounts', () => {
-    return request(app)
+  it('should return all bank accounts', () =>
+    request(app)
       .get(`/api/accounts/bank-accounts/${mockToken}`)
       .then(res => {
         const { accounts } = res.body
         expect(res.status).toEqual(200)
         expect(accounts.numbers.length).toBeGreaterThanOrEqual(0)
-      })
-  })
-  it('should return error', () => {
-    return request(app)
+      }))
+  it('should return error', () =>
+    request(app)
       .get(`/api/accounts/bank-accounts/${mockToken}-fail`)
       .then(res => {
         expect(res.status).toEqual(400)
-      })
-  })
-  it('should return error if ethAccount does not exist', () => {
-    return request(app)
+      }))
+  it('should return error if ethAccount does not exist', () =>
+    request(app)
       .post('/api/accounts/sign-account')
       .send({
         accessToken: mockAccessToken,
@@ -66,10 +64,9 @@ describe('[routes] accounts', () => {
       })
       .then(res => {
         expect(res.status).toEqual(404)
-      })
-  })
-  it('should return error if accessToken does not exist', () => {
-    return request(app)
+      }))
+  it('should return error if accessToken does not exist', () =>
+    request(app)
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
@@ -77,21 +74,19 @@ describe('[routes] accounts', () => {
       })
       .then(res => {
         expect(res.status).toEqual(404)
-      })
-  })
-  it('should return error if accountId does not exist', () => {
-    return request(app)
+      }))
+  it('should return error if accountId does not exist', () =>
+    request(app)
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
-        accessToken: mockAccessToken,
+        accessToken: mockAccessToken
       })
       .then(res => {
         expect(res.status).toEqual(404)
-      })
-  })
-  it('should return error if accessToken is invalid', () => {
-    return request(app)
+      }))
+  it('should return error if accessToken is invalid', () =>
+    request(app)
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
@@ -100,10 +95,9 @@ describe('[routes] accounts', () => {
       })
       .then(res => {
         expect(res.status).toEqual(400)
-      })
-  })
-  it('should return the transaction data', () => {
-    return request(app)
+      }))
+  it('should return the transaction data', () =>
+    request(app)
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
@@ -114,6 +108,5 @@ describe('[routes] accounts', () => {
         const { account } = mockBankAccounts.numbers[0]
         expect(res.body).toEqual({ account, ...mockSign })
         expect(res.status).toEqual(200)
-      })
-  })
+      }))
 })
