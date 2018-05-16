@@ -3,3 +3,4 @@ public/
 coverage/
 .coveralls.yml
 .env
+coverage/
