@@ -6,8 +6,7 @@
   "rules": {
     "func-names": "off",
     "no-console": "off",
-    "prefer-template": "off",
-    "node/no-unpublished-require": "off"
+    "prefer-template": "off"
   },
   "globals": {
     "jest": false,
