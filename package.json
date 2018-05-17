@@ -4,26 +4,27 @@
   "description": "Proof of Bank Account",
   "main": "index.js",
   "scripts": {
-    "prepush": "npm run lint", 
+    "prepush": "npm run lint && npm test",
     "dev": "npm run migrate && concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'",
     "lint": "npm run lint --prefix blockchain && npm run lint --prefix frontend && npm run lint --prefix server",
     "postinstall": "npm install --prefix blockchain && npm install --prefix frontend && npm install --prefix server",
     "migrate": "npm run migrate --prefix blockchain",
+    "test": "npm run test.frontend && npm run test.backend",
     "ganache": "ganache-cli -m 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'",
     "build": "node scripts/build.js",
     "prestart": "npm run build",
     "start": "npm start --prefix server",
-    "test.frontend": "node scripts/frontend-tests.js"
+    "test.frontend": "node scripts/frontend-tests.js",
+    "test.backend": "npm test --prefix server"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^3.5.1",
     "ganache-cli": "^6.1.0",
+    "husky": "^0.14.3",
     "shelljs": "^0.8.2",
     "tree-kill": "^1.2.0"
   },
-  "dependencies": {
-    "husky": "^0.14.3"
-  }
+  "dependencies": {}
 }
