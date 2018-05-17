@@ -1,6 +1,5 @@
 public/
-# testing
-coverage/
-.coveralls.yml
 .env
+
+# testing
 coverage/
