@@ -12,14 +12,16 @@
     "ganache": "ganache-cli -m 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'",
     "build": "node scripts/build.js",
     "prestart": "npm run build",
-    "start": "npm start --prefix server"
+    "start": "npm start --prefix server",
+    "test.frontend": "node scripts/frontend-tests.js"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^3.5.1",
     "ganache-cli": "^6.1.0",
-    "shelljs": "^0.8.2"
+    "shelljs": "^0.8.2",
+    "tree-kill": "^1.2.0"
   },
   "dependencies": {
     "husky": "^0.14.3"
