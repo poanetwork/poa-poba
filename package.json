@@ -4,7 +4,7 @@
   "description": "Proof of Bank Account",
   "main": "index.js",
   "scripts": {
-    "prepush": "npm test",
+    "prepush": "npm run lint && npm test",
     "dev": "npm run migrate && concurrently 'npm start --prefix frontend' 'npm run dev --prefix server'",
     "lint": "npm run lint --prefix blockchain && npm run lint --prefix frontend && npm run lint --prefix server",
     "postinstall": "npm install --prefix blockchain && npm install --prefix frontend && npm install --prefix server",
