@@ -11,8 +11,15 @@ import { successAlert, errorAlert } from './alerts'
 
 const PobaContract = contract(pobaArtifact)
 
-const getBankAccount = async (ethAccount, token) => {
-  const result = await axios.post('/api/get-tx-data', {
+const getBankAccounts = async token => {
+  const result = await axios.get(`/api/accounts/bank-accounts/${token}`)
+
+  return result.data.accounts.numbers
+}
+
+const getSignedBankAccount = async (accountId, ethAccount, token) => {
+  const result = await axios.post('/api/accounts/sign-account', {
+    accountId,
     ethAccount,
     token
   })
@@ -21,10 +28,11 @@ const getBankAccount = async (ethAccount, token) => {
 }
 
 const getTxData = async (web3, ethAccount, token) => {
-  const { bankAccount, v, r, s } = await getBankAccount(ethAccount, token)
+  const accounts = await getBankAccounts(token)
+  const { account, v, r, s } = await getSignedBankAccount(accounts[0].account_id, ethAccount, token)
 
   return Promise.resolve({
-    account: bankAccount,
+    account,
     v,
     r,
     s
