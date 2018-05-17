@@ -34,7 +34,7 @@
       "**/controllers/**/*.js",
       "**/routes/**/*.js",
       "**/etc/**/*.js",
-      "**/*.js",
+      "*.js",
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/*.spec.js",
