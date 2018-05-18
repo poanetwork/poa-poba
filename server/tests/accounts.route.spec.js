@@ -59,13 +59,13 @@ describe('[routes] accounts', () => {
     request(app)
       .post('/api/accounts/sign-account')
       .send({
-        accessToken: mockAccessToken,
+        token: mockToken,
         accountId: mockBankAccounts.numbers[0].account_id
       })
       .then(res => {
         expect(res.status).toEqual(404)
       }))
-  it('should return error if accessToken does not exist', () =>
+  it('should return error if token does not exist', () =>
     request(app)
       .post('/api/accounts/sign-account')
       .send({
@@ -80,17 +80,17 @@ describe('[routes] accounts', () => {
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
-        accessToken: mockAccessToken
+        token: mockToken
       })
       .then(res => {
         expect(res.status).toEqual(404)
       }))
-  it('should return error if accessToken is invalid', () =>
+  it('should return error if token is invalid', () =>
     request(app)
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
-        accessToken: `${mockAccessToken}-fail`,
+        token: `${mockToken}-fail`,
         accountId: mockBankAccounts.numbers[0].account_id
       })
       .then(res => {
@@ -101,7 +101,7 @@ describe('[routes] accounts', () => {
       .post('/api/accounts/sign-account')
       .send({
         ethAccount: mockEthAccount,
-        accessToken: mockAccessToken,
+        token: mockToken,
         accountId: mockBankAccounts.numbers[0].account_id
       })
       .then(res => {
