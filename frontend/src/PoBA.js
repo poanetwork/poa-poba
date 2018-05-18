@@ -7,6 +7,7 @@ import Title from './ui/Title'
 import Loading from './ui/Loading'
 import RegisteredAccountsList from './ui/RegisteredAccountsList'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
+import BankAccountList from './ui/BankAccountList'
 import { successAlert, errorAlert } from './alerts'
 
 const PobaContract = contract(pobaArtifact)
@@ -27,23 +28,13 @@ const getSignedBankAccount = async (accountId, ethAccount, token) => {
   return result.data
 }
 
-const getTxData = async (web3, ethAccount, token) => {
-  const accounts = await getBankAccounts(token)
-  const { account, v, r, s } = await getSignedBankAccount(accounts[0].account_id, ethAccount, token)
-
-  return Promise.resolve({
-    account,
-    v,
-    r,
-    s
-  })
-}
-
 class PoBA extends Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
+      token: null,
+      bankAccounts: null,
       registeredAccounts: []
     }
 
@@ -69,24 +60,38 @@ class PoBA extends Component {
     this.setState({ registeredAccounts })
   }
 
-  createProof = async token => {
-    const { web3, account } = this.props
+  fetchBankAccounts = async token => {
+    this.setState({ loading: true })
+
+    return getBankAccounts(token)
+      .then(bankAccounts => {
+        this.setState({
+          token,
+          bankAccounts
+        })
+      })
+      .finally(() => this.setState({ loading: false }))
+  }
+
+  chooseBankAccount = async accountId => {
+    const ethAccount = this.props.account
+    const { token } = this.state
 
     this.setState({ loading: true })
-    return getTxData(web3, account, token).then(txData => {
-      this.pobaContract
-        .register(txData.account, txData.v, txData.r, txData.s, {
-          from: account
+    return getSignedBankAccount(accountId, ethAccount, token)
+      .then(txData => {
+        return this.pobaContract.register(txData.account, txData.v, txData.r, txData.s, {
+          from: ethAccount
         })
-        .then(
-          () => successAlert(),
-          e => {
-            console.error('There was a problem registering the address', e)
-            errorAlert()
-          }
-        )
-        .finally(() => this.setState({ loading: false }))
-    })
+      })
+      .then(
+        () => successAlert(),
+        e => {
+          console.error('There was a problem registering the address', e)
+          errorAlert()
+        }
+      )
+      .finally(() => this.setState({ loading: false }))
   }
 
   render() {
@@ -102,20 +107,29 @@ class PoBA extends Component {
           nisi mollis dolor. Quisque porttitor nisi ac elit. Nullam tincidunt ligula vitae nulla.
         </p>
 
-        <PlaidLink
-          clientName="Your app name"
-          env={process.env.REACT_APP_PLAID_ENV}
-          institution={null}
-          publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
-          product={['auth']}
-          onSuccess={this.createProof}
-          className={plaidLinkButtonStyles}
-          style={{}}
-        >
-          Register bank account
-        </PlaidLink>
+        {this.state.bankAccounts === null ? (
+          <div>
+            <PlaidLink
+              clientName="Your app name"
+              env={process.env.REACT_APP_PLAID_ENV}
+              institution={null}
+              publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
+              product={['auth']}
+              onSuccess={this.fetchBankAccounts}
+              className={plaidLinkButtonStyles}
+              style={{}}
+            >
+              Register bank account
+            </PlaidLink>
 
-        <RegisteredAccountsList accounts={this.state.registeredAccounts} />
+            <RegisteredAccountsList accounts={this.state.registeredAccounts} />
+          </div>
+        ) : (
+          <BankAccountList
+            bankAccounts={this.state.bankAccounts}
+            onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+          />
+        )}
 
         <Loading show={this.state.loading} />
       </div>
