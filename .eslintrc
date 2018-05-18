@@ -6,7 +6,8 @@
   "rules": {
     "func-names": "off",
     "no-console": "off",
-    "prefer-template": "off"
+    "prefer-template": "off",
+    "arrow-body-style": "off"
   },
   "globals": {
     "jest": false,

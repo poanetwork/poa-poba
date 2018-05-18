@@ -11,6 +11,7 @@ const web3 = new Web3()
 
 const getBankAccounts = (req, res) => {
   const { token } = req.params
+  logger.info('Getting bank accounts')
   const bankAccounts = async publicToken => {
     try {
       const accessToken = await accountsController.getAccessToken(publicToken)
@@ -25,13 +26,16 @@ const getBankAccounts = (req, res) => {
 }
 
 const signBankAccount = (req, res) => {
-  const { ethAccount, accessToken, accountId } = req.body
+  const { ethAccount, token, accountId } = req.body
   logger.info({ ethAccount }, 'Getting bank account')
   const getTxData = async () => {
     try {
       if (!ethAccount) return res.status(404).send({ error: 'ETH Account not found' })
-      if (!accessToken) return res.status(404).send({ error: 'Access Token not found' })
+      if (!token) return res.status(404).send({ error: 'Token not found' })
       if (!accountId) return res.status(404).send({ error: 'Account ID not found' })
+
+      const accessToken = await accountsController.getAccessToken(token)
+
       const { account } = await accountsController.getBankAccount(accessToken, accountId)
       const hash = web3.utils.sha3(ethAccount + Buffer.from(account).toString('hex'))
       const { v, r, s } = web3.eth.accounts.sign(hash, PRIVATE_KEY)
