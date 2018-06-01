@@ -5,7 +5,7 @@ contract PoBA {
   address public owner;
   address public signer;
 
-  constructor() {
+  constructor() public {
     owner = msg.sender;
     signer = owner;
   }
@@ -30,14 +30,14 @@ contract PoBA {
   public constant returns (bool)
   {
       bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-      bytes32 prefixed = keccak256(prefix, data);
+      bytes32 prefixed = keccak256(abi.encodePacked(prefix, data));
       return (ecrecover(prefixed, v, r, s) == signer);
   }
 
   function register(
     string account,
     string institution,
-    uint8 v, bytes32 r, bytes32 s) {
+    uint8 v, bytes32 r, bytes32 s) public {
 
     require(bytes(account).length > 0);
     require(bytes(institution).length > 0);
@@ -54,12 +54,13 @@ contract PoBA {
     ba.creationBlock = block.number;
 
     bytes32 hash = keccak256(
+    abi.encodePacked(
       msg.sender,
         ba.accountNumber,
         ba.bankName,
         ba.attestationDate,
         ba.attestationFact
-    );
+    ));
     require(signerIsValid(hash, v, r, s));
 
     users[msg.sender].bankAccounts.push(ba);
