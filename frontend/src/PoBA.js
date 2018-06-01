@@ -80,7 +80,7 @@ class PoBA extends Component {
     this.setState({ loading: true })
     return getSignedBankAccount(accountId, ethAccount, token)
       .then(txData => {
-        return this.pobaContract.register(txData.account, txData.v, txData.r, txData.s, {
+        return this.pobaContract.register(txData.bankAccount.account, txData.bankAccount.institution, txData.v, txData.r, txData.s, {
           from: ethAccount
         })
       })
