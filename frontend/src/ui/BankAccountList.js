@@ -24,9 +24,7 @@ export default ({ bankAccounts, onClick }) => (
     {bankAccounts.map((bankAccount, index) => (
       <Div key={index} textAlign="center">
         Bank account number: <strong>{bankAccount.account} </strong>
-        <Button onClick={() => onClick(bankAccount)}>
-          Verify
-        </Button>
+        <Button onClick={() => onClick(bankAccount)}>Verify</Button>
       </Div>
     ))}
   </BankAccountList>
