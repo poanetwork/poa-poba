@@ -14,8 +14,8 @@ const PobaContract = contract(pobaArtifact)
 
 const getBankAccounts = async token => {
   const result = await axios.get(`/api/accounts/bank-accounts/${token}`)
-
-  return result.data.accounts.numbers
+  const { ach, eft } = result.data.accounts.numbers
+  return [...ach, ...eft]
 }
 
 const getSignedBankAccount = async (accountId, ethAccount, token) => {
