@@ -42,7 +42,7 @@ $ cp .env.example .env
 
 - Move to the frontend folder, copy the file .env.example to .env, and add the plaid information related to the API
 ```
-$ cd server
+$ cd frontend
 $ cp .env.example .env
 ```
 
