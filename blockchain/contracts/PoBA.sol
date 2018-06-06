@@ -34,6 +34,12 @@ contract PoBA {
       return (ecrecover(prefixed, v, r, s) == signer);
   }
 
+  function userExists(address wallet)
+  public view returns (bool)
+  {
+    return (users[wallet].creationBlock > 0);
+  }
+
   function register(
     string account,
     string institution,
@@ -43,7 +49,10 @@ contract PoBA {
     require(bytes(institution).length > 0);
     require(users[msg.sender].bankAccounts.length < 2**256-1);
 
-    users[msg.sender].creationBlock = block.number;
+    if (!userExists(msg.sender)) {
+      // new user
+      users[msg.sender].creationBlock = block.number;
+    }
 
     BankAccount memory ba;
 
@@ -57,9 +66,7 @@ contract PoBA {
     abi.encodePacked(
       msg.sender,
         ba.accountNumber,
-        ba.bankName,
-        ba.attestationDate,
-        ba.attestationFact
+        ba.bankName
     ));
     require(signerIsValid(hash, v, r, s));
 
