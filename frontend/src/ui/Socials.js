@@ -25,7 +25,14 @@ const Social = ({ company, url }) => (
 )
 
 const Socials = () => (
-  <Div className="social-container" position="absolute" right="0" top="50%" transform="translateY(-50%)" color="white">
+  <Div
+    className="social-container"
+    position="absolute"
+    right="0"
+    top="50%"
+    transform="translateY(-50%)"
+    color="white"
+  >
     <Social company="twitter" url="https://twitter.com/poanetwork" />
     <Social company="telegram" url="https://t.me/oraclesnetwork" />
     <Social company="github" url="https://github.com/poanetwork" />
