@@ -36,5 +36,25 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.12.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/ui/**/*.js",
+      "**/src/*.js",
+      "!**/build/**",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/public/**",
+      "!**/artifacts/**",
+      "!**/__tests__/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 55,
+        "functions": 55,
+        "lines": 55,
+        "statements": 55
+      }
+    }
   }
 }
