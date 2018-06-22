@@ -6,7 +6,7 @@
     "start": "node index.js",
     "dev": "nodemon | pino -c",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest --testMatch **/tests/**/*.spec.js --env=jsdom --coverage"
+    "test": "NODE_ENV=test jest --env=jsdom --coverage"
   },
   "license": "MIT",
   "dependencies": {

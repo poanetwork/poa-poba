@@ -3,7 +3,7 @@ import glamorous, { Div } from 'glamorous'
 import buttonStyles from './styles/button'
 import colors from './styles/colors'
 
-const BankAccountList = glamorous.div({
+const BankAccountList = glamorous.div('bank-account-list', {
   textAlign: 'center'
 })
 
@@ -22,7 +22,7 @@ const Button = glamorous.button(buttonStyles, {
 export default ({ bankAccounts, onClick }) => (
   <BankAccountList>
     {bankAccounts.map((bankAccount, index) => (
-      <Div textAlign="center">
+      <Div className="bank-account-item" textAlign="center">
         Bank account number: <strong>{bankAccount.account} </strong>
         <Button key={index} onClick={() => onClick(bankAccount)}>
           Verify

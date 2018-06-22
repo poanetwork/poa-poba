@@ -6,7 +6,7 @@ import Socials from './Socials'
 import { footerHeight, headerBackgroundImage } from './styles/constants'
 import { fullWidth } from './styles/mixins'
 
-const BaseFooter = glamorous.div(fullWidth, {
+const BaseFooter = glamorous.div([fullWidth, 'footer'], {
   bottom: '0',
   height: footerHeight,
   backgroundImage: headerBackgroundImage

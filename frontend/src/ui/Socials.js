@@ -16,7 +16,7 @@ const socialStyles = {
 }
 
 const Social = ({ company, url }) => (
-  <A href={url} css={socialStyles}>
+  <A className="social-item" href={url} css={socialStyles}>
     <span className="fa-stack fa-lg">
       <i className="fa fa-circle fa-stack-2x" />
       <i className={`fa fa-${company} fa-inverse fa-stack-1x`} />
@@ -25,7 +25,14 @@ const Social = ({ company, url }) => (
 )
 
 const Socials = () => (
-  <Div position="absolute" right="0" top="50%" transform="translateY(-50%)" color="white">
+  <Div
+    className="social-container"
+    position="absolute"
+    right="0"
+    top="50%"
+    transform="translateY(-50%)"
+    color="white"
+  >
     <Social company="twitter" url="https://twitter.com/poanetwork" />
     <Social company="telegram" url="https://t.me/oraclesnetwork" />
     <Social company="github" url="https://github.com/poanetwork" />
