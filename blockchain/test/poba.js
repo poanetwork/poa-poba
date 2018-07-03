@@ -1,4 +1,4 @@
-const PoBA = artifacts.require('PoBa')
+const PoBA = artifacts.require('PoBA')
 
 contract('ownership', () => {
   it('signer should be equal to owner', async () => {
