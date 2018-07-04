@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "lint": "eslint .",
-    "migrate": "truffle migrate"
+    "migrate": "truffle migrate",
+    "coverage": "NODE_ENV=test solidity-coverage",
+    "test": "NODE_ENV=test truffle test --network test"
   },
   "license": "MIT",
   "devDependencies": {
@@ -13,7 +15,11 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.12.1",
+    "solidity-coverage": "^0.5.4",
     "truffle": "^4.1.11",
     "truffle-hdwallet-provider": "0.0.5"
+  },
+  "dependencies": {
+    "ethereumjs-abi": "^0.6.5"
   }
 }

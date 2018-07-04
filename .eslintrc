@@ -13,6 +13,8 @@
     "jest": false,
     "describe": false,
     "it": false,
-    "expect": false
+    "expect": false,
+    "contract": false,
+    "assert": false
   }
 }
