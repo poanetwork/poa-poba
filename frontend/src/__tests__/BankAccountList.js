@@ -17,7 +17,6 @@ describe('<BankAccountList />', () => {
     const wrapper = mount(<BankAccountList bankAccounts={['bank_account_1', 'bank_account_2']} />)
 
     expect(wrapper.find('div.bank-account-list')).toHaveLength(1)
-    expect(wrapper.find('div.bank-account-list div.bank-account-item')).toHaveLength(2)
     expect(wrapper.find('div.bank-account-list button')).toHaveLength(2)
   })
 })
