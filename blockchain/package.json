@@ -19,5 +19,7 @@
     "truffle": "^4.1.11",
     "truffle-hdwallet-provider": "0.0.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ethereumjs-abi": "^0.6.5"
+  }
 }
