@@ -1,6 +1,6 @@
 import glamorous from 'glamorous'
 
-const LogoContainer = glamorous.div({
+const LogoContainer = glamorous.div('logo-container', {
   position: 'relative',
   overflow: 'hidden',
   width: '960px',

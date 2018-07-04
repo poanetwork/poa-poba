@@ -2,6 +2,7 @@ import glamorous from 'glamorous'
 import { logoImage } from './styles/constants'
 
 const Logo = glamorous.a(
+  'poa-logo',
   {
     display: 'block',
     float: 'left',

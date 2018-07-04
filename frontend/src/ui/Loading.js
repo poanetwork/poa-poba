@@ -16,7 +16,7 @@ const fadeOut = css.keyframes({
   }
 })
 
-const LoadingContainer = glamorous.div({
+const LoadingContainer = glamorous.div('loading-container', {
   position: 'fixed',
   zIndex: 1000000,
   left: 0,
@@ -26,7 +26,7 @@ const LoadingContainer = glamorous.div({
   backgroundColor: 'rgba(35, 29, 115, 0.8)'
 })
 
-const LoadingInner = glamorous.div({
+const LoadingInner = glamorous.div('loading-inner', {
   display: 'flex',
   justifyContent: 'space-between',
   position: 'absolute',
@@ -49,6 +49,7 @@ const LoadingInner = glamorous.div({
 })
 
 const LoadingDot = glamorous.div(
+  'loading-dot',
   {
     animationName: `${fadeOut}`,
     animationDuration: '2s',
