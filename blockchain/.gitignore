@@ -1,2 +1,5 @@
 /build/contracts/*
 !/build/contracts/PoBA.json
+
+coverage/
+coverage.json

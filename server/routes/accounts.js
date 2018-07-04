@@ -36,10 +36,10 @@ const signBankAccount = (req, res) => {
 
       const accessToken = await accountsController.getAccessToken(token)
 
-      const { account } = await accountsController.getBankAccount(accessToken, accountId)
-      const hash = web3.utils.sha3(ethAccount + Buffer.from(account).toString('hex'))
+      const bankAccount = await accountsController.getBankAccount(accessToken, accountId)
+      const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount.account).toString('hex'))
       const { v, r, s } = web3.eth.accounts.sign(hash, PRIVATE_KEY)
-      return res.send({ account, v, r, s })
+      return res.send({ bankAccount, v, r, s })
     } catch (e) {
       logger.error(e.message, 'There was an error getting the transaction data')
       return res.status(400).send({ error: e.message })
