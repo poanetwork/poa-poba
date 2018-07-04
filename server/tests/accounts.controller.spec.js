@@ -7,6 +7,7 @@ const mockExchangePublicToken = mocks.exchangePublicToken
 const mockExchangePublicTokenError = mocks.exchangePublicTokenError
 const mockGetAuth = mocks.getAuth
 const mockGetAuthError = mocks.getAuthError
+const mockGetInstitutionById = mocks.getInstitutionById
 
 jest.mock('../etc/plaid', () => ({
   exchangePublicToken: jest.fn(publicToken => {
@@ -16,7 +17,8 @@ jest.mock('../etc/plaid', () => ({
   getAuth: jest.fn(accessToken => {
     if (accessToken === mockAccessToken) return mockGetAuth
     return mockGetAuthError
-  })
+  }),
+  getInstitutionById: jest.fn(() => mockGetInstitutionById)
 }))
 
 describe('[controllers] accounts', () => {
@@ -39,8 +41,12 @@ describe('[controllers] accounts', () => {
     })
   })
   it('should return only one bank account', async () => {
-    const accountId = mockGetAuth.numbers[0].account_id
+    const accountId = mockGetAuth.numbers.ach[0].account_id
     const account = await accountsController.getBankAccount(mockAccessToken, accountId)
-    expect(account).toEqual(mockGetAuth.numbers[0])
+    const expected = {
+      account: mockGetAuth.numbers.ach[0].account,
+      institution: mockGetInstitutionById.institution.name
+    }
+    expect(account).toEqual(expected)
   })
 })

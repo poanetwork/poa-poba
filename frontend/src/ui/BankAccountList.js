@@ -22,11 +22,9 @@ const Button = glamorous.button(buttonStyles, {
 export default ({ bankAccounts, onClick }) => (
   <BankAccountList>
     {bankAccounts.map((bankAccount, index) => (
-      <Div textAlign="center">
+      <Div key={index} textAlign="center">
         Bank account number: <strong>{bankAccount.account} </strong>
-        <Button key={index} onClick={() => onClick(bankAccount)}>
-          Verify
-        </Button>
+        <Button onClick={() => onClick(bankAccount)}>Verify</Button>
       </Div>
     ))}
   </BankAccountList>

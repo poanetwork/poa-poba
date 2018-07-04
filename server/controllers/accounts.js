@@ -20,11 +20,26 @@ const getBankAccounts = async accessToken => {
   }
 }
 
+const getInstitutionById = async institutionId => {
+  try {
+    return await plaidClient.getInstitutionById(institutionId)
+  } catch (error) {
+    logger.error({ status: error.status_code }, 'Error getting institution')
+    throw Error(`[getInstitutionById] ${error.error_code}: ${error.error_message}`)
+  }
+}
+
 const getBankAccount = async (accessToken, accountId) => {
   const bankAccounts = await getBankAccounts(accessToken)
-  const numberBankAccount = bankAccounts.numbers.filter(account => account.account_id === accountId)
-  logger.info({ numberBankAccount }, 'Got bank account')
-  return numberBankAccount[0]
+  const { numbers, item } = bankAccounts
+  const ach = numbers.ach.filter(account => account.account_id === accountId)
+  const eft = numbers.eft.filter(account => account.account_id === accountId)
+  const number = [...ach, ...eft][0]
+  const institutionId = item.institution_id
+  const { institution } = await getInstitutionById(institutionId)
+  const bankAccount = { account: number.account, institution: institution.name }
+  logger.info(bankAccount, 'Got bank account')
+  return bankAccount
 }
 
 module.exports = {

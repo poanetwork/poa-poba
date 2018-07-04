@@ -14,8 +14,8 @@ const PobaContract = contract(pobaArtifact)
 
 const getBankAccounts = async token => {
   const result = await axios.get(`/api/accounts/bank-accounts/${token}`)
-
-  return result.data.accounts.numbers
+  const { ach, eft } = result.data.accounts.numbers
+  return [...ach, ...eft]
 }
 
 const getSignedBankAccount = async (accountId, ethAccount, token) => {
@@ -80,9 +80,16 @@ class PoBA extends Component {
     this.setState({ loading: true })
     return getSignedBankAccount(accountId, ethAccount, token)
       .then(txData => {
-        return this.pobaContract.register(txData.account, txData.v, txData.r, txData.s, {
-          from: ethAccount
-        })
+        return this.pobaContract.register(
+          txData.bankAccount.account,
+          txData.bankAccount.institution,
+          txData.v,
+          txData.r,
+          txData.s,
+          {
+            from: ethAccount
+          }
+        )
       })
       .then(
         () => successAlert(),

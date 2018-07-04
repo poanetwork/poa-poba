@@ -29,14 +29,17 @@ const data = {
         type: 'depository'
       }
     ],
-    numbers: [
-      {
-        account: '9900009606',
-        account_id: 'vzeNDwK7KQIm4yEog683uElbp9GRLEFXGK98D',
-        routing: '011401533',
-        wire_routing: '021000021'
-      }
-    ],
+    numbers: {
+      ach: [
+        {
+          account: '9900009606',
+          account_id: 'vzeNDwK7KQIm4yEog683uElbp9GRLEFXGK98D',
+          routing: '011401533',
+          wire_routing: '021000021'
+        }
+      ],
+      eft: []
+    },
     item: { Object },
     request_id: '45QSn',
     status_code: 200
@@ -48,6 +51,28 @@ const data = {
     error_type: 'INVALID_REQUEST',
     request_id: 'qcaHk',
     http_code: 404
+  },
+  getInstitutionById: {
+    institution: {
+      credentials: [
+        {
+          label: 'User ID',
+          name: 'username',
+          type: 'text'
+        },
+        {
+          label: 'Password',
+          name: 'password',
+          type: 'password'
+        }
+      ],
+      has_mfa: true,
+      institution_id: 'ins_109512',
+      mfa: ['code', 'list', 'questions', 'selections'],
+      name: 'Houndstooth Bank',
+      products: ['auth', 'balance', 'identity', 'transactions']
+    },
+    request_id: '9VpnU'
   }
 }
 
