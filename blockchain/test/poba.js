@@ -3,7 +3,10 @@ const Web3 = require('web3')
 
 const web3 = new Web3()
 
-const ethAccount = '0x9f398EE455b4027eb667A69Ed68E69ce4Df84692'
+const ethAccount = [
+  '0x9f398EE455b4027eb667A69Ed68E69ce4Df84692',
+  '0x8fc00688be3c7609326263fce9f2500417ad2433'
+]
 const privateKey = '0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5c88f9e'
 
 /**
@@ -11,16 +14,11 @@ const privateKey = '0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5
  *
  * The { v, r, s } values were signed with the PK of address 0x92970dbd5c0ee6b439422bfd7cd71e1dda921a03,
  * 0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5c88f9e, for the requester address
- * 0x9f398EE455b4027eb667A69Ed68E69ce4Df84692
+ * 0x9f398EE455b4027eb667A69Ed68E69xwce4Df84692
  */
-function buildRegisterBankAccountArgs() {
-  const bank = {
-    account: '1111222233330000',
-    institution: 'Chase'
-  }
-
+function buildRegisterBankAccountArgs(account, bank) {
   const hash = web3.utils.soliditySha3(
-    ethAccount +
+    account +
       Buffer.from(bank.account).toString('hex') +
       Buffer.from(bank.institution).toString('hex')
   )
@@ -34,9 +32,9 @@ function buildRegisterBankAccountArgs() {
   }
 }
 
-function registerBankAccount(poba, args) {
+function registerBankAccount(poba, args, account) {
   return poba.register(args.bankAccount, args.institution, args.v, args.r, args.s, {
-    from: ethAccount
+    from: account
   })
 }
 
@@ -51,17 +49,97 @@ contract('ownership', () => {
 
 contract('bank account registration (success)', () => {
   contract('', () => {
-    it('registerAddress should register an address', async () => {
+    it('registerBankAccount should register an address', async () => {
       const poba = await PoBA.deployed()
-      const args = buildRegisterBankAccountArgs()
+      const bank = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
 
-      let bankAccounts = await poba.accountsLength(ethAccount)
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
 
-      await registerBankAccount(poba, args)
+      await registerBankAccount(poba, args, ethAccount[0])
 
-      bankAccounts = await poba.accountsLength(ethAccount)
+      bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 1)
+    })
+  })
+
+  contract('', () => {
+    it('should allow a user to register two different bank accounts', async () => {
+      const poba = await PoBA.deployed()
+      const bankOne = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const bankTwo = {
+        account: '1111222233330001',
+        institution: 'Sugar'
+      }
+      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bankOne)
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+      await registerBankAccount(poba, args1, ethAccount[0])
+      bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 1)
+      const args2 = buildRegisterBankAccountArgs(ethAccount[0], bankTwo)
+      await registerBankAccount(poba, args2, ethAccount[0])
+      bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 2)
+    })
+  })
+
+  contract('', () => {
+    it('should allow different users to register different bank accounts', async () => {
+      const poba = await PoBA.deployed()
+      const bankOne = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const bankTwo = {
+        account: '1111222233330001',
+        institution: 'Sugar'
+      }
+
+      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bankOne)
+      let bankAccounts1 = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts1, 0)
+      await registerBankAccount(poba, args1, ethAccount[0])
+      bankAccounts1 = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts1, 1)
+
+      const args2 = buildRegisterBankAccountArgs(ethAccount[1], bankTwo)
+      let bankAccounts2 = await poba.accountsLength(ethAccount[1])
+      assert.equal(+bankAccounts2, 0)
+      await registerBankAccount(poba, args2, ethAccount[1])
+      bankAccounts2 = await poba.accountsLength(ethAccount[1])
+      assert.equal(+bankAccounts2, 1)
+    })
+  })
+
+  contract('', () => {
+    it('should allow different users to register the same bank account', async () => {
+      const poba = await PoBA.deployed()
+      const bank = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+
+      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      let bankAccounts1 = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts1, 0)
+      await registerBankAccount(poba, args1, ethAccount[0])
+      bankAccounts1 = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts1, 1)
+
+      const args2 = buildRegisterBankAccountArgs(ethAccount[1], bank)
+      let bankAccounts2 = await poba.accountsLength(ethAccount[1])
+      assert.equal(+bankAccounts2, 0)
+      await registerBankAccount(poba, args2, ethAccount[1])
+      bankAccounts2 = await poba.accountsLength(ethAccount[1])
+      assert.equal(+bankAccounts2, 1)
     })
   })
 })
