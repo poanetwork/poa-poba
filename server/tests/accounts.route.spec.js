@@ -10,6 +10,7 @@ const mockBankAccount = {
   bankAccount: {
     account: '9900009606',
     account_id: 'vzeNDwK7KQIm4yEog683uElbp9GRLEFXGK98D',
+    institution: 'Bank One',
     routing: '011401533',
     wire_routing: '021000021'
   }
@@ -31,14 +32,16 @@ jest.mock('../controllers/accounts', () => ({
   }),
   getBankAccount: jest.fn((accessToken, accountId) => {
     if (accessToken === mockAccessToken && accountId === mockBankAccounts.numbers.ach[0].account_id)
-      return mockBankAccounts.numbers.ach[0]
+      return mockBankAccount.bankAccount
     throw new Error('There was an error getting the transaction data')
   })
 }))
 jest.mock('web3', () =>
   jest.fn().mockImplementation(() => ({
     utils: {
-      sha3: jest.fn(() => '0xc20eab54de62a1151b630cc74fdfc40cf58e919325e294aa124a6ec3b52f542f')
+      soliditySha3: jest.fn(
+        () => '0xc20eab54de62a1151b630cc74fdfc40cf58e919325e294aa124a6ec3b52f542f'
+      )
     },
     eth: {
       accounts: {
