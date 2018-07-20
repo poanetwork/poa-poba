@@ -37,7 +37,11 @@ const signBankAccount = (req, res) => {
       const accessToken = await accountsController.getAccessToken(token)
 
       const bankAccount = await accountsController.getBankAccount(accessToken, accountId)
-      const hash = web3.utils.sha3(ethAccount + Buffer.from(bankAccount.account).toString('hex'))
+      const hash = web3.utils.soliditySha3(
+        ethAccount +
+          Buffer.from(bankAccount.account).toString('hex') +
+          Buffer.from(bankAccount.institution).toString('hex')
+      )
       const { v, r, s } = web3.eth.accounts.sign(hash, PRIVATE_KEY)
       return res.send({ bankAccount, v, r, s })
     } catch (e) {
