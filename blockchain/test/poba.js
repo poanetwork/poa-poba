@@ -143,3 +143,72 @@ contract('bank account registration (success)', () => {
     })
   })
 })
+
+contract('bank account registration (fail)', () => {
+  contract('', () => {
+    it('registerBankAccount should fail if account is empty', async () => {
+      const poba = await PoBA.deployed()
+      const bank = {
+        account: '',
+        institution: 'Chase'
+      }
+
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+
+      await registerBankAccount(poba, args, ethAccount[0]).then(
+        () => assert.fail(), // should reject
+        async () => {
+          bankAccounts = await poba.accountsLength(ethAccount[0])
+          assert.equal(+bankAccounts, 0)
+        }
+      )
+    })
+  })
+  contract('', () => {
+    it('registerBankAccount should fail if institution is empty', async () => {
+      const poba = await PoBA.deployed()
+      const bank = {
+        account: '1111222233330000',
+        institution: ''
+      }
+
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+
+      await registerBankAccount(poba, args, ethAccount[0]).then(
+        () => assert.fail(), // should reject
+        async () => {
+          bankAccounts = await poba.accountsLength(ethAccount[0])
+          assert.equal(+bankAccounts, 0)
+        }
+      )
+    })
+  })
+  contract('', () => {
+    it('registerBankAccount should fail if signer is not valid', async () => {
+      const poba = await PoBA.deployed()
+      const bank = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+
+      await registerBankAccount(poba, args, ethAccount[1]).then(
+        () => assert.fail(), // should reject
+        async () => {
+          bankAccounts = await poba.accountsLength(ethAccount[0])
+          assert.equal(+bankAccounts, 0)
+        }
+      )
+    })
+  })
+})
