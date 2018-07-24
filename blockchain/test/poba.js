@@ -211,4 +211,27 @@ contract('bank account registration (fail)', () => {
       )
     })
   })
+  contract('', () => {
+    it('registerBankAccount should fail if data is not valid', async () => {
+      const poba = await PoBA.deployed()
+      const bank = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+
+      args.bankAccount = '1111222233330001'
+      await registerBankAccount(poba, args, ethAccount[0]).then(
+        () => assert.fail(), // should reject
+        async () => {
+          bankAccounts = await poba.accountsLength(ethAccount[0])
+          assert.equal(+bankAccounts, 0)
+        }
+      )
+    })
+  })
 })
