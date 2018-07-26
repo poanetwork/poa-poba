@@ -69,6 +69,9 @@ class PoBA extends Component {
           token,
           bankAccounts
         })
+      }, e => {
+        console.error('There was a problem getting the bank accounts', e)
+        errorAlert('There was a problem getting the bank accounts')
       })
       .finally(() => this.setState({ loading: false }))
   }

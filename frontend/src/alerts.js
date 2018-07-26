@@ -1,9 +1,9 @@
 import sweetAlert2 from 'sweetalert2'
 
-export function successAlert() {
+export function successAlert(msg = 'Your bank account was successfully registered') {
   sweetAlert2({
     title: 'Bank account registration',
-    html: 'Your bank account was successfully registered',
+    html: msg,
     type: 'success'
   })
 }
