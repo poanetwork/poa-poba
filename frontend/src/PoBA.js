@@ -46,18 +46,23 @@ class PoBA extends Component {
 
     PobaContract.setProvider(web3.currentProvider)
 
-    this.pobaContract = await PobaContract.deployed()
+    try {
+      this.pobaContract = await PobaContract.deployed()
 
-    const registeredAcountsCount = await this.pobaContract.accountsLength.call(account)
+      const registeredAcountsCount = await this.pobaContract.accountsLength.call(account)
 
-    const whenAccounts = []
-    for (let i = 0; i < registeredAcountsCount; i++) {
-      whenAccounts.push(this.pobaContract.accounts(account, i))
+      const whenAccounts = []
+      for (let i = 0; i < registeredAcountsCount; i++) {
+        whenAccounts.push(this.pobaContract.accounts(account, i))
+      }
+
+      const registeredAccounts = await Promise.all(whenAccounts)
+
+      this.setState({ registeredAccounts })
+    } catch (e) {
+      console.error('There was a problem deploying the contract', e)
+      errorAlert('There was a problem deploying the contract')
     }
-
-    const registeredAccounts = await Promise.all(whenAccounts)
-
-    this.setState({ registeredAccounts })
   }
 
   fetchBankAccounts = async token => {
