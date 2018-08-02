@@ -5,6 +5,7 @@ css.global('*', {
 })
 
 css.global('html, body', {
+  margin: '0',
   color: '#333',
   lineHeight: '1',
   fontSize: '14px',

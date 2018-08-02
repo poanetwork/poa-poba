@@ -1,24 +1,20 @@
 import React from 'react'
 import glamorous, { P } from 'glamorous'
 import LogoContainer from './LogoContainer'
-import Logo from './Logo'
 import Socials from './Socials'
-import { footerHeight, headerBackgroundImage } from './styles/constants'
-import { fullWidth } from './styles/mixins'
+import { footerHeight } from './styles/constants'
 
-const BaseFooter = glamorous.div('footer', fullWidth, {
+const BaseFooter = glamorous.div('footer', {
   bottom: '0',
-  height: footerHeight,
-  backgroundImage: headerBackgroundImage
+  height: footerHeight
 })
 
 const Footer = () => (
   <BaseFooter>
     <LogoContainer>
-      <P color="white" lineHeight={footerHeight} textAlign="center" fontSize="12px" margin="0">
+      <P color="#5c34a2" lineHeight={footerHeight} textAlign="left" fontSize="12px" margin="0">
         2018 POA Network. All rights reserved.
       </P>
-      <Logo href="/" size="small" />
       <Socials />
     </LogoContainer>
   </BaseFooter>

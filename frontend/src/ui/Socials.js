@@ -8,10 +8,10 @@ const socialStyles = {
   },
   '& .fa-circle': {
     transition: '0.3s color',
-    color: 'hsla(0,0%,100%,.2)'
+    color: '#5c34a2'
   },
   '&:hover .fa-circle': {
-    color: 'hsla(0,0%,100%,.4)'
+    color: '#5c34a2'
   }
 }
 
@@ -31,7 +31,7 @@ const Socials = () => (
     right="0"
     top="50%"
     transform="translateY(-50%)"
-    color="white"
+    color="#5c34a2"
   >
     <Social company="twitter" url="https://twitter.com/poanetwork" />
     <Social company="telegram" url="https://t.me/oraclesnetwork" />
