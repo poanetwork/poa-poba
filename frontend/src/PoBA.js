@@ -3,6 +3,7 @@ import PlaidLink from 'react-plaid-link'
 import axios from 'axios'
 import contract from 'truffle-contract'
 import pobaArtifact from './artifacts/PoBA.json' // eslint-disable-line import/no-unresolved
+import Main from './ui/Main'
 import Title from './ui/Title'
 import Loading from './ui/Loading'
 import RegisteredAccountsList from './ui/RegisteredAccountsList'
