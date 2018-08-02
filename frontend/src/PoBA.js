@@ -49,10 +49,10 @@ class PoBA extends Component {
     try {
       this.pobaContract = await PobaContract.deployed()
 
-      const registeredAcountsCount = await this.pobaContract.accountsLength.call(account)
+      const registeredAccountsCount = await this.pobaContract.accountsLength.call(account)
 
       const whenAccounts = []
-      for (let i = 0; i < registeredAcountsCount; i++) {
+      for (let i = 0; i < registeredAccountsCount; i++) {
         whenAccounts.push(this.pobaContract.accounts(account, i))
       }
 
@@ -60,8 +60,8 @@ class PoBA extends Component {
 
       this.setState({ registeredAccounts })
     } catch (e) {
-      console.error('There was a problem deploying the contract', e)
-      errorAlert('There was a problem deploying the contract')
+      console.error('Contract is not deployed on this network', e)
+      errorAlert('Contract is not deployed on this network')
     }
   }
 
