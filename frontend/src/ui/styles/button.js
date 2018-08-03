@@ -1,15 +1,23 @@
 import colors from './colors'
 
 const buttonStyles = {
-  backgroundColor: colors.primary,
-  color: 'white',
+  width: '200px',
+  height: '44px',
+  borderRadius: '5px',
+  backgroundColor: colors.white,
+  border: `solid 1px ${colors.primary}`,
+  color: colors.primary,
   cursor: 'pointer',
-  fontSize: '13px',
-  textTransform: 'uppercase',
-  padding: '0 15px',
-  lineHeight: '36px',
-  fontWeight: 700,
-  borderWidth: 0,
+  fontFamily: 'Nunito',
+  fontSize: '16px',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: '1.5',
+  letterSpacing: 'normal',
+  textAlign: 'left',
+  textTransform: 'none',
+  float: 'left',
   ':hover': {
     backgroundColor: '#34c3f8'
   },
