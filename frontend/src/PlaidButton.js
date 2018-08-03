@@ -1,33 +1,36 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import PlaidLink from 'react-plaid-link'
-import axios from 'axios'
 import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
 
-const getBankAccounts = async token => {
-  const result = await axios.get(`/api/accounts/bank-accounts/${token}`)
-  const { ach, eft } = result.data.accounts.numbers
-  return [...ach, ...eft]
-}
-
 class PlaidButton extends Component {
-  fetchBankAccounts = async token => {
-    return getBankAccounts(token)
-      .then(bankAccounts => {
-        console.log('token', token)
-        console.log('bankAccounts', bankAccounts)
-        console.log('se termino, y debe redirigir')
-      })
+  constructor() {
+    super()
+    this.state = { plaidToken: null }
+    this.redirectToBankAccountsPage = this.redirectToBankAccountsPage.bind(this)
+  }
+
+  redirectToBankAccountsPage(token) {
+    this.setState({ plaidToken: token })
   }
 
   render() {
-    return (
+    const { plaidToken } = this.state
+    const bankAccountsListState = {
+      pathname: '/bankaccountslist/' + plaidToken
+    }
+
+    // Redirect to list of bank accounts after successful plaid token fetch
+    return plaidToken ? (
+      <Redirect to={bankAccountsListState} />
+    ) : (
       <PlaidLink
         clientName="Proof of Bank Account"
         env={process.env.REACT_APP_PLAID_ENV}
         institution={null}
         publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
         product={['auth']}
-        onSuccess={this.fetchBankAccounts}
+        onSuccess={this.redirectToBankAccountsPage}
         className={plaidLinkButtonStyles}
         style={{
           width: '200px',
@@ -48,7 +51,10 @@ class PlaidButton extends Component {
           color: '#ffffff'
         }}
       >
-        Continue <span style={{float: 'right', lineHeight: '42px'}}><i className="fa fa-arrow-right"></i></span>
+        Continue{' '}
+        <span style={{ float: 'right', lineHeight: '42px' }}>
+          <i className="fa fa-arrow-right" />
+        </span>
       </PlaidLink>
     )
   }
