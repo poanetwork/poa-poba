@@ -7,10 +7,6 @@ const BgSidebar = glamorous.div({
   backgroundSize: 'cover'
 })
 
-const Sidebar = () => (
-  <BgSidebar>
-
-  </BgSidebar>
-)
+const Sidebar = () => <BgSidebar />
 
 export default Sidebar

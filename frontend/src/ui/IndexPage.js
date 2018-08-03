@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import { P, H2 } from 'glamorous'
 import Title from './Title'
 import PlaidButton from '../PlaidButton'
-import buttonStyle  from './styles/button'
+import buttonStyle from './styles/button'
 import align from './styles/align'
-import Web3Provider from '../Web3Provider'
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -29,22 +28,36 @@ class IndexPage extends React.Component {
     return (
       <div>
         <Title />
-        <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris.</P>
+        <P>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris.
+        </P>
         <Link to="/help">
-          <button style={buttonStyle}>How it works? <span style={align.iconRight}><i className="fa fa-question"></i></span></button>
+          <button style={buttonStyle}>
+            How it works?{' '}
+            <span style={align.iconRight}>
+              <i className="fa fa-question" />
+            </span>
+          </button>
         </Link>
-        <PlaidButton web3={this.state.web3} account={this.state.accounts[0]}/>
+        <PlaidButton web3={this.state.web3} account={this.state.accounts[0]} />
 
-        <div style={{clear: 'both'}}></div>
+        <div style={{ clear: 'both' }} />
 
         <H2>Lorem ipsum dolor sit amet</H2>
-        <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris.</P>
+        <P>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris.
+        </P>
         <Link to="/my-bank-accounts">
-          <button style={buttonStyle}>My Bank Accounts <span style={align.iconRight}><i className="fa fa-university"></i></span></button>
+          <button style={buttonStyle}>
+            My Bank Accounts{' '}
+            <span style={align.iconRight}>
+              <i className="fa fa-university" />
+            </span>
+          </button>
         </Link>
       </div>
     )

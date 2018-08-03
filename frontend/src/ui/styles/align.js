@@ -1,5 +1,5 @@
 const align = {
-  iconRight: {float: 'right'}
+  iconRight: { float: 'right' }
 }
 
 export default align
