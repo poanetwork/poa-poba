@@ -46,30 +46,41 @@ class PoBA extends Component {
 
     PobaContract.setProvider(web3.currentProvider)
 
-    this.pobaContract = await PobaContract.deployed()
+    try {
+      this.pobaContract = await PobaContract.deployed()
 
-    const registeredAcountsCount = await this.pobaContract.accountsLength.call(account)
+      const registeredAccountsCount = await this.pobaContract.accountsLength.call(account)
 
-    const whenAccounts = []
-    for (let i = 0; i < registeredAcountsCount; i++) {
-      whenAccounts.push(this.pobaContract.accounts(account, i))
+      const whenAccounts = []
+      for (let i = 0; i < registeredAccountsCount; i++) {
+        whenAccounts.push(this.pobaContract.accounts(account, i))
+      }
+
+      const registeredAccounts = await Promise.all(whenAccounts)
+
+      this.setState({ registeredAccounts })
+    } catch (e) {
+      console.error('Contract is not deployed on this network', e)
+      errorAlert('Contract is not deployed on this network')
     }
-
-    const registeredAccounts = await Promise.all(whenAccounts)
-
-    this.setState({ registeredAccounts })
   }
 
   fetchBankAccounts = async token => {
     this.setState({ loading: true })
 
     return getBankAccounts(token)
-      .then(bankAccounts => {
-        this.setState({
-          token,
-          bankAccounts
-        })
-      })
+      .then(
+        bankAccounts => {
+          this.setState({
+            token,
+            bankAccounts
+          })
+        },
+        e => {
+          console.error('There was a problem getting the bank accounts', e)
+          errorAlert('There was a problem getting the bank accounts')
+        }
+      )
       .finally(() => this.setState({ loading: false }))
   }
 
