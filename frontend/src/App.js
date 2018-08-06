@@ -8,6 +8,7 @@ import Content from './ui/Content'
 import Section from './ui/Section'
 import IndexPage from './ui/IndexPage'
 import HelpPage from './ui/HelpPage'
+import ErrorPage from './ui/ErrorPage'
 import BankAccountsPage from './ui/BankAccountsPage'
 import Web3Provider from './Web3Provider'
 
@@ -27,10 +28,11 @@ const App = () => (
                   render={({ web3, accounts }) => {
                     let content = null
                     if (!web3) {
-                      content = <div>No web3</div>
+                      content = <ErrorPage error="web3" />
                     } else if (!accounts || accounts.length === 0) {
-                      content = <div>No unlocked account</div>
+                      content = <ErrorPage error="unlock" />
                     } else {
+                      console.log('web3', web3)
                       content = <IndexPage web3={web3} accounts={accounts} />
                     }
                     return content
@@ -43,13 +45,6 @@ const App = () => (
               path="/bankaccountslist/:token"
               component={props => <BankAccountsPage props={props} />}
             />
-            {/* <Route path="/register" component={() => <RegisterAddressPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* <Route path="/confirm" component={() => <ConfirmationPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* <Route path="/my-addresses" component={() => <MyAddressesPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* {content} */}
           </Section>
           <Footer />
         </Content>
