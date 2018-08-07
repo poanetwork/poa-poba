@@ -11,6 +11,21 @@ import HelpPage from './ui/HelpPage'
 import BankAccountsPage from './ui/BankAccountsPage'
 import Web3Provider from './Web3Provider'
 
+const noWeb3Render = () => <div>No web3</div>
+const noUnlockedAccountRender = () => <div>No unlocked account</div>
+const routesRender = (web3, accounts) => {
+  return (
+    <section>
+      <Route exact path="/" component={() => <IndexPage web3={web3} accounts={accounts} />} />
+      <Route exact path="/help" component={() => <HelpPage />} />
+      <Route
+        path="/bankaccountslist/:token"
+        component={props => <BankAccountsPage props={props} web3={web3} account={accounts[0]} />}
+      />
+    </section>
+  )
+}
+
 const App = () => (
   <div className="App">
     <BrowserRouter>
@@ -19,37 +34,19 @@ const App = () => (
         <Content>
           <Header />
           <Section>
-            <Route
-              exact
-              path="/"
-              component={() => (
-                <Web3Provider
-                  render={({ web3, accounts }) => {
-                    let content = null
-                    if (!web3) {
-                      content = <div>No web3</div>
-                    } else if (!accounts || accounts.length === 0) {
-                      content = <div>No unlocked account</div>
-                    } else {
-                      content = <IndexPage web3={web3} accounts={accounts} />
-                    }
-                    return content
-                  }}
-                />
-              )}
+            <Web3Provider
+              render={({ web3, accounts }) => {
+                let content = null
+                if (!web3) {
+                  content = noWeb3Render()
+                } else if (!accounts || accounts.length === 0) {
+                  content = noUnlockedAccountRender()
+                } else {
+                  content = routesRender(web3, accounts)
+                }
+                return content
+              }}
             />
-            <Route exact path="/help" component={() => <HelpPage />} />
-            <Route
-              path="/bankaccountslist/:token"
-              component={props => <BankAccountsPage props={props} />}
-            />
-            {/* <Route path="/register" component={() => <RegisterAddressPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* <Route path="/confirm" component={() => <ConfirmationPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* <Route path="/my-addresses" component={() => <MyAddressesPage my_web3={this.state.my_web3} */}
-            {/* contract={this.state.contract}/>}/> */}
-            {/* {content} */}
           </Section>
           <Footer />
         </Content>
