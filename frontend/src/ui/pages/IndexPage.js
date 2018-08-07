@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { P, H2 } from 'glamorous'
-import Title from './layout/Title'
-import PlaidButton from '../PlaidButton'
-import buttonStyle from './styles/button'
-import align from './styles/align'
+import Title from '../layout/Title'
+import PlaidButton from '../../PlaidButton'
+import buttonStyle from '../styles/button'
+import align from '../styles/align'
 
 class IndexPage extends React.Component {
   constructor(props) {

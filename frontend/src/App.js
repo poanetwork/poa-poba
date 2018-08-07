@@ -6,9 +6,9 @@ import Main from './ui/layout/Main'
 import Sidebar from './ui/layout/Sidebar'
 import Content from './ui/layout/Content'
 import Section from './ui/layout/Section'
-import IndexPage from './ui/IndexPage'
-import HelpPage from './ui/HelpPage'
-import BankAccountsPage from './ui/BankAccountsPage'
+import IndexPage from './ui/pages/IndexPage'
+import HelpPage from './ui/pages/HelpPage'
+import BankAccountsPage from './ui/pages/BankAccountsPage'
 import Web3Provider from './Web3Provider'
 
 const noWeb3Render = () => <div>No web3</div>

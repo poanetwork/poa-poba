@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import contract from 'truffle-contract'
-import BankAccountsList from './BankAccountsList'
-import { successAlert, errorAlert } from '../alerts'
-import pobaArtifact from '../artifacts/PoBA.json'
+import BankAccountsList from '../BankAccountsList'
+import { successAlert, errorAlert } from '../../alerts'
+import pobaArtifact from '../../artifacts/PoBA.json'
 // eslint-disable-line import/no-unresolved
 const PobaContract = contract(pobaArtifact)
 
