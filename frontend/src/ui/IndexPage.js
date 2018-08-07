@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { P, H2 } from 'glamorous'
-import Title from './Title'
+import Title from './layout/Title'
 import PlaidButton from '../PlaidButton'
 import buttonStyle from './styles/button'
 import align from './styles/align'
