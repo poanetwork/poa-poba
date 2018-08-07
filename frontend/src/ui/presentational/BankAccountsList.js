@@ -1,6 +1,6 @@
 import React from 'react'
 import glamorous from 'glamorous'
-import buttonStyles from './styles/button'
+import buttonStyles from '../styles/button'
 
 const BankAccountsList = glamorous.div('bank-account-list', {})
 

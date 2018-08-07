@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Loading from '../ui/general/Loading'
+import Loading from '../ui/presentational/Loading'
 
 configure({ adapter: new Adapter() })
 
