@@ -1,6 +1,6 @@
 import glamorous from 'glamorous'
 
-import { fullWidth } from './styles/mixins'
+import { fullWidth } from '../styles/mixins'
 
 const Main = glamorous.div(fullWidth, {
   margin: '0',

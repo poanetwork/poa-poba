@@ -1,7 +1,7 @@
 import React from 'react'
 import glamorous, { Div } from 'glamorous'
-import buttonStyles from './styles/button'
-import colors from './styles/colors'
+import buttonStyles from '../styles/button'
+import colors from '../styles/colors'
 
 const BankAccountList = glamorous.div('bank-account-list', {
   textAlign: 'center'

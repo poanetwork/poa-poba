@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Title from '../ui/Title'
+import Title from '../ui/layout/Title'
 
 configure({ adapter: new Adapter() })
 

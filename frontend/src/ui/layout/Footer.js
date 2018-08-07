@@ -2,7 +2,7 @@ import React from 'react'
 import glamorous, { P } from 'glamorous'
 import LogoContainer from './LogoContainer'
 import Socials from './Socials'
-import { footerHeight } from './styles/constants'
+import { footerHeight } from '../styles/constants'
 
 const BaseFooter = glamorous.div('footer', {
   bottom: '0',

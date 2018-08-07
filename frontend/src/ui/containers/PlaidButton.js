@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import PlaidLink from 'react-plaid-link'
-import plaidLinkButtonStyles from './ui/styles/plaidLinkButton'
+import plaidLinkButtonStyles from '../styles/plaidLinkButton'
 
 class PlaidButton extends Component {
   constructor() {
