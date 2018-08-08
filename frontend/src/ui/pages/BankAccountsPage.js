@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
+import BackButton from '../containers/BackButton'
 import BankAccountsList from '../presentational/BankAccountsList'
 import { successAlert, errorAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
@@ -91,6 +92,8 @@ class BankAccountsPage extends Component {
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
         />
         <Loading show={this.state.loading} />
+
+        <BackButton />
       </div>
     )
   }
