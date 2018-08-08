@@ -8,11 +8,12 @@ import Content from './ui/layout/Content'
 import Section from './ui/layout/Section'
 import IndexPage from './ui/pages/IndexPage'
 import HelpPage from './ui/pages/HelpPage'
+import ErrorPage from './ui/pages/ErrorPage'
 import BankAccountsPage from './ui/pages/BankAccountsPage'
 import Web3Provider from './Web3Provider'
 
-const noWeb3Render = () => <div>No web3</div>
-const noUnlockedAccountRender = () => <div>No unlocked account</div>
+const noWeb3Render = () => <ErrorPage error="noWeb3Render"/>
+const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender"/>
 const routesRender = (web3, accounts) => {
   return (
     <section>
