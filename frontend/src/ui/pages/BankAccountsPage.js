@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import contract from 'truffle-contract'
+import Loading from '../presentational/Loading'
 import BankAccountsList from '../presentational/BankAccountsList'
 import { successAlert, errorAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
@@ -32,7 +33,7 @@ class BankAccountsPage extends Component {
       ethAccount: props.account,
       plaidToken,
       bankAccounts: [],
-      loading: true
+      loading: false
     }
     this.fetchBankAccounts = this.fetchBankAccounts.bind(this)
     this.pobaContract = null
@@ -51,7 +52,7 @@ class BankAccountsPage extends Component {
   }
 
   async chooseBankAccount(accountId) {
-    // @TODO: set loading status
+    this.setState({ loading: true })
     try {
       const { plaidToken, ethAccount } = this.state
       const txData = await getSignedBankAccount(accountId, ethAccount, plaidToken)
@@ -68,23 +69,29 @@ class BankAccountsPage extends Component {
       console.error('There was a problem registering the address', e)
       errorAlert()
     } finally {
-      // @TODO: unset loading status
+      this.setState({ loading: false })
     }
   }
 
   async fetchBankAccounts(token) {
-    return getBankAccounts(token).then(bankAccounts => {
-      this.setState({ bankAccounts })
-    })
+    this.setState({ loading: true })
+    return getBankAccounts(token)
+      .then(bankAccounts => {
+        this.setState({ bankAccounts })
+      })
+      .finally(() => this.setState({ loading: false }))
   }
 
   render() {
     const { bankAccounts } = this.state
     return (
-      <BankAccountsList
-        bankAccounts={bankAccounts}
-        onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
-      />
+      <div>
+        <BankAccountsList
+          bankAccounts={bankAccounts}
+          onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+        />
+        <Loading show={this.state.loading} />
+      </div>
     )
   }
 }
