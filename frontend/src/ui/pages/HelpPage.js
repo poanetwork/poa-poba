@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, P } from 'glamorous'
+import { H1, H2, P } from 'glamorous'
 
 import BackButton from '../containers/BackButton'
 

@@ -40,7 +40,7 @@ class ErrorPage extends React.Component {
       <div style={{ height: '80vh', position: 'relative' }}>
         <div style={{ top: '50%', marginTop: '-80px', position: 'absolute', width: '450px', lineHeight: '1.5em' }}>
           <Icon><i className="fa fa-times-circle-o fa-3x"></i></Icon>
-          <H1 color={colors.primary}>{title}</H1>
+          <H1 style={{marginTop: '0'}} color={colors.primary}>{title}</H1>
           <P color={colors.primary}>{message}</P>
         </div>
       </div>
