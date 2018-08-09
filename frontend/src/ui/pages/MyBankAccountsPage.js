@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
 import BackButton from '../containers/BackButton'
-import BankAccountsList from '../presentational/BankAccountsList'
+import VerifiedBankAccountsList from '../presentational/VerifiedBankAccountsList'
 import { errorAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
 // eslint-disable-line import/no-unresolved
@@ -60,7 +60,7 @@ class MyBankAccountsPage extends Component {
     const { verifiedBankAccounts } = this.state
     return (
       <div>
-        <BankAccountsList
+        <VerifiedBankAccountsList
           bankAccounts={verifiedBankAccounts}
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
         />
