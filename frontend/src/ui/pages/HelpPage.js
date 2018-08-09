@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H2, P } from 'glamorous'
+import { H1, P } from 'glamorous'
 
 import BackButton from '../containers/BackButton'
 
@@ -11,21 +11,21 @@ const HelpPage = () => {
         <div>
           <div>
             <div>
-              <P style={{fontWeight: 'bold'}}>
+              <P style={{ fontWeight: 'bold' }}>
                 <span>Step 1: </span>
                 Connect Bank Account
               </P>
               <P>Choose the Bank and complete the form with your username and password</P>
             </div>
             <div>
-              <P style={{fontWeight: 'bold'}}>
+              <P style={{ fontWeight: 'bold' }}>
                 <span>Step 2: </span>
                 Choose the bank account
               </P>
               <P>Choose one of your bank accounts to verify</P>
             </div>
             <div>
-              <P style={{fontWeight: 'bold'}}>
+              <P style={{ fontWeight: 'bold' }}>
                 <span>Step 3: </span>
                 Sign transaction & Finalize proof
               </P>

@@ -1,6 +1,4 @@
 import { css } from 'glamor'
-import { H1 } from 'glamorous'
-import React from 'react'
 
 css.global('*', {
   boxSizing: 'border-box'

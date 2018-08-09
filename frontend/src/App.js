@@ -12,8 +12,8 @@ import ErrorPage from './ui/pages/ErrorPage'
 import BankAccountsPage from './ui/pages/BankAccountsPage'
 import Web3Provider from './Web3Provider'
 
-const noWeb3Render = () => <ErrorPage error="noWeb3Render"/>
-const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender"/>
+const noWeb3Render = () => <ErrorPage error="noWeb3Render" />
+const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender" />
 const routesRender = (web3, accounts) => {
   return (
     <section>
