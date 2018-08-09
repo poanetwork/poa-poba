@@ -15,6 +15,11 @@ const getBankAccounts = async token => {
   return [...ach, ...eft]
 }
 
+const getSingleBankAccountDetails = async (token, accountId) => {
+  const result = await axios.get(`/api/accounts/bank-accounts/${token}/${accountId}`)
+  return result.data
+}
+
 const getSignedBankAccount = async (accountId, ethAccount, token) => {
   const result = await axios.post('/api/accounts/sign-account', {
     accountId,
@@ -34,10 +39,14 @@ class BankAccountsPage extends Component {
       ethAccount: props.account,
       plaidToken,
       bankAccounts: [],
+      verifiedBankAccounts: [],
       loading: false
     }
-    this.fetchBankAccounts = this.fetchBankAccounts.bind(this)
     this.pobaContract = null
+
+    this.fetchBankAccounts = this.fetchBankAccounts.bind(this)
+    this.getVerifiedBankAccounts = this.getVerifiedBankAccounts.bind(this)
+    this.getBankAccountDetails = this.getBankAccountDetails.bind(this)
   }
 
   async componentDidMount() {
@@ -46,6 +55,8 @@ class BankAccountsPage extends Component {
     PobaContract.setProvider(this.props.web3.currentProvider)
     try {
       this.pobaContract = await PobaContract.deployed()
+      const verifiedBankAccounts = await this.getVerifiedBankAccounts(this.state.ethAccount)
+      this.setState({ verifiedBankAccounts })
     } catch (e) {
       console.error('Contract is not deployed on this network', e)
       errorAlert('Contract is not deployed on this network')
@@ -53,11 +64,13 @@ class BankAccountsPage extends Component {
   }
 
   async chooseBankAccount(accountId) {
+    const errorMessage = 'There was a problem verifying the the bank account'
+
     this.setState({ loading: true })
     try {
       const { plaidToken, ethAccount } = this.state
       const txData = await getSignedBankAccount(accountId, ethAccount, plaidToken)
-      this.pobaContract.register(
+      const registerResult = await this.pobaContract.register(
         txData.bankAccount.account,
         txData.bankAccount.institution,
         txData.v,
@@ -65,10 +78,16 @@ class BankAccountsPage extends Component {
         txData.s,
         { from: ethAccount }
       )
-      successAlert()
+      if (registerResult) {
+        this.getVerifiedBankAccounts(this.state.ethAccount)
+        successAlert()
+        // @TODO: set flag in bankAccount to signal that it is verified
+      } else {
+        throw new Error(errorMessage)
+      }
     } catch (e) {
-      console.error('There was a problem registering the address', e)
-      errorAlert()
+      console.error(errorMessage, e)
+      errorAlert(errorMessage)
     } finally {
       this.setState({ loading: false })
     }
@@ -79,12 +98,70 @@ class BankAccountsPage extends Component {
     return getBankAccounts(token)
       .then(bankAccounts => {
         this.setState({ bankAccounts })
+        const accountIdArray = bankAccounts.map(bankAccount => {
+          return bankAccount.account_id
+        })
+        return this.getBankAccountDetails(accountIdArray)
+      })
+      .then(bankAccountDetailArray => {
+        this.augmentAccountsToVerifyWithAccountDetails(bankAccountDetailArray)
       })
       .finally(() => this.setState({ loading: false }))
   }
 
-  render() {
+  async getBankAccountDetails(accountIdArray) {
+    try {
+      const { plaidToken } = this.state
+      const promises = accountIdArray.map(accountId =>
+        getSingleBankAccountDetails(plaidToken, accountId)
+      )
+      const results = await Promise.all(promises)
+      return results
+    } catch (e) {
+      console.error('Error getting bank account details', e)
+      throw e
+    }
+  }
+
+  augmentAccountsToVerifyWithAccountDetails(accountDetailArray) {
     const { bankAccounts } = this.state
+    const accountDetailArrayAccountNumberArray = accountDetailArray.map(
+      detail => detail.account.account
+    )
+    const augmentedBankAccounts = bankAccounts.map(bankAccount => {
+      const index = accountDetailArrayAccountNumberArray.indexOf(bankAccount.account)
+      const accountDetail = accountDetailArray[index]
+      return Object.assign(bankAccount, {
+        account: bankAccount.account,
+        bankName: accountDetail.account.institution
+      })
+    })
+    this.setState({ bankAccounts: augmentedBankAccounts })
+  }
+
+  async getVerifiedBankAccounts(ethAccount) {
+    this.setState({ loading: true })
+    try {
+      const accountsLengthResult = await this.pobaContract.accountsLength(ethAccount)
+      const accountsLength = accountsLengthResult.c[0]
+      const promises = []
+      for (let index = 0; index < accountsLength; index++) {
+        promises.push(this.pobaContract.getBankAccounts(ethAccount, index))
+      }
+      const verifiedBankAccounts = await Promise.all(promises)
+      console.log(verifiedBankAccounts)
+      this.setState({ verifiedBankAccounts })
+    } catch (e) {
+      const errorMessage = 'Error getting veried bank accounts'
+      console.error(errorMessage, e)
+      errorAlert(errorMessage)
+    } finally {
+      this.setState({ loading: false })
+    }
+  }
+
+  render() {
+    const { bankAccounts, verifiedBankAccounts } = this.state
     return (
       <div>
         <BankAccountsList
@@ -92,7 +169,11 @@ class BankAccountsPage extends Component {
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
         />
         <Loading show={this.state.loading} />
-
+        {verifiedBankAccounts && verifiedBankAccounts.length ? (
+          <pre>{JSON.stringify(verifiedBankAccounts)}</pre>
+        ) : (
+          <p>No verified accounts yet</p>
+        )}
         <BackButton />
       </div>
     )
