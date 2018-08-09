@@ -6,55 +6,75 @@ const BankAccountsList = glamorous.div('bank-account-list', {})
 
 const BankAccountItem = glamorous.div('bank-account-list-item', {
   display: 'grid',
-  border: `1px solid #e0e0e0`,
-  borderRadius: '7px',
-  gridTemplateColumns: '90px auto 130px',
-  gridTemplateAreas: `'icon info  verify'`,
+  border: `1px solid #d7d7d7`,
+  borderRadius: '5px',
+  gridTemplateColumns: '80px auto 120px',
+  gridTemplateAreas: `'icon info verify'`,
   gridGap: 0,
   marginBottom: '1.5em',
   width: '560px',
   height: '80px',
-  boxShadow: `0px 0px 2px 0px rgba(0,0,0,0.20)`
+  ':hover': {
+    boxShadow: `0px 10px 30px 0 rgba(76, 43, 134, 0.2)`
+  }
 })
 
-const BankIcon = glamorous.i('fa fa-wpforms', {
-  color: '#b0b0b0',
-  fontSize: '3em',
-  placeSelf: 'center',
-  textAlign: 'center'
+const BankIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/clock.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '40px',
+  width: '40px',
+  placeSelf: 'center'
 })
 const InfoWrapper = glamorous.div('bank-account-info', {
-  gridArea: 'info'
+  gridArea: 'info',
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  gridGap: 0
 })
 
-const AccountInfo = ({ bankAccount }) =>
-  bankAccount.bankName ? (
+const AccountInfo = ({ bankAccount }) => {
+  const InfoParagraph = glamorous.span('info-paragraph', {
+    width: '100%',
+    textAlign: 'left',
+    height: 'auto',
+    alignSelf: 'center',
+    lineHeight: '1.5em'
+  })
+  return bankAccount.bankName ? (
     <InfoWrapper>
-      <p>{bankAccount.account}</p>
-      <p>{bankAccount.bankName}</p>
+      <InfoParagraph>
+        {bankAccount.account}
+        <br />
+        {bankAccount.bankName}
+      </InfoParagraph>
     </InfoWrapper>
   ) : (
     <InfoWrapper>
-      <p>{bankAccount.account}</p>
+      <InfoParagraph>{bankAccount.account}</InfoParagraph>
     </InfoWrapper>
   )
+}
 
 const newButtonColor = '#5c34a2'
 const VerifyButton = glamorous.button(buttonStyles, {
+  textTransform: 'none',
   backgroundColor: 'white',
-  boxShadow: `inset 0 0 0 2px ${newButtonColor}`,
+  border: `1px solid ${newButtonColor}`,
+  borderRadius: '3px',
   color: newButtonColor,
-  borderWidth: 0,
   ':hover': {
     backgroundColor: newButtonColor,
     color: 'white'
   },
+  width: 'auto',
+  height: '45%',
+  padding: '0 10px',
   placeSelf: 'center',
-  textAlign: 'center',
-  textTransform: 'none',
-  borderRadius: '4px',
-  width: '50%',
-  height: '45%'
+  textAlign: 'right',
+  gridArea: 'verify'
 })
 
 export default ({ bankAccounts, onClick }) => (
@@ -63,12 +83,7 @@ export default ({ bankAccounts, onClick }) => (
       <BankAccountItem key={index}>
         <BankIcon />
         <AccountInfo bankAccount={bankAccount} />
-        <VerifyButton
-          css={{ gridArea: 'verify', placeSelf: 'center' }}
-          onClick={() => onClick(bankAccount)}
-        >
-          Verify
-        </VerifyButton>
+        <VerifyButton onClick={() => onClick(bankAccount)}>Verify</VerifyButton>
       </BankAccountItem>
     ))}
   </BankAccountsList>

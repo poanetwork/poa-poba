@@ -9,7 +9,7 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
   border: `1px solid #d7d7d7`,
   borderRadius: '5px',
   gridTemplateColumns: '80px auto 100px 120px',
-  gridTemplateAreas: `'icon info  verify date'`,
+  gridTemplateAreas: `'icon info remove date'`,
   gridGap: 0,
   marginBottom: '1.5em',
   width: '560px',
@@ -22,12 +22,17 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
 const VerifiedIcon = glamorous.i('svg-background-element', {
   display: 'inline-block',
   background: `url("/images/svg/done.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
   height: '40px',
   width: '40px',
   placeSelf: 'center'
 })
 const InfoWrapper = glamorous.div('bank-account-info', {
-  gridArea: 'info'
+  gridArea: 'info',
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  gridGap: 0
 })
 const DateWrapper = glamorous.div('bank-account-verified-date', {
   gridArea: 'date',
@@ -36,12 +41,28 @@ const DateWrapper = glamorous.div('bank-account-verified-date', {
   gridGap: 0
 })
 
-const AccountInfo = ({ bankAccount }) => (
-  <InfoWrapper>
-    <p>{bankAccount.account}</p>
-    <p>{bankAccount.bankName}</p>
-  </InfoWrapper>
-)
+const AccountInfo = ({ bankAccount }) => {
+  const InfoParagraph = glamorous.span('info-paragraph', {
+    width: '100%',
+    textAlign: 'left',
+    height: 'auto',
+    alignSelf: 'center',
+    lineHeight: '1.5em'
+  })
+  return bankAccount.bankName ? (
+    <InfoWrapper>
+      <InfoParagraph>
+        {bankAccount.account}
+        <br />
+        {bankAccount.bankName}
+      </InfoParagraph>
+    </InfoWrapper>
+  ) : (
+    <InfoWrapper>
+      <InfoParagraph>{bankAccount.account}</InfoParagraph>
+    </InfoWrapper>
+  )
+}
 
 const newButtonColor = '#5c34a2'
 const RemoveButton = glamorous.button(buttonStyles, {
@@ -59,7 +80,7 @@ const RemoveButton = glamorous.button(buttonStyles, {
   padding: '0 10px',
   placeSelf: 'center',
   textAlign: 'right',
-  gridArea: 'verify'
+  gridArea: 'remove'
 })
 const VerifiedDate = ({ date }) => {
   const DatePragraph = glamorous.span('date-paragraph', {
