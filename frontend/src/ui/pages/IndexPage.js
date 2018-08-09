@@ -51,7 +51,7 @@ class IndexPage extends React.Component {
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris.
         </P>
-        <Link to="/my-bank-accounts">
+        <Link to="/mybankaccountslist">
           <button style={buttonStyle}>
             My Bank Accounts{' '}
             <span style={align.iconRight}>
