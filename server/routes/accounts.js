@@ -16,9 +16,11 @@ const getBankAccounts = (req, res) => {
     try {
       const accessToken = await accountsController.getAccessToken(publicToken)
       const accounts = await accountsController.getBankAccounts(accessToken)
+      const {institution_id} = accounts.item
+      accounts.item.institution = await accountsController.getInstitutionById(institution_id)
       return res.send({ accounts })
     } catch (e) {
-      logger.error(e.message, 'There was an error getting the transaction data')
+      logger.error(e.message, 'There was an error getting the transaction data 1')
       return res.status(400).send({ error: e.message })
     }
   }
@@ -34,7 +36,7 @@ const getSingleBankAccount = (req, res) => {
       const account = await accountsController.getBankAccount(accessToken, accountId)
       return res.send({ account })
     } catch (e) {
-      logger.error(e.message, 'There was an error getting the transaction data')
+      logger.error(e.message, 'There was an error getting the transaction data 2')
       return res.status(400).send({ error: e.message })
     }
   }
