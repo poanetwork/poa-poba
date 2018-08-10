@@ -16,8 +16,8 @@ const getBankAccounts = (req, res) => {
     try {
       const accessToken = await accountsController.getAccessToken(publicToken)
       const accounts = await accountsController.getBankAccounts(accessToken)
-      const {institution_id} = accounts.item
-      accounts.item.institution = await accountsController.getInstitutionById(institution_id)
+      const institutionId = accounts.item.institution_id
+      accounts.item.institution = await accountsController.getInstitutionById(institutionId)
       return res.send({ accounts })
     } catch (e) {
       logger.error(e.message, 'There was an error getting the transaction data 1')

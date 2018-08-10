@@ -83,15 +83,18 @@ export default ({ bankAccounts, onClick }) => (
       <BankAccountItem key={index}>
         {bankAccount.verified ? <VerifiedIcon /> : <BankIcon />}
         <AccountInfo bankAccount={bankAccount} />
-        {bankAccount.verified ?
-          <VerifiedMessage><i className="fa fa-check"></i> Verified</VerifiedMessage> :
+        {bankAccount.verified ? (
+          <VerifiedMessage>
+            <i className="fa fa-check" /> Verified
+          </VerifiedMessage>
+        ) : (
           <VerifyButton
             css={{ gridArea: 'verify', placeSelf: 'center' }}
             onClick={() => onClick(bankAccount)}
           >
             Verify
           </VerifyButton>
-        }
+        )}
       </BankAccountItem>
     ))}
   </BankAccountsList>
