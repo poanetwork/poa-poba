@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import glamorous from 'glamorous'
 import PlaidLink from 'react-plaid-link'
 import plaidLinkButtonStyles from '../styles/plaidLinkButton'
+import align from '../styles/align'
+
+const RightArrowIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/arrow.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '100%',
+  width: '18px'
+})
 
 class PlaidButton extends Component {
   constructor() {
@@ -35,6 +46,7 @@ class PlaidButton extends Component {
         style={{
           width: '200px',
           height: '44px',
+          position: 'relative',
           'border-radius': '5px',
           'background-color': '#5c34a2',
           'box-shadow': '0px 5px 10px 0 rgba(92, 52, 162, 0.3)',
@@ -52,8 +64,8 @@ class PlaidButton extends Component {
         }}
       >
         Continue{' '}
-        <span style={{ float: 'right', lineHeight: '42px' }}>
-          <i className="fa fa-arrow-right" />
+        <span style={align.iconRight}>
+          <RightArrowIcon />
         </span>
       </PlaidLink>
     )

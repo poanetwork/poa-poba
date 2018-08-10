@@ -1,10 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { P, H2 } from 'glamorous'
+import glamorous, { P, H2 } from 'glamorous'
 import Title from '../layout/Title'
 import PlaidButton from '../containers/PlaidButton'
 import buttonStyle from '../styles/button'
 import align from '../styles/align'
+
+const HowItWorksIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/how-it-works.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '100%',
+  width: '18px'
+})
+const MyAccountsIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/my-accounts.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '100%',
+  width: '18px'
+})
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -37,7 +54,7 @@ class IndexPage extends React.Component {
           <button style={buttonStyle}>
             How it works?{' '}
             <span style={align.iconRight}>
-              <i className="fa fa-question" />
+              <HowItWorksIcon />
             </span>
           </button>
         </Link>
@@ -55,7 +72,7 @@ class IndexPage extends React.Component {
           <button style={buttonStyle}>
             My Bank Accounts{' '}
             <span style={align.iconRight}>
-              <i className="fa fa-university" />
+              <MyAccountsIcon />
             </span>
           </button>
         </Link>
