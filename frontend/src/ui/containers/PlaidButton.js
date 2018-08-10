@@ -46,7 +46,7 @@ class PlaidButton extends Component {
         style={{
           width: '200px',
           height: '44px',
-          position: 'relative',
+          display: 'inline-block',
           'border-radius': '5px',
           'background-color': '#5c34a2',
           'box-shadow': '0px 5px 10px 0 rgba(92, 52, 162, 0.3)',
@@ -59,7 +59,6 @@ class PlaidButton extends Component {
           'line-height': '44px',
           'letter-spacing': 'normal',
           'text-align': 'left',
-          'margin-left': '30px',
           color: '#ffffff'
         }}
       >

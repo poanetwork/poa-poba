@@ -1,7 +1,7 @@
 const align = {
   iconRight: {
     position: 'absolute',
-    right: '10px',
+    right: '15px',
     top: '0',
     height: '100%',
     lineHeight: '100%'

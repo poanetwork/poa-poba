@@ -42,6 +42,10 @@ class IndexPage extends React.Component {
   }
 
   render() {
+    const howItWorksButtonStyle = Object.assign(
+      { 'margin-right': '30px', 'margin-bottom': '10px' },
+      buttonStyle
+    )
     return (
       <div>
         <Title />
@@ -51,7 +55,7 @@ class IndexPage extends React.Component {
           ullamco laboris.
         </P>
         <Link to="/help">
-          <button style={buttonStyle}>
+          <button style={howItWorksButtonStyle}>
             How it works?{' '}
             <span style={align.iconRight}>
               <HowItWorksIcon />
