@@ -3,6 +3,8 @@ import colors from './colors'
 const buttonStyles = {
   width: '200px',
   height: '44px',
+  padding: '0 15px',
+  position: 'relative',
   borderRadius: '5px',
   backgroundColor: colors.white,
   border: `solid 1px ${colors.primary}`,

@@ -2,9 +2,14 @@ import React from 'react'
 import glamorous, { H1, P } from 'glamorous'
 import colors from '../styles/colors'
 
-const Icon = glamorous.div({
-  width: '100%',
-  color: colors.primary
+const WarningIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/warning.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '40px',
+  width: '40px',
+  placeSelf: 'center'
 })
 
 class ErrorPage extends React.Component {
@@ -46,9 +51,7 @@ class ErrorPage extends React.Component {
             lineHeight: '1.5em'
           }}
         >
-          <Icon>
-            <i className="fa fa-times-circle-o fa-3x" />
-          </Icon>
+          <WarningIcon />
           <H1 style={{ marginTop: '0' }} color={colors.primary}>
             {title}
           </H1>

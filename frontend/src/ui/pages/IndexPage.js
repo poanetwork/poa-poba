@@ -1,10 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { P, H2 } from 'glamorous'
+import glamorous, { P, H2 } from 'glamorous'
 import Title from '../layout/Title'
 import PlaidButton from '../containers/PlaidButton'
 import buttonStyle from '../styles/button'
 import align from '../styles/align'
+
+const HowItWorksIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/how-it-works.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '100%',
+  width: '18px'
+})
+const MyAccountsIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/my-accounts.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '100%',
+  width: '18px'
+})
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -25,6 +42,10 @@ class IndexPage extends React.Component {
   }
 
   render() {
+    const howItWorksButtonStyle = Object.assign(
+      { 'margin-right': '30px', 'margin-bottom': '10px' },
+      buttonStyle
+    )
     return (
       <div>
         <Title />
@@ -34,10 +55,10 @@ class IndexPage extends React.Component {
           ullamco laboris.
         </P>
         <Link to="/help">
-          <button style={buttonStyle}>
+          <button style={howItWorksButtonStyle}>
             How it works?{' '}
             <span style={align.iconRight}>
-              <i className="fa fa-question" />
+              <HowItWorksIcon />
             </span>
           </button>
         </Link>
@@ -51,11 +72,11 @@ class IndexPage extends React.Component {
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris.
         </P>
-        <Link to="/my-bank-accounts">
+        <Link to="/mybankaccountslist">
           <button style={buttonStyle}>
             My Bank Accounts{' '}
             <span style={align.iconRight}>
-              <i className="fa fa-university" />
+              <MyAccountsIcon />
             </span>
           </button>
         </Link>
