@@ -14,6 +14,7 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
   marginBottom: '1.5em',
   width: '560px',
   height: '80px',
+  cursor: 'pointer',
   ':hover': {
     boxShadow: `0px 10px 30px 0 rgba(76, 43, 134, 0.2)`
   }

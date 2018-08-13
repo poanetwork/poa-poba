@@ -8,7 +8,7 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
   display: 'grid',
   border: `1px solid #d7d7d7`,
   borderRadius: '5px',
-  gridTemplateColumns: '90px auto 130px',
+  gridTemplateColumns: '80px auto 130px',
   gridTemplateAreas: `'icon info  verify'`,
   gridGap: 0,
   marginBottom: '1.5em',
@@ -20,34 +20,49 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
   }
 })
 
-const BankIcon = glamorous.i('fa fa-wpforms', {
-  color: '#d7d7d7',
-  fontSize: '3em',
-  placeSelf: 'center',
-  textAlign: 'center'
+const BankIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/clock.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '40px',
+  width: '40px',
+  placeSelf: 'center'
 })
-const VerifiedIcon = glamorous.i('fa fa-check-circle', {
-  color: '#61db98',
-  fontSize: '3em',
-  placeSelf: 'center',
-  textAlign: 'center'
+const VerifiedIcon = glamorous.i('svg-background-element', {
+  display: 'inline-block',
+  background: `url("/images/svg/done.svg")`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  height: '40px',
+  width: '40px',
+  placeSelf: 'center'
 })
 const InfoWrapper = glamorous.div('bank-account-info', {
-  gridArea: 'info'
+  gridArea: 'info',
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  gridGap: 0
 })
 
-const AccountInfo = ({ bankAccount }) =>
-  bankAccount.bankName ? (
+const AccountInfo = ({ bankAccount }) => {
+  const InfoParagraph = glamorous.span('info-paragraph', {
+    width: '100%',
+    textAlign: 'left',
+    height: 'auto',
+    alignSelf: 'center',
+    lineHeight: '1.5em'
+  })
+  return (
     <InfoWrapper>
-      <p>{bankAccount.account}</p>
-      <p>{bankAccount.bankName}</p>
-    </InfoWrapper>
-  ) : (
-    <InfoWrapper>
-      <p>{bankAccount.account}</p>
-      <p>{bankAccount.institution}</p>
+      <InfoParagraph>
+        {bankAccount.account}
+        <br />
+        {bankAccount.bankName || bankAccount.institution}
+      </InfoParagraph>
     </InfoWrapper>
   )
+}
 
 const newButtonColor = '#5c34a2'
 const VerifyButton = glamorous.button(buttonStyles, {
@@ -63,11 +78,11 @@ const VerifyButton = glamorous.button(buttonStyles, {
   textAlign: 'center',
   textTransform: 'none',
   borderRadius: '4px',
-  width: '50%',
+  width: 'auto',
   height: '45%'
 })
 const VerifiedMessage = glamorous.p({
-  lineHeight: '35px',
+  lineHeight: '1em',
   textAlign: 'center',
   fontWeight: 'bold',
   textTransform: 'uppercase',
@@ -83,15 +98,18 @@ export default ({ bankAccounts, onClick }) => (
       <BankAccountItem key={index}>
         {bankAccount.verified ? <VerifiedIcon /> : <BankIcon />}
         <AccountInfo bankAccount={bankAccount} />
-        {bankAccount.verified ?
-          <VerifiedMessage><i className="fa fa-check"></i> Verified</VerifiedMessage> :
+        {bankAccount.verified ? (
+          <VerifiedMessage>
+            <i className="fa fa-check" /> Verified
+          </VerifiedMessage>
+        ) : (
           <VerifyButton
             css={{ gridArea: 'verify', placeSelf: 'center' }}
             onClick={() => onClick(bankAccount)}
           >
             Verify
           </VerifyButton>
-        }
+        )}
       </BankAccountItem>
     ))}
   </BankAccountsList>
