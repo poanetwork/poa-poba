@@ -4,7 +4,7 @@ import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
 import BackButton from '../containers/BackButton'
 import BankAccountsList from '../presentational/BankAccountsList'
-import { successAlert, errorAlert } from '../presentational/alerts'
+import { errorAlert, successAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
 // eslint-disable-line import/no-unresolved
 const PobaContract = contract(pobaArtifact)
@@ -14,8 +14,7 @@ const getBankAccounts = async token => {
   const { ach, eft } = result.data.accounts.numbers
   const { institution } = result.data.accounts.item.institution
   const accounts = [...ach, ...eft]
-  accounts.forEach(account => (account.institution = institution.name))
-  return accounts
+  return accounts.map(account => Object.assign({ institution: institution.name }, account))
 }
 
 const getSignedBankAccount = async (accountId, ethAccount, token) => {
@@ -88,18 +87,19 @@ class BankAccountsPage extends Component {
 
   async fetchBankAccounts(token) {
     this.setState({ loading: true })
-    const bankAccounts = await getBankAccounts(token)
-    const verifiedBankAccounts = (await this.getVerifiedBankAccounts(this.state.ethAccount)).map(account => account[0])
-    bankAccounts.forEach(account => {
-      console.log(verifiedBankAccounts)
-      verifiedBankAccounts.includes(account.account) ? account.verified = true : account.verified = false
+    const accounts = await getBankAccounts(token)
+    const verifiedBankAccounts = await this.getVerifiedBankAccounts(this.state.ethAccount)
+    const verifiedBankAccountsNumbers = verifiedBankAccounts.map(account => account[0])
+    const bankAccounts = accounts.map(account => {
+      const verified = !!verifiedBankAccountsNumbers.includes(account.account)
+      return Object.assign({ verified }, account)
     })
     this.setState({ bankAccounts })
     this.setState({ loading: false })
   }
 
+  // eslint-disable-next-line consistent-return
   async getVerifiedBankAccounts(ethAccount) {
-    this.setState({ loading: true })
     try {
       const accountsLengthResult = await this.pobaContract.accountsLength(ethAccount)
       const accountsLength = accountsLengthResult.c[0]
@@ -107,13 +107,11 @@ class BankAccountsPage extends Component {
       for (let index = 0; index < accountsLength; index++) {
         promises.push(this.pobaContract.getBankAccounts(ethAccount, index))
       }
-      return await Promise.all(promises)
+      return Promise.all(promises)
     } catch (e) {
       const errorMessage = 'Error getting verified bank accounts'
       console.error(errorMessage, e)
       errorAlert(errorMessage)
-    } finally {
-      this.setState({ loading: false })
     }
   }
 

@@ -12,7 +12,6 @@ describe('<Footer />', () => {
     expect(wrapper.find('div.footer')).toHaveLength(1)
     expect(wrapper.find('div div.logo-container')).toHaveLength(1)
     expect(wrapper.find('div div.logo-container p')).toHaveLength(1)
-    expect(wrapper.find('div div.logo-container a.poa-logo')).toHaveLength(1)
     expect(wrapper.find('div div.logo-container div.social-container')).toHaveLength(1)
     expect(wrapper.find('div div.logo-container div.social-container a.social-item')).toHaveLength(
       3
