@@ -81,7 +81,8 @@ const RemoveButton = glamorous.button(buttonStyles, {
   padding: '0 10px',
   placeSelf: 'center',
   textAlign: 'right',
-  gridArea: 'remove'
+  gridArea: 'remove',
+  visibility: 'hidden'
 })
 const VerifiedDate = ({ date }) => {
   const DatePragraph = glamorous.span('date-paragraph', {
