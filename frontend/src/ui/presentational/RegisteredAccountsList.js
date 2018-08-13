@@ -31,7 +31,11 @@ const RegisteredAccountsList = ({ accounts }) =>
     <Div className="registered-accounts-list" textAlign="left" marginTop="1em">
       You have {accounts.length} registered account
       {accounts.length > 1 ? 's' : ''}:
-      <ul>{accounts.map((account, index) => <li key={index}>{account}</li>)}</ul>
+      <ul>
+        {accounts.map((account, index) => (
+          <li key={index}>{account}</li>
+        ))}
+      </ul>
     </Div>
   ) : null
 
