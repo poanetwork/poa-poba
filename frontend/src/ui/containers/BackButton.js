@@ -4,15 +4,9 @@ import glamorous from 'glamorous'
 import { Link } from 'react-router-dom'
 import buttonStyle from '../styles/button'
 import align from '../styles/align'
+import { backIconStyles } from '../styles/icons'
 
-const BackIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/back.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '100%',
-  width: '18px'
-})
+const BackIcon = glamorous.i(backIconStyles)
 
 export default () => (
   <Link to="/">

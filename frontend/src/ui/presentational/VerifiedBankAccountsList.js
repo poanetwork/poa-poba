@@ -1,6 +1,7 @@
 import React from 'react'
 import glamorous from 'glamorous'
 import buttonStyles from '../styles/button'
+import { verifiedAcountIconStyles } from '../styles/icons'
 
 const BankAccountsList = glamorous.div('bank-account-list', {})
 
@@ -20,13 +21,8 @@ const BankAccountItem = glamorous.div('bank-account-list-item', {
   }
 })
 
-const VerifiedIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/done.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '40px',
-  width: '40px',
+const VerifiedIcon = glamorous.i({
+  ...verifiedAcountIconStyles,
   placeSelf: 'center'
 })
 const InfoWrapper = glamorous.div('bank-account-info', {

@@ -4,15 +4,9 @@ import glamorous from 'glamorous'
 import PlaidLink from 'react-plaid-link'
 import plaidLinkButtonStyles from '../styles/plaidLinkButton'
 import align from '../styles/align'
+import { rightArrowIconStyles } from '../styles/icons'
 
-const RightArrowIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/arrow.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '100%',
-  width: '18px'
-})
+const RightArrowIcon = glamorous.i(rightArrowIconStyles)
 
 class PlaidButton extends Component {
   constructor() {

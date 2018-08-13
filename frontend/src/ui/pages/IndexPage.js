@@ -5,23 +5,10 @@ import Title from '../layout/Title'
 import PlaidButton from '../containers/PlaidButton'
 import buttonStyle from '../styles/button'
 import align from '../styles/align'
+import { howItWorksIconStyles, myAccountsIconStyles } from '../styles/icons'
 
-const HowItWorksIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/how-it-works.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '100%',
-  width: '18px'
-})
-const MyAccountsIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/my-accounts.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '100%',
-  width: '18px'
-})
+const HowItWorksIcon = glamorous.i(howItWorksIconStyles)
+const MyAccountsIcon = glamorous.i(myAccountsIconStyles)
 
 class IndexPage extends React.Component {
   constructor(props) {
