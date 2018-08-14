@@ -28,4 +28,22 @@ const buttonStyles = {
   }
 }
 
+export const accountItemListButtonStyles = {
+  backgroundColor: 'white',
+  boxShadow: `inset 0 0 0 2px ${colors.primary}`,
+  color: colors.primary,
+  borderWidth: 0,
+  ':hover': {
+    backgroundColor: colors.primary,
+    color: 'white'
+  },
+  placeSelf: 'center',
+  textAlign: 'center',
+  textTransform: 'none',
+  borderRadius: '4px',
+  width: 'auto',
+  padding: '0 10px',
+  height: '45%'
+}
+
 export default buttonStyles

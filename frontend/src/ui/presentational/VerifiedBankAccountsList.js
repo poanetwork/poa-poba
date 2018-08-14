@@ -1,100 +1,42 @@
 import React from 'react'
 import glamorous from 'glamorous'
-import buttonStyles from '../styles/button'
 import { verifiedAcountIconStyles } from '../styles/icons'
+import {
+  bankAccountItemListStyles,
+  infoWrapperStyles,
+  infoParagraphStyles,
+  dateWrapperStyles,
+  dateParagraphStyles,
+  removeButtonStyles
+} from '../styles/bankAccountItemListStyles'
 
-const BankAccountsList = glamorous.div('bank-account-list', {})
-
-const BankAccountItem = glamorous.div('bank-account-list-item', {
-  display: 'grid',
-  border: `1px solid #d7d7d7`,
-  borderRadius: '5px',
-  gridTemplateColumns: '80px auto 100px 120px',
-  gridTemplateAreas: `'icon info remove date'`,
-  gridGap: 0,
-  marginBottom: '1.5em',
-  width: '560px',
-  height: '80px',
-  cursor: 'pointer',
-  ':hover': {
-    boxShadow: `0px 10px 30px 0 rgba(76, 43, 134, 0.2)`
-  }
-})
+const BankAccountItem = glamorous.div(bankAccountItemListStyles)
 
 const VerifiedIcon = glamorous.i({
   ...verifiedAcountIconStyles,
   placeSelf: 'center'
 })
-const InfoWrapper = glamorous.div('bank-account-info', {
-  gridArea: 'info',
-  display: 'grid',
-  gridTemplateColumns: 'auto',
-  gridGap: 0
-})
-const DateWrapper = glamorous.div('bank-account-verified-date', {
-  gridArea: 'date',
-  display: 'grid',
-  gridTemplateColumns: 'auto',
-  gridGap: 0
-})
+const InfoWrapper = glamorous.div(infoWrapperStyles)
+const DateWrapper = glamorous.div(dateWrapperStyles)
 
-const AccountInfo = ({ bankAccount }) => {
-  const InfoParagraph = glamorous.span('info-paragraph', {
-    width: '100%',
-    textAlign: 'left',
-    height: 'auto',
-    alignSelf: 'center',
-    lineHeight: '1.5em'
-  })
-  return bankAccount.bankName ? (
-    <InfoWrapper>
-      <InfoParagraph>
-        {bankAccount.account}
-        <br />
-        {bankAccount.bankName}
-      </InfoParagraph>
-    </InfoWrapper>
-  ) : (
-    <InfoWrapper>
-      <InfoParagraph>{bankAccount.account}</InfoParagraph>
-    </InfoWrapper>
-  )
-}
+const InfoParagraph = glamorous.span(infoParagraphStyles)
+const AccountInfo = ({ bankAccount }) => (
+  <InfoWrapper>
+    <InfoParagraph>
+      {bankAccount.account}
+      <br />
+      {bankAccount.bankName}
+    </InfoParagraph>
+  </InfoWrapper>
+)
 
-const newButtonColor = '#5c34a2'
-const RemoveButton = glamorous.button(buttonStyles, {
-  textTransform: 'none',
-  backgroundColor: 'white',
-  border: `1px solid ${newButtonColor}`,
-  borderRadius: '3px',
-  color: newButtonColor,
-  ':hover': {
-    backgroundColor: newButtonColor,
-    color: 'white'
-  },
-  width: 'auto',
-  height: '45%',
-  padding: '0 10px',
-  placeSelf: 'center',
-  textAlign: 'right',
-  gridArea: 'remove',
-  visibility: 'hidden'
-})
-const VerifiedDate = ({ date }) => {
-  const DatePragraph = glamorous.span('date-paragraph', {
-    color: '#777',
-    height: 'auto',
-    padding: '0 20px 0 0',
-    width: '100%',
-    textAlign: 'right',
-    placeSelf: 'center'
-  })
-  return (
-    <DateWrapper>
-      <DatePragraph>{date || '13 April 2018'}</DatePragraph>
-    </DateWrapper>
-  )
-}
+const RemoveButton = glamorous.button(removeButtonStyles)
+const DatePragraph = glamorous.span(dateParagraphStyles)
+const VerifiedDate = ({ date }) => (
+  <DateWrapper>
+    <DatePragraph>{date || '13 April 2018'}</DatePragraph>
+  </DateWrapper>
+)
 
 const VerifiedBankAccountListItem = ({ bankAccount, onClick }) => (
   <BankAccountItem>
@@ -106,7 +48,7 @@ const VerifiedBankAccountListItem = ({ bankAccount, onClick }) => (
 )
 
 export default ({ bankAccounts, onClick }) => (
-  <BankAccountsList>
+  <div>
     {bankAccounts.map((bankAccount, index) => (
       <VerifiedBankAccountListItem
         key={index}
@@ -114,5 +56,5 @@ export default ({ bankAccounts, onClick }) => (
         onClick={() => onClick(bankAccount)}
       />
     ))}
-  </BankAccountsList>
+  </div>
 )
