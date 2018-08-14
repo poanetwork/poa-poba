@@ -2,7 +2,7 @@ const HDWalletProvider = require('truffle-hdwallet-provider')
 
 const mnemonic = 'gauge pilot return sauce iron woman reason ridge across kangaroo sorry ritual'
 const rinkebyUrl = 'https://rinkeby.infura.io'
-const sokolUrl = 'https://sokol.poa.network';
+const sokolUrl = 'https://sokol.poa.network'
 
 module.exports = {
   networks: {
