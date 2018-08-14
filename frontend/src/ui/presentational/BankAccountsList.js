@@ -9,7 +9,8 @@ import {
   verifiedMessageStyles
 } from '../styles/bankAccountItemListStyles'
 
-const BankAccountItem = glamorous.div(unverifiedBankAccountItemListStyles)
+const BankAccountList = glamorous.div('bank-account-list')
+const BankAccountItem = glamorous.div('bank-account-list-item', unverifiedBankAccountItemListStyles)
 
 const UnverifiedIcon = glamorous.i({
   ...unverifiedAcountIconStyles,
@@ -35,17 +36,20 @@ const AccountInfo = ({ bankAccount }) => (
 const VerifyButton = glamorous.button(verifyButtonStyles)
 const VerifiedMessage = glamorous.p(verifiedMessageStyles)
 
-export default ({ bankAccounts, onClick }) =>
-  bankAccounts.map((bankAccount, index) => (
-    <BankAccountItem key={index}>
-      {bankAccount.verified ? <VerifiedIcon /> : <UnverifiedIcon />}
-      <AccountInfo bankAccount={bankAccount} />
-      {bankAccount.verified ? (
-        <VerifiedMessage>
-          <i className="fa fa-check" /> Verified
-        </VerifiedMessage>
-      ) : (
-        <VerifyButton onClick={() => onClick(bankAccount)}>Verify</VerifyButton>
-      )}
-    </BankAccountItem>
-  ))
+export default ({ bankAccounts, onClick }) => (
+  <BankAccountList>
+    {bankAccounts.map((bankAccount, index) => (
+      <BankAccountItem key={index}>
+        {bankAccount.verified ? <VerifiedIcon /> : <UnverifiedIcon />}
+        <AccountInfo bankAccount={bankAccount} />
+        {bankAccount.verified ? (
+          <VerifiedMessage>
+            <i className="fa fa-check" /> Verified
+          </VerifiedMessage>
+        ) : (
+          <VerifyButton onClick={() => onClick(bankAccount)}>Verify</VerifyButton>
+        )}
+      </BankAccountItem>
+    ))}
+  </BankAccountList>
+)

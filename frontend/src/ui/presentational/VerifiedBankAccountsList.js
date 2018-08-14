@@ -10,7 +10,8 @@ import {
   removeButtonStyles
 } from '../styles/bankAccountItemListStyles'
 
-const BankAccountItem = glamorous.div(bankAccountItemListStyles)
+const BankAccountList = glamorous.div('verified-bank-account-list', bankAccountItemListStyles)
+const BankAccountItem = glamorous.div('verified-bank-account-list-item', bankAccountItemListStyles)
 
 const VerifiedIcon = glamorous.i({
   ...verifiedAcountIconStyles,
@@ -48,7 +49,7 @@ const VerifiedBankAccountListItem = ({ bankAccount, onClick }) => (
 )
 
 export default ({ bankAccounts, onClick }) => (
-  <div>
+  <BankAccountList>
     {bankAccounts.map((bankAccount, index) => (
       <VerifiedBankAccountListItem
         key={index}
@@ -56,5 +57,5 @@ export default ({ bankAccounts, onClick }) => (
         onClick={() => onClick(bankAccount)}
       />
     ))}
-  </div>
+  </BankAccountList>
 )
