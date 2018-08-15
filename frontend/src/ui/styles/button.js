@@ -4,6 +4,7 @@ const buttonStyles = {
   width: '200px',
   height: '44px',
   padding: '0 15px',
+  marginRight: '20px',
   position: 'relative',
   borderRadius: '5px',
   backgroundColor: colors.white,
@@ -15,11 +16,11 @@ const buttonStyles = {
   fontWeight: 'normal',
   fontStyle: 'normal',
   fontStretch: 'normal',
-  lineHeight: '1.5',
+  lineHeight: '24px',
   letterSpacing: 'normal',
   textAlign: 'left',
   textTransform: 'none',
-  float: 'left',
+  // float: 'left',
   ':hover': {
     backgroundColor: '#34c3f8'
   },
@@ -28,22 +29,31 @@ const buttonStyles = {
   }
 }
 
+export const plaidButtonStyles = {
+  ...buttonStyles,
+  backgroundColor: colors.primary,
+  boxShadow: '0px 5px 10px 0 rgba(92, 52, 162, 0.3)',
+  border: `solid 1px ${colors.primary}`,
+  color: '#ffffff'
+}
+
 export const accountItemListButtonStyles = {
   backgroundColor: 'white',
-  boxShadow: `inset 0 0 0 2px ${colors.primary}`,
   color: colors.primary,
-  borderWidth: 0,
+  border: `solid 1px ${colors.primary}`,
+  alignSelf: 'center',
+  justifySelf: 'end',
+  marginRight: '20px',
+  padding: 0,
+  textAlign: 'center',
+  textTransform: 'none',
+  borderRadius: '3px',
+  width: '59px',
+  height: '34px',
   ':hover': {
     backgroundColor: colors.primary,
     color: 'white'
-  },
-  placeSelf: 'center',
-  textAlign: 'center',
-  textTransform: 'none',
-  borderRadius: '4px',
-  width: 'auto',
-  padding: '0 10px',
-  height: '45%'
+  }
 }
 
 export default buttonStyles

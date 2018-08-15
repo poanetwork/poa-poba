@@ -7,8 +7,8 @@ import buttonStyle from '../styles/button'
 import align from '../styles/align'
 import { howItWorksIconStyles, myAccountsIconStyles } from '../styles/icons'
 
-const HowItWorksIcon = glamorous.i(howItWorksIconStyles)
-const MyAccountsIcon = glamorous.i(myAccountsIconStyles)
+const HowItWorksIcon = glamorous.i(howItWorksIconStyles, align.iconRight)
+const MyAccountsIcon = glamorous.i(myAccountsIconStyles, align.iconRight)
 
 class IndexPage extends React.Component {
   constructor(props) {
@@ -29,29 +29,20 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    const howItWorksButtonStyle = Object.assign(
-      { 'margin-right': '30px', 'margin-bottom': '10px' },
-      buttonStyle
-    )
     return (
       <div>
         <Title />
-        <P>
+        <P className="main">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris.
         </P>
         <Link to="/help">
-          <button style={howItWorksButtonStyle}>
-            How it works?{' '}
-            <span style={align.iconRight}>
-              <HowItWorksIcon />
-            </span>
+          <button style={buttonStyle}>
+            How it works <HowItWorksIcon />
           </button>
         </Link>
         <PlaidButton web3={this.state.web3} account={this.state.accounts[0]} />
-
-        <div style={{ clear: 'both' }} />
 
         <H2>Lorem ipsum dolor sit amet</H2>
         <P>
@@ -61,10 +52,7 @@ class IndexPage extends React.Component {
         </P>
         <Link to="/mybankaccountslist">
           <button style={buttonStyle}>
-            My Bank Accounts{' '}
-            <span style={align.iconRight}>
-              <MyAccountsIcon />
-            </span>
+            My Bank Accounts <MyAccountsIcon />
           </button>
         </Link>
       </div>

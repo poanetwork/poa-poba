@@ -1,16 +1,8 @@
 import React from 'react'
-import glamorous, { H1, P } from 'glamorous'
-import colors from '../styles/colors'
+import glamorous, { H2, P } from 'glamorous'
+import { warningIconStyles } from '../styles/icons'
 
-const WarningIcon = glamorous.i('svg-background-element', {
-  display: 'inline-block',
-  background: `url("/images/svg/warning.svg")`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  height: '40px',
-  width: '40px',
-  placeSelf: 'center'
-})
+const WarningIcon = glamorous.i('svg-background-element', warningIconStyles)
 
 class ErrorPage extends React.Component {
   constructor(props) {
@@ -52,10 +44,8 @@ class ErrorPage extends React.Component {
           }}
         >
           <WarningIcon />
-          <H1 style={{ marginTop: '0' }} color={colors.primary}>
-            {title}
-          </H1>
-          <P color={colors.primary}>{message}</P>
+          <H2>{title}</H2>
+          <P>{message}</P>
         </div>
       </div>
     )

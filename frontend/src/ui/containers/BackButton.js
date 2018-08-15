@@ -6,15 +6,12 @@ import buttonStyle from '../styles/button'
 import align from '../styles/align'
 import { backIconStyles } from '../styles/icons'
 
-const BackIcon = glamorous.i(backIconStyles)
+const BackIcon = glamorous.i(backIconStyles, align.iconRight)
 
 export default () => (
   <Link to="/">
     <button style={buttonStyle}>
-      Back
-      <span style={align.iconRight}>
-        <BackIcon />
-      </span>
+      Back <BackIcon />
     </button>
   </Link>
 )

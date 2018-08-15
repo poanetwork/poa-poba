@@ -10,7 +10,7 @@ import {
   removeButtonStyles
 } from '../styles/bankAccountItemListStyles'
 
-const BankAccountList = glamorous.div('verified-bank-account-list', bankAccountItemListStyles)
+const BankAccountList = glamorous.div('verified-bank-account-list')
 const BankAccountItem = glamorous.div('verified-bank-account-list-item', bankAccountItemListStyles)
 
 const VerifiedIcon = glamorous.i({

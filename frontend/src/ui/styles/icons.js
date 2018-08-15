@@ -48,3 +48,8 @@ export const unverifiedAcountIconStyles = {
   ...baseAccountIconStyles,
   backgroundImage: `url("/images/svg/clock.svg")`
 }
+
+export const warningIconStyles = {
+  ...baseAccountIconStyles,
+  background: `url("/images/svg/warning.svg")`
+}
