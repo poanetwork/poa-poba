@@ -26,6 +26,12 @@ contract PoBA {
 
   mapping (address => User) public users;
 
+  // Modifiers:
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
   function signerIsValid(bytes32 data, uint8 v, bytes32 r, bytes32 s)
   public constant returns (bool)
   {
@@ -38,6 +44,13 @@ contract PoBA {
   public view returns (bool)
   {
     return (users[wallet].creationBlock > 0);
+  }
+
+  // Methods:
+  // set address that is used on server-side to calculate signatures
+  // and on contract-side to verify them
+  function setSigner(address newSigner) public onlyOwner {
+    signer = newSigner;
   }
 
   function register(

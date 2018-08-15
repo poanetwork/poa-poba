@@ -235,3 +235,37 @@ contract('bank account registration (fail)', () => {
     })
   })
 })
+
+contract('setSigner', accounts => {
+  contract('', () => {
+    it('should allow the owner to change the signer', async () => {
+      const poba = await PoBA.deployed()
+
+      const signerBefore = await poba.signer()
+
+      await poba.setSigner(accounts[1])
+
+      const signerAfter = await poba.signer()
+
+      assert.notEqual(signerBefore, signerAfter)
+      assert.equal(accounts[1], signerAfter)
+    })
+  })
+
+  contract('', () => {
+    it("should not allow someone that's not the owner to change the signer", async () => {
+      const poba = await PoBA.deployed()
+
+      const signerBefore = await poba.signer()
+
+      await poba.setSigner(accounts[2], { from: accounts[1] }).then(
+        () => assert.fail(), // should reject
+        async () => {
+          const signerAfter = await poba.signer()
+
+          assert.equal(signerBefore, signerAfter)
+        }
+      )
+    })
+  })
+})
