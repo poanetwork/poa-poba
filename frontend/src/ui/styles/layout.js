@@ -11,7 +11,7 @@ export const mainStyles = {
 }
 
 export const sidebarStyles = {
-  backgroundImage: 'url("/images/pic@3x.png")',
+  backgroundImage: 'url("/images/pic@3x.jpg")',
   width: '40%',
   backgroundSize: 'cover'
 }
