@@ -1,7 +1,6 @@
 import React from 'react'
 import { H1, P } from 'glamorous'
-
-import BackButton from '../containers/BackButton'
+import WithBackButton from './WithBackButton'
 
 const HelpPage = () => {
   return (
@@ -22,9 +21,8 @@ const HelpPage = () => {
         <br />
         Sign transaction in MetaMask to add your data to smart contract
       </P>
-      <BackButton />
     </div>
   )
 }
 
-export default HelpPage
+export default WithBackButton(HelpPage)

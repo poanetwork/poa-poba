@@ -1,6 +1,7 @@
 import React from 'react'
 import glamorous, { H2, P } from 'glamorous'
 import { warningIconStyles } from '../styles/icons'
+import { pageLayoutStyles, headingStyles } from '../styles/errorPage'
 
 const WarningIcon = glamorous.i('svg-background-element', warningIconStyles)
 
@@ -38,27 +39,11 @@ class ErrorPage extends React.Component {
       message = 'Please unlock your account in MetaMask and refresh the page first'
     }
 
-    // style={{
-    //   top: '50%',
-    //   marginTop: '-80px',
-    //   position: 'absolute',
-    //   width: '533px'
-    // }}
-
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          height: '100%'
-        }}
-      >
-        <div>
-          <WarningIcon />
-          <H2 style={{ marginTop: '0' }}>{title}</H2>
-          <P>{message}</P>
-        </div>
+      <div style={pageLayoutStyles}>
+        <WarningIcon />
+        <H2 style={headingStyles}>{title}</H2>
+        <P>{message}</P>
       </div>
     )
   }

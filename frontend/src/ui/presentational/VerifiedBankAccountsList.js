@@ -2,6 +2,7 @@ import React from 'react'
 import glamorous from 'glamorous'
 import { verifiedAcountIconStyles } from '../styles/icons'
 import {
+  bankAccountListStyles,
   bankAccountItemListStyles,
   infoWrapperStyles,
   infoParagraphStyles,
@@ -10,7 +11,7 @@ import {
   removeButtonStyles
 } from '../styles/bankAccountItemListStyles'
 
-const BankAccountList = glamorous.div('verified-bank-account-list')
+const BankAccountList = glamorous.div('verified-bank-account-list', bankAccountListStyles)
 const BankAccountItem = glamorous.div('verified-bank-account-list-item', bankAccountItemListStyles)
 
 const VerifiedIcon = glamorous.i({
@@ -33,9 +34,10 @@ const AccountInfo = ({ bankAccount }) => (
 
 const RemoveButton = glamorous.button(removeButtonStyles)
 const DatePragraph = glamorous.span(dateParagraphStyles)
+// @TODO: add date format
 const VerifiedDate = ({ date }) => (
   <DateWrapper>
-    <DatePragraph>{date || '13 April 2018'}</DatePragraph>
+    <DatePragraph>{date}</DatePragraph>
   </DateWrapper>
 )
 

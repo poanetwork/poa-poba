@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
-import BackButton from '../containers/BackButton'
+import WithBackButton from './WithBackButton'
 import BankAccountsList from '../presentational/BankAccountsList'
 import { errorAlert, successAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
@@ -116,18 +116,17 @@ class BankAccountsPage extends Component {
   }
 
   render() {
-    const { bankAccounts } = this.state
+    const { loading, bankAccounts } = this.state
     return (
-      <div style={{ paddingTop: '20px' }}>
+      <div>
+        <Loading show={loading} />
         <BankAccountsList
           bankAccounts={bankAccounts}
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
         />
-        <BackButton />
-        <Loading show={this.state.loading} />
       </div>
     )
   }
 }
 
-export default BankAccountsPage
+export default WithBackButton(BankAccountsPage)

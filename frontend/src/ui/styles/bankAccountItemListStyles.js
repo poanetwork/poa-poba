@@ -1,6 +1,10 @@
 import colors from './colors'
 import { accountItemListButtonStyles } from './button'
 
+export const bankAccountListStyles = {
+  paddingTop: '20px'
+}
+
 const baseAccountItemListStyles = {
   display: 'grid',
   border: `1px solid ${colors.accountItemListBorder}`,

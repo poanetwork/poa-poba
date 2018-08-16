@@ -2,6 +2,7 @@ import React from 'react'
 import glamorous from 'glamorous'
 import { verifiedAcountIconStyles, unverifiedAcountIconStyles } from '../styles/icons'
 import {
+  bankAccountListStyles,
   unverifiedBankAccountItemListStyles,
   infoWrapperStyles,
   infoParagraphStyles,
@@ -9,7 +10,7 @@ import {
   verifiedMessageStyles
 } from '../styles/bankAccountItemListStyles'
 
-const BankAccountList = glamorous.div('bank-account-list')
+const BankAccountList = glamorous.div('bank-account-list', bankAccountListStyles)
 const BankAccountItem = glamorous.div('bank-account-list-item', unverifiedBankAccountItemListStyles)
 
 const UnverifiedIcon = glamorous.i({

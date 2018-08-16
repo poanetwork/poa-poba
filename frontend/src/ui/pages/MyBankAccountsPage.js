@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { P } from 'glamorous'
 import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
-import BackButton from '../containers/BackButton'
+import WithBackButton from './WithBackButton'
 import VerifiedBankAccountsList from '../presentational/VerifiedBankAccountsList'
 import { errorAlert } from '../presentational/alerts'
 import pobaArtifact from '../../artifacts/PoBA.json'
@@ -58,10 +58,10 @@ class MyBankAccountsPage extends Component {
   }
 
   render() {
-    const { verifiedBankAccounts } = this.state
+    const { loading, verifiedBankAccounts } = this.state
     return (
-      <div style={{ paddingTop: '20px' }}>
-        <Loading show={this.state.loading} />
+      <div>
+        <Loading show={loading} />
         {verifiedBankAccounts.length > 0 ? (
           <VerifiedBankAccountsList
             bankAccounts={verifiedBankAccounts}
@@ -70,10 +70,9 @@ class MyBankAccountsPage extends Component {
         ) : (
           <P>Could not find bank accounts for the given address.</P>
         )}
-        <BackButton />
       </div>
     )
   }
 }
 
-export default MyBankAccountsPage
+export default WithBackButton(MyBankAccountsPage)
