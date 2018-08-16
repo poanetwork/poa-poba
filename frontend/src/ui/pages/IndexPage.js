@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import glamorous, { P, H2 } from 'glamorous'
-import Title from '../layout/Title'
+import glamorous, { P, H1, H2 } from 'glamorous'
 import PlaidButton from '../containers/PlaidButton'
 import buttonStyle from '../styles/button'
 import align from '../styles/align'
@@ -31,7 +30,7 @@ class IndexPage extends React.Component {
   render() {
     return (
       <div>
-        <Title />
+        <H1>Proof of bank account</H1>
         <P className="main">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation

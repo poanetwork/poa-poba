@@ -118,7 +118,7 @@ class BankAccountsPage extends Component {
   render() {
     const { bankAccounts } = this.state
     return (
-      <div>
+      <div style={{ paddingTop: '20px' }}>
         <BankAccountsList
           bankAccounts={bankAccounts}
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { P } from 'glamorous'
 import contract from 'truffle-contract'
 import Loading from '../presentational/Loading'
 import BackButton from '../containers/BackButton'
@@ -59,12 +60,16 @@ class MyBankAccountsPage extends Component {
   render() {
     const { verifiedBankAccounts } = this.state
     return (
-      <div>
-        <VerifiedBankAccountsList
-          bankAccounts={verifiedBankAccounts}
-          onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
-        />
+      <div style={{ paddingTop: '20px' }}>
         <Loading show={this.state.loading} />
+        {verifiedBankAccounts.length > 0 ? (
+          <VerifiedBankAccountsList
+            bankAccounts={verifiedBankAccounts}
+            onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+          />
+        ) : (
+          <P>Could not find bank accounts for the given address.</P>
+        )}
         <BackButton />
       </div>
     )

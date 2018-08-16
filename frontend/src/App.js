@@ -17,7 +17,7 @@ const noWeb3Render = () => <ErrorPage error="noWeb3Render" />
 const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender" />
 const routesRender = (web3, accounts) => {
   return (
-    <section>
+    <section className="h100percent">
       <Route exact path="/" component={() => <IndexPage web3={web3} accounts={accounts} />} />
       <Route exact path="/help" component={() => <HelpPage />} />
       <Route

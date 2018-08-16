@@ -73,5 +73,6 @@ export const verifiedMessageStyles = {
   textTransform: 'uppercase',
   color: colors.verifiedMessageColor,
   placeSelf: 'center',
-  width: '70%'
+  width: '70%',
+  margin: 'auto auto'
 }

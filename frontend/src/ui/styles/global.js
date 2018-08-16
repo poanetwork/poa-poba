@@ -20,8 +20,10 @@ css.global('html, body', {
 
 css.global('h1', {
   color: '#333',
-  marginTop: '100px',
-  marginBottom: '15px',
+  marginTop: '0',
+  marginBottom: '0',
+  paddingTop: '100px',
+  paddingBottom: '15px',
   fontSize: '36px',
   fontWeight: '400',
   lineHeight: '64px',
@@ -50,4 +52,8 @@ css.global('p', {
 css.global('p.main', {
   fontSize: '16px',
   lineHeight: '28px'
+})
+
+css.global('.h100percent', {
+  height: '100%'
 })

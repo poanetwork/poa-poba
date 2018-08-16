@@ -9,7 +9,7 @@ import { backIconStyles } from '../styles/icons'
 const BackIcon = glamorous.i(backIconStyles, align.iconRight)
 
 export default () => (
-  <Link to="/">
+  <Link to="/" style={{ position: 'absolute', bottom: '102px' }}>
     <button style={buttonStyle}>
       Back <BackIcon />
     </button>

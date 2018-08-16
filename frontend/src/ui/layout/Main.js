@@ -2,7 +2,7 @@ import glamorous from 'glamorous'
 
 import { fullWidth } from '../styles/mixins'
 
-const Main = glamorous.div(fullWidth, {
+const Main = glamorous.div('main', fullWidth, {
   margin: '0',
   display: 'flex',
   justifyContent: 'space-around',

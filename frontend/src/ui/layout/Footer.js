@@ -5,8 +5,11 @@ import Socials from './Socials'
 import { footerHeight } from '../styles/constants'
 
 const BaseFooter = glamorous.div('footer', {
-  bottom: '0',
-  height: footerHeight
+  gridRowStart: '3',
+  gridRowEnd: '3',
+  alignSelf: 'end',
+  width: '100%',
+  marginTop: '80px'
 })
 
 const Footer = () => (
