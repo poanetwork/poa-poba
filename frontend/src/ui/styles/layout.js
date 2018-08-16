@@ -40,7 +40,9 @@ export const headerStyles = {
 export const sectionStyles = {
   gridRowStart: '2',
   gridRowEnd: '2',
-  justifySelf: 'start'
+  justifySelf: 'start',
+  width: '100%',
+  maxWidth: '600px'
 }
 
 // "footer" wraps "footerText" and "socials" in markup
@@ -49,6 +51,7 @@ export const footerStyles = {
   gridRowEnd: '3',
   alignSelf: 'end',
   width: '100%',
+  maxWidth: '600px',
   marginTop: '80px',
   display: 'flex'
 }
