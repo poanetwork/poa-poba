@@ -51,5 +51,33 @@ export const unverifiedAcountIconStyles = {
 
 export const warningIconStyles = {
   ...baseAccountIconStyles,
-  background: `url("/images/svg/warning.svg")`
+  backgroundImage: `url("/images/svg/warning.svg")`
+}
+
+// Social icons styles
+const baseSocalIconStyles = {
+  ...baseSvgIconStyles,
+  verticalAlign: 'middle',
+  height: '20px',
+  width: '20px'
+}
+
+export const twitterIconStyles = {
+  ...baseSocalIconStyles,
+  backgroundImage: `url("/images/socials/twitter.svg")`
+}
+
+export const mediumIconStyles = {
+  ...baseSocalIconStyles,
+  backgroundImage: `url("/images/socials/medium.svg")`
+}
+
+export const telegramIconStyles = {
+  ...baseSocalIconStyles,
+  backgroundImage: `url("/images/socials/telegram.svg")`
+}
+
+export const githubIconStyles = {
+  ...baseSocalIconStyles,
+  backgroundImage: `url("/images/socials/github.svg")`
 }

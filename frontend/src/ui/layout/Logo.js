@@ -2,12 +2,11 @@ import glamorous from 'glamorous'
 import { logoImage } from '../styles/constants'
 
 const Logo = glamorous.a('poa-logo', {
-  display: 'block',
-  float: 'left',
+  display: 'inline-block',
   backgroundImage: logoImage,
+  backgroundPosition: '0 0',
   width: '234px',
-  height: '26px',
-  backgroundPosition: '0 0'
+  height: '26px'
 })
 
 export default Logo

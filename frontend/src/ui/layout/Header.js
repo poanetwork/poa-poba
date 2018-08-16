@@ -2,16 +2,9 @@ import React from 'react'
 import glamorous from 'glamorous'
 import LogoContainer from './LogoContainer'
 import Logo from './Logo'
-import { headerHeight } from '../styles/constants'
+import { headerStyles } from '../styles/layout'
 
-const BaseHeader = glamorous.header({
-  gridRowStart: '1',
-  gridRowEnd: '1',
-  alignSelf: 'start',
-  height: headerHeight,
-  padding: '23px 0',
-  width: '100%'
-})
+const BaseHeader = glamorous.header(headerStyles)
 
 const Header = () => (
   <BaseHeader>

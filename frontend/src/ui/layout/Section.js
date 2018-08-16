@@ -1,9 +1,6 @@
 import glamorous from 'glamorous'
+import { sectionStyles } from '../styles/layout'
 
-const Section = glamorous.div('section', {
-  gridRowStart: '2',
-  gridRowEnd: '2',
-  justifySelf: 'start'
-})
+const Section = glamorous.div('section', sectionStyles)
 
 export default Section

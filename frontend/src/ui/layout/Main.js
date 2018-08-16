@@ -1,14 +1,7 @@
 import glamorous from 'glamorous'
-
 import { fullWidth } from '../styles/mixins'
+import { mainStyles } from '../styles/layout'
 
-const Main = glamorous.div('main', fullWidth, {
-  margin: '0',
-  display: 'flex',
-  justifyContent: 'space-around',
-  alignItems: 'stretch',
-  flexDirection: 'row',
-  height: '100%'
-})
+const Main = glamorous.div('main', fullWidth, mainStyles)
 
 export default Main
