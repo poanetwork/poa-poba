@@ -15,7 +15,7 @@ contract PoBA {
     string bankName;
     uint256 attestationDate;
     bool attestationFact;
-    bytes32 keccakIdentifier
+    bytes32 keccakIdentifier;
     uint256 creationBlock;
   }
 
@@ -116,7 +116,7 @@ contract PoBA {
 
   // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
   function userBankAccountByBankAccount(address wallet, string account, string institution)
-  public view checkUserExists(wallet) returns(bool, uint256, bool)
+  public view checkUserExists(wallet) returns(bool, uint256)
   {
     bytes32 keccakIdentifier = keccak256(
       abi.encodePacked(
