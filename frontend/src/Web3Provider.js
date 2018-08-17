@@ -48,7 +48,7 @@ class Web3Provider extends Component {
   render() {
     const { render } = this.props
 
-    return <div>{render({ ...this.state })}</div>
+    return <div className="h100percent">{render({ ...this.state })}</div>
   }
 }
 

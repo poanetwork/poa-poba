@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Main from '../ui/Main'
+import Main from '../ui/layout/Main'
 
 configure({ adapter: new Adapter() })
 
