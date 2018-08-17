@@ -142,4 +142,14 @@ contract PoBA {
   function accountsLength(address _address) public constant returns (uint256) {
     return users[_address].bankAccounts.length;
   }
+
+  function getBankAccounts(address _address, uint256 addressIndex) public constant
+  returns (string accountNumber, string bankName, uint256 attestationDate)
+  {
+    return (
+    users[_address].bankAccounts[addressIndex].accountNumber,
+    users[_address].bankAccounts[addressIndex].bankName,
+    users[_address].bankAccounts[addressIndex].attestationDate
+    );
+  }
 }

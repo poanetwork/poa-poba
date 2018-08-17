@@ -34,6 +34,9 @@ jest.mock('../controllers/accounts', () => ({
     if (accessToken === mockAccessToken && accountId === mockBankAccounts.numbers.ach[0].account_id)
       return mockBankAccount.bankAccount
     throw new Error('There was an error getting the transaction data')
+  }),
+  getInstitutionById: jest.fn(() => {
+    return { name: 'Chase' }
   })
 }))
 jest.mock('web3', () =>

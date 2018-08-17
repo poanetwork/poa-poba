@@ -1,28 +1,63 @@
 import React from 'react'
-import Header from './ui/Header'
-import Footer from './ui/Footer'
-import Main from './ui/Main'
+import { BrowserRouter, Route } from 'react-router-dom'
+import Header from './ui/layout/Header'
+import Footer from './ui/layout/Footer'
+import Main from './ui/layout/Main'
+import Sidebar from './ui/layout/Sidebar'
+import Content from './ui/layout/Content'
+import Section from './ui/layout/Section'
+import IndexPage from './ui/pages/IndexPage'
+import HelpPage from './ui/pages/HelpPage'
+import ErrorPage from './ui/pages/ErrorPage'
+import BankAccountsPage from './ui/pages/BankAccountsPage'
+import MyBankAccountsPage from './ui/pages/MyBankAccountsPage'
 import Web3Provider from './Web3Provider'
-import PoBA from './PoBA'
+
+const noWeb3Render = () => <ErrorPage error="noWeb3Render" />
+const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender" />
+const routesRender = (web3, accounts) => {
+  return (
+    <section className="h100percent">
+      <Route exact path="/" component={() => <IndexPage web3={web3} accounts={accounts} />} />
+      <Route exact path="/help" component={() => <HelpPage />} />
+      <Route
+        path="/bankaccountslist/:token"
+        component={props => <BankAccountsPage props={props} web3={web3} account={accounts[0]} />}
+      />
+      <Route
+        path="/mybankaccountslist"
+        component={props => <MyBankAccountsPage props={props} web3={web3} account={accounts[0]} />}
+      />
+    </section>
+  )
+}
 
 const App = () => (
   <div className="App">
-    <Header />
-    <Web3Provider
-      render={({ web3, accounts }) => {
-        let content = null
-        if (!web3) {
-          content = <div>No web3</div>
-        } else if (!accounts || accounts.length === 0) {
-          content = <div>No unlocked account</div>
-        } else {
-          content = <PoBA web3={web3} account={accounts[0]} />
-        }
-
-        return <Main>{content}</Main>
-      }}
-    />
-    <Footer />
+    <BrowserRouter>
+      <Main>
+        <Sidebar />
+        <Content>
+          <Header />
+          <Section>
+            <Web3Provider
+              render={({ web3, accounts }) => {
+                let content = null
+                if (!web3) {
+                  content = noWeb3Render()
+                } else if (!accounts || accounts.length === 0) {
+                  content = noUnlockedAccountRender()
+                } else {
+                  content = routesRender(web3, accounts)
+                }
+                return content
+              }}
+            />
+          </Section>
+          <Footer />
+        </Content>
+      </Main>
+    </BrowserRouter>
   </div>
 )
 
