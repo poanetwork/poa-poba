@@ -49,7 +49,7 @@ export const dateWrapperStyles = {
   gridArea: 'date',
   display: 'grid',
   gridTemplateColumns: 'auto',
-  gridGap: 0,
+  gridGap: 0
 }
 export const dateParagraphStyles = {
   color: colors.accountItemDateTextColor,
@@ -66,7 +66,7 @@ export const verifyButtonStyles = {
 }
 export const removeButtonStyles = {
   ...accountItemListButtonStyles,
-  gridArea: 'remove',
+  gridArea: 'remove'
 }
 
 export const verifiedMessageStyles = {

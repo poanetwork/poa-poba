@@ -1,7 +1,7 @@
 import React from 'react'
 import glamorous from 'glamorous'
-import Moment from 'react-moment';
-import 'moment-timezone';
+import Moment from 'react-moment'
+import 'moment-timezone'
 import { verifiedAcountIconStyles } from '../styles/icons'
 import {
   bankAccountListStyles,
@@ -39,7 +39,9 @@ const DatePragraph = glamorous.span(dateParagraphStyles)
 const VerifiedDate = ({ date }) => (
   <DateWrapper>
     <DatePragraph>
-      <Moment unix format="YYYY-MM-DD HH:mm Z">{date}</Moment>
+      <Moment unix format="YYYY-MM-DD HH:mm Z">
+        {date}
+      </Moment>
     </DatePragraph>
   </DateWrapper>
 )

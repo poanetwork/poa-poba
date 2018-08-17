@@ -34,6 +34,21 @@ class MyBankAccountsPage extends Component {
     }
   }
 
+  async removeBankAccount(bankAccount) {
+    this.setState({ loading: true })
+    try {
+      await this.pobaContract.unregisterBankAccount(bankAccount.account, bankAccount.bankName, {
+        from: this.state.ethAccount
+      })
+      await this.getVerifiedBankAccounts(this.state.ethAccount)
+      this.setState({ loading: false })
+    } catch (e) {
+      this.setState({ loading: false })
+      console.error('Error removing the verified bank account', e)
+      errorAlert('Error removing the verified bank account')
+    }
+  }
+
   async getVerifiedBankAccounts(ethAccount) {
     this.setState({ loading: true })
     try {
@@ -66,7 +81,7 @@ class MyBankAccountsPage extends Component {
         {verifiedBankAccounts.length > 0 ? (
           <VerifiedBankAccountsList
             bankAccounts={verifiedBankAccounts}
-            onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+            onClick={bankAccount => this.removeBankAccount(bankAccount)}
           />
         ) : (
           <P>Could not find bank accounts for the given address.</P>
