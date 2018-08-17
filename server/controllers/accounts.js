@@ -45,5 +45,6 @@ const getBankAccount = async (accessToken, accountId) => {
 module.exports = {
   getAccessToken,
   getBankAccounts,
-  getBankAccount
+  getBankAccount,
+  getInstitutionById
 }

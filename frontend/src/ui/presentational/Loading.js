@@ -32,7 +32,7 @@ const LoadingInner = glamorous.div('loading-inner', {
   position: 'absolute',
   left: '50%',
   top: '50%',
-  width: '206px',
+  width: '234px',
   margin: '-30px 0 0 -81.5px',
   paddingTop: '50px',
 
@@ -41,8 +41,8 @@ const LoadingInner = glamorous.div('loading-inner', {
     position: 'absolute',
     left: 0,
     top: 0,
-    width: '206px',
-    height: '35px',
+    width: '234px',
+    height: '26px',
     backgroundImage: 'url(/images/loading.png)',
     backgroundPosition: '0 0'
   }

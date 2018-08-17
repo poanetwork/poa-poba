@@ -1,44 +1,59 @@
 import { css } from 'glamor'
 
+// react-plaid-link wraps its <button> in a div with display:block
+css.global('.plaid-link-wrapper > div', {
+  display: 'inline-block'
+})
+
 css.global('*', {
   boxSizing: 'border-box'
 })
 
 css.global('html, body', {
+  margin: '0',
   color: '#333',
   lineHeight: '1',
   fontSize: '14px',
-  fontFamily: "'Open Sans', sans-serif",
+  fontFamily: "'Nunito', sans-serif",
   WebkitFontSmoothing: 'antialiased'
 })
 
-// Font
-css.fontFace({
-  fontFamily: 'Open Sans',
-  fontStyle: 'normal',
+css.global('h1', {
+  color: '#333',
+  marginTop: '0',
+  marginBottom: '0',
+  paddingTop: '100px',
+  paddingBottom: '15px',
+  fontSize: '36px',
   fontWeight: '400',
-  src:
-    "local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2')",
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000'
+  lineHeight: '64px',
+  textAlign: 'left',
+  textTransform: 'none'
 })
 
-css.fontFace({
-  fontFamily: 'Open Sans',
-  fontStyle: 'normal',
-  fontWeight: '600',
-  src:
-    "local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url(https://fonts.gstatic.com/s/opensans/v14/MTP_ySUJH_bn48VBG8sNShampu5_7CjHW5spxoeN3Vs.woff2) format('woff2')",
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215'
+css.global('h2', {
+  color: '#333',
+  marginTop: '70px',
+  marginBottom: '5px',
+  fontSize: '24px',
+  fontWeight: '400',
+  lineHeight: '64px'
 })
 
-css.fontFace({
-  fontFamily: 'Open Sans',
-  fontStyle: 'normal',
-  fontWeight: '700',
-  src:
-    "local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v13/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2')",
-  unicodeRange:
-    'U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000'
+css.global('p', {
+  color: '#777777',
+  marginTop: 0,
+  marginBottom: '40px',
+  align: 'left',
+  fontSize: '14px',
+  lineHeight: '24px'
+})
+
+css.global('p.main', {
+  fontSize: '16px',
+  lineHeight: '28px'
+})
+
+css.global('.h100percent', {
+  height: '100%'
 })
