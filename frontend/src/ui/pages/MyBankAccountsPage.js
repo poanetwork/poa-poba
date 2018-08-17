@@ -46,7 +46,8 @@ class MyBankAccountsPage extends Component {
       const verifiedBankAccountsData = await Promise.all(promises)
       const verifiedBankAccounts = verifiedBankAccountsData.map(bankAccountData => ({
         account: bankAccountData[0],
-        bankName: bankAccountData[1]
+        bankName: bankAccountData[1],
+        verifiedDate: bankAccountData[2].toString()
       }))
       this.setState({ verifiedBankAccounts })
     } catch (e) {
