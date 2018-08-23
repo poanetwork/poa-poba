@@ -13,6 +13,8 @@ import {
   removeButtonStyles
 } from '../styles/bankAccountItemListStyles'
 
+const DATE_FORMAT = 'DD MMM YYYY'
+
 const BankAccountList = glamorous.div('verified-bank-account-list', bankAccountListStyles)
 const BankAccountItem = glamorous.div('verified-bank-account-list-item', bankAccountItemListStyles)
 
@@ -39,7 +41,7 @@ const DatePragraph = glamorous.span(dateParagraphStyles)
 const VerifiedDate = ({ date }) => (
   <DateWrapper>
     <DatePragraph>
-      <Moment unix format="YYYY-MM-DD HH:mm Z">
+      <Moment unix format={DATE_FORMAT}>
         {date}
       </Moment>
     </DatePragraph>
