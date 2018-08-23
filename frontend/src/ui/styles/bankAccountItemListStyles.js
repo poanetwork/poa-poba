@@ -66,7 +66,8 @@ export const verifyButtonStyles = {
 }
 export const removeButtonStyles = {
   ...accountItemListButtonStyles,
-  gridArea: 'remove'
+  gridArea: 'remove',
+  width: '73px'
 }
 
 export const verifiedMessageStyles = {
