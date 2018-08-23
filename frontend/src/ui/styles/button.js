@@ -52,6 +52,7 @@ export const accountItemListButtonStyles = {
   height: '34px',
   ':hover': {
     backgroundColor: colors.primary,
+    cursor: 'pointer',
     color: 'white'
   }
 }
