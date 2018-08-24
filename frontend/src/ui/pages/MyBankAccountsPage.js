@@ -37,8 +37,15 @@ class MyBankAccountsPage extends Component {
   async removeBankAccount(bankAccount) {
     this.setState({ loading: true })
     try {
+      // Default estimation of gas is too low, multiply it by 2
+      const gasEstimate = await this.pobaContract.unregisterBankAccount.estimateGas(
+        bankAccount.account,
+        bankAccount.bankName,
+        { from: this.state.ethAccount }
+      )
       await this.pobaContract.unregisterBankAccount(bankAccount.account, bankAccount.bankName, {
-        from: this.state.ethAccount
+        from: this.state.ethAccount,
+        gas: gasEstimate * 2
       })
       await this.getVerifiedBankAccounts(this.state.ethAccount)
       this.setState({ loading: false })
