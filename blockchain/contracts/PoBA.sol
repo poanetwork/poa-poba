@@ -15,7 +15,7 @@ contract PoBA {
     string bankName;
     uint256 attestationDate;
     bool attestationFact;
-
+    bytes32 keccakIdentifier;
     uint256 creationBlock;
   }
 
@@ -29,6 +29,11 @@ contract PoBA {
   // Modifiers:
   modifier onlyOwner() {
     require(msg.sender == owner);
+    _;
+  }
+
+  modifier checkUserExists(address wallet) {
+    require(userExists(wallet));
     _;
   }
 
@@ -82,8 +87,56 @@ contract PoBA {
         ba.bankName
     ));
     require(signerIsValid(hash, v, r, s));
+    ba.keccakIdentifier = hash;
 
     users[msg.sender].bankAccounts.push(ba);
+  }
+
+  function unregisterBankAccount(string account, string institution)
+  public checkUserExists(msg.sender)
+  {
+    bool found;
+    uint256 index;
+    bool confirmed;
+    (found, index) = userBankAccountByBankAccount(msg.sender, account, institution);
+    require(found);
+
+    // Remove bank account from the list
+    uint256 length = users[msg.sender].bankAccounts.length;
+
+    if (index != length - 1) {
+      users[msg.sender].bankAccounts[index] = users[msg.sender].bankAccounts[length - 1];
+    }
+    users[msg.sender].bankAccounts.length--;
+
+    if (users[msg.sender].bankAccounts.length == 0) {
+      delete users[msg.sender];
+    }
+  }
+
+  // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
+  function userBankAccountByBankAccount(address wallet, string account, string institution)
+  public view checkUserExists(wallet) returns(bool, uint256)
+  {
+    bytes32 keccakIdentifier = keccak256(
+      abi.encodePacked(
+        wallet,
+        account,
+        institution
+      ));
+    return userBankAccountByKeccakIdentifier(wallet, keccakIdentifier);
+  }
+
+  // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
+  function userBankAccountByKeccakIdentifier(address wallet, bytes32 keccakIdentifier)
+  public view checkUserExists(wallet) returns(bool, uint256)
+  {
+    for (uint256 ai = 0; ai < users[wallet].bankAccounts.length; ai++) {
+      if (users[wallet].bankAccounts[ai].keccakIdentifier == keccakIdentifier) {
+        return (true, ai);
+      }
+    }
+    return (false, 0);
   }
 
   function accountsLength(address _address) public constant returns (uint256) {

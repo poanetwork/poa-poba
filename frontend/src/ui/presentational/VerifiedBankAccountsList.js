@@ -1,5 +1,7 @@
 import React from 'react'
 import glamorous from 'glamorous'
+import Moment from 'react-moment'
+import 'moment-timezone'
 import { verifiedAcountIconStyles } from '../styles/icons'
 import {
   bankAccountListStyles,
@@ -10,6 +12,8 @@ import {
   dateParagraphStyles,
   removeButtonStyles
 } from '../styles/bankAccountItemListStyles'
+
+const DATE_FORMAT = 'DD MMM YYYY'
 
 const BankAccountList = glamorous.div('verified-bank-account-list', bankAccountListStyles)
 const BankAccountItem = glamorous.div('verified-bank-account-list-item', bankAccountItemListStyles)
@@ -34,10 +38,13 @@ const AccountInfo = ({ bankAccount }) => (
 
 const RemoveButton = glamorous.button(removeButtonStyles)
 const DatePragraph = glamorous.span(dateParagraphStyles)
-// @TODO: add date format
 const VerifiedDate = ({ date }) => (
   <DateWrapper>
-    <DatePragraph>{date}</DatePragraph>
+    <DatePragraph>
+      <Moment unix format={DATE_FORMAT}>
+        {date}
+      </Moment>
+    </DatePragraph>
   </DateWrapper>
 )
 
