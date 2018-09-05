@@ -38,6 +38,12 @@ function registerBankAccount(poba, args, account) {
   })
 }
 
+function unregisterBankAccount(poba, args, account) {
+  return poba.unregisterBankAccount(args.bankAccount, args.institution, {
+    from: account
+  })
+}
+
 contract('ownership', () => {
   it('signer should be equal to owner', async () => {
     const poba = await PoBA.deployed()
@@ -51,11 +57,11 @@ contract('bank account registration (success)', () => {
   contract('', () => {
     it('registerBankAccount should register an address', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '1111222233330000',
         institution: 'Chase'
       }
-      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
 
       let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
@@ -122,19 +128,19 @@ contract('bank account registration (success)', () => {
   contract('', () => {
     it('should allow different users to register the same bank account', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '1111222233330000',
         institution: 'Chase'
       }
 
-      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
       let bankAccounts1 = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts1, 0)
       await registerBankAccount(poba, args1, ethAccount[0])
       bankAccounts1 = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts1, 1)
 
-      const args2 = buildRegisterBankAccountArgs(ethAccount[1], bank)
+      const args2 = buildRegisterBankAccountArgs(ethAccount[1], bankAccountData)
       let bankAccounts2 = await poba.accountsLength(ethAccount[1])
       assert.equal(+bankAccounts2, 0)
       await registerBankAccount(poba, args2, ethAccount[1])
@@ -148,12 +154,12 @@ contract('bank account registration (fail)', () => {
   contract('', () => {
     it('registerBankAccount should fail if account is empty', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '',
         institution: 'Chase'
       }
 
-      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
 
       let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
@@ -170,12 +176,12 @@ contract('bank account registration (fail)', () => {
   contract('', () => {
     it('registerBankAccount should fail if institution is empty', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '1111222233330000',
         institution: ''
       }
 
-      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
 
       let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
@@ -192,12 +198,12 @@ contract('bank account registration (fail)', () => {
   contract('', () => {
     it('registerBankAccount should fail if signer is not valid', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '1111222233330000',
         institution: 'Chase'
       }
 
-      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
 
       let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
@@ -214,12 +220,12 @@ contract('bank account registration (fail)', () => {
   contract('', () => {
     it('registerBankAccount should fail if data is not valid', async () => {
       const poba = await PoBA.deployed()
-      const bank = {
+      const bankAccountData = {
         account: '1111222233330000',
         institution: 'Chase'
       }
 
-      const args = buildRegisterBankAccountArgs(ethAccount[0], bank)
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
 
       let bankAccounts = await poba.accountsLength(ethAccount[0])
       assert.equal(+bankAccounts, 0)
@@ -232,6 +238,132 @@ contract('bank account registration (fail)', () => {
           assert.equal(+bankAccounts, 0)
         }
       )
+    })
+  })
+})
+
+contract('bank account removal', accounts => {
+  contract('', () => {
+    it('should allow to unregister a bank account', async () => {
+      const poba = await PoBA.deployed()
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(accounts[0], bankAccountData)
+
+      await registerBankAccount(poba, args, accounts[0])
+
+      let bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+
+      await unregisterBankAccount(poba, args, accounts[0])
+
+      bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 0)
+    })
+  })
+
+  contract('', () => {
+    it("should not allow a user to unregister another user's bank account", async () => {
+      const poba = await PoBA.deployed()
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(accounts[0], bankAccountData)
+
+      await registerBankAccount(poba, args, accounts[0])
+
+      let bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+
+      await unregisterBankAccount(poba, args, accounts[1]).then(
+        () => assert.fail(), // should reject
+        () => {}
+      )
+
+      bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+    })
+  })
+
+  contract('', () => {
+    it('should delete the user if the unregistered bank account was his/her last one', async () => {
+      const poba = await PoBA.deployed()
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(accounts[0], bankAccountData)
+
+      await registerBankAccount(poba, args, accounts[0])
+
+      let bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+
+      await unregisterBankAccount(poba, args, accounts[0])
+
+      bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 0)
+
+      const userExists = await poba.userExists(accounts[0])
+      assert.isFalse(userExists)
+    })
+  })
+
+  contract('', () => {
+    it('should not delete the user if the unregistered bank account was not their last one', async () => {
+      const poba = await PoBA.deployed()
+      const bankAccountData1 = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const bankAccountData2 = {
+        account: '2222333300001111',
+        institution: 'Chase'
+      }
+      const args1 = buildRegisterBankAccountArgs(accounts[0], bankAccountData1)
+      const args2 = buildRegisterBankAccountArgs(accounts[0], bankAccountData2)
+
+      await registerBankAccount(poba, args1, accounts[0])
+      await registerBankAccount(poba, args2, accounts[0])
+
+      let userExists = await poba.userExists(accounts[0])
+      assert.isTrue(userExists)
+
+      await unregisterBankAccount(poba, args1, accounts[0])
+
+      userExists = await poba.userExists(accounts[0])
+      assert.isTrue(userExists)
+    })
+  })
+
+  contract('', () => {
+    it('should not delete a bank account that a user has not registered', async () => {
+      const poba = await PoBA.deployed()
+      const bankAccountData1 = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const bankAccountData2 = {
+        account: '2222333300001111',
+        institution: 'Chase'
+      }
+      const args1 = buildRegisterBankAccountArgs(accounts[0], bankAccountData1)
+      const args2 = buildRegisterBankAccountArgs(accounts[0], bankAccountData2)
+
+      await registerBankAccount(poba, args1, accounts[0])
+      let bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+
+      await unregisterBankAccount(poba, args2, accounts[0]).then(
+        () => assert.fail(), // should reject
+        () => {}
+      )
+
+      bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
     })
   })
 })
