@@ -26,6 +26,10 @@ contract PoBA {
 
   mapping (address => User) public users;
 
+  // Events:
+  event LogBankAccountRegistered(address indexed wallet, bytes32 keccakIdentifier);
+  event LogBankAccountUnregistered(address indexed wallet, bytes32 keccakIdentifier);
+
   // Modifiers:
   modifier onlyOwner() {
     require(msg.sender == owner);
@@ -90,6 +94,8 @@ contract PoBA {
     ba.keccakIdentifier = hash;
 
     users[msg.sender].bankAccounts.push(ba);
+
+    emit LogBankAccountRegistered(msg.sender, ba.keccakIdentifier);
   }
 
   function unregisterBankAccount(string account, string institution)
@@ -97,9 +103,11 @@ contract PoBA {
   {
     bool found;
     uint256 index;
-    bool confirmed;
     (found, index) = userBankAccountByBankAccount(msg.sender, account, institution);
     require(found);
+
+    // Store keccakIdentifier for logging purpose
+    bytes32 keccakIdentifier = users[msg.sender].bankAccounts[index].keccakIdentifier;
 
     // Remove bank account from the list
     uint256 length = users[msg.sender].bankAccounts.length;
@@ -112,6 +120,8 @@ contract PoBA {
     if (users[msg.sender].bankAccounts.length == 0) {
       delete users[msg.sender];
     }
+
+    emit LogBankAccountUnregistered(msg.sender, keccakIdentifier);
   }
 
   // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
