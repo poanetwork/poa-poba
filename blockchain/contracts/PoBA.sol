@@ -26,9 +26,14 @@ contract PoBA {
 
   mapping (address => User) public users;
 
+  // Stats:
+  uint64 public totalUsers;
+  uint64 public totalBankAccounts;
+
   // Events:
   event LogBankAccountRegistered(address indexed wallet, bytes32 keccakIdentifier);
   event LogBankAccountUnregistered(address indexed wallet, bytes32 keccakIdentifier);
+  event LogSignerChanged(address newSigner);
 
   // Modifiers:
   modifier onlyOwner() {
@@ -60,6 +65,7 @@ contract PoBA {
   // and on contract-side to verify them
   function setSigner(address newSigner) public onlyOwner {
     signer = newSigner;
+    emit LogSignerChanged(newSigner);
   }
 
   function register(
@@ -74,6 +80,7 @@ contract PoBA {
     if (!userExists(msg.sender)) {
       // new user
       users[msg.sender].creationBlock = block.number;
+      totalUsers += 1;
     }
 
     BankAccount memory ba;
@@ -85,15 +92,17 @@ contract PoBA {
     ba.creationBlock = block.number;
 
     bytes32 hash = keccak256(
-    abi.encodePacked(
-      msg.sender,
+      abi.encodePacked(
+        msg.sender,
         ba.accountNumber,
         ba.bankName
-    ));
+      )
+    );
     require(signerIsValid(hash, v, r, s));
     ba.keccakIdentifier = hash;
 
     users[msg.sender].bankAccounts.push(ba);
+    totalBankAccounts += 1;
 
     emit LogBankAccountRegistered(msg.sender, ba.keccakIdentifier);
   }
@@ -116,9 +125,11 @@ contract PoBA {
       users[msg.sender].bankAccounts[index] = users[msg.sender].bankAccounts[length - 1];
     }
     users[msg.sender].bankAccounts.length--;
+    totalBankAccounts -= 1;
 
     if (users[msg.sender].bankAccounts.length == 0) {
       delete users[msg.sender];
+      totalUsers -= 1;
     }
 
     emit LogBankAccountUnregistered(msg.sender, keccakIdentifier);
