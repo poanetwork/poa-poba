@@ -33,6 +33,7 @@ contract PoBA {
   // Events:
   event LogBankAccountRegistered(address indexed wallet, bytes32 keccakIdentifier);
   event LogBankAccountUnregistered(address indexed wallet, bytes32 keccakIdentifier);
+  event LogSignerChanged(address newSigner);
 
   // Modifiers:
   modifier onlyOwner() {
@@ -64,6 +65,7 @@ contract PoBA {
   // and on contract-side to verify them
   function setSigner(address newSigner) public onlyOwner {
     signer = newSigner;
+    emit LogSignerChanged(newSigner);
   }
 
   function register(
