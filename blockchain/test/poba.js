@@ -148,6 +148,25 @@ contract('bank account registration (success)', () => {
       assert.equal(+bankAccounts2, 1)
     })
   })
+
+  contract('', () => {
+    it("totalUsers should be incremented if it's the first bank account for that user", async () => {
+      const poba = await PoBA.deployed()
+
+      let users = await poba.totalUsers()
+      assert.equal(+users, 0)
+
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
+      await registerBankAccount(poba, args, ethAccount[0])
+
+      users = await poba.totalUsers()
+      assert.equal(+users, 1)
+    })
+  })
 })
 
 contract('bank account registration (fail)', () => {
@@ -236,6 +255,29 @@ contract('bank account registration (fail)', () => {
         async () => {
           bankAccounts = await poba.accountsLength(ethAccount[0])
           assert.equal(+bankAccounts, 0)
+        }
+      )
+    })
+  })
+
+  contract('', () => {
+    it('totalUsers should not be incremented if registerBankAccount fails', async () => {
+      const poba = await PoBA.deployed()
+
+      let totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 0)
+
+      // Make registerBankAccount fail with an emtpy institutuion
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: ''
+      }
+      const args = buildRegisterBankAccountArgs(ethAccount[0], bankAccountData)
+      await registerBankAccount(poba, args, ethAccount[0]).then(
+        () => assert.fail(), // should reject
+        async () => {
+          totalUsers = await poba.totalUsers()
+          assert.equal(+totalUsers, 0)
         }
       )
     })
@@ -364,6 +406,63 @@ contract('bank account removal', accounts => {
 
       bankAccountCount = await poba.accountsLength(accounts[0])
       assert.equal(+bankAccountCount, 1)
+    })
+  })
+
+  contract('', () => {
+    it('should decrement totalUsers value if the unregistered bank account was the only one for that user', async () => {
+      const poba = await PoBA.deployed()
+
+      let totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 0)
+
+      const bankAccountData = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(accounts[0], bankAccountData)
+      await registerBankAccount(poba, args, accounts[0])
+      const bankAccountCount = await poba.accountsLength(accounts[0])
+      assert.equal(+bankAccountCount, 1)
+
+      totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 1)
+
+      await unregisterBankAccount(poba, args, accounts[0])
+
+      totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 0)
+    })
+  })
+
+  contract('', () => {
+    it('should not decrement totalUsers value if the unregistered bank account was not the only one for that user', async () => {
+      const poba = await PoBA.deployed()
+
+      let totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 0)
+      let bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 0)
+
+      const bankOne = {
+        account: '1111222233330000',
+        institution: 'Chase'
+      }
+      const bankTwo = {
+        account: '1111222233330001',
+        institution: 'Sugar'
+      }
+      const args1 = buildRegisterBankAccountArgs(ethAccount[0], bankOne)
+      await registerBankAccount(poba, args1, ethAccount[0])
+      const args2 = buildRegisterBankAccountArgs(ethAccount[0], bankTwo)
+      await registerBankAccount(poba, args2, ethAccount[0])
+      bankAccounts = await poba.accountsLength(ethAccount[0])
+      assert.equal(+bankAccounts, 2)
+
+      await unregisterBankAccount(poba, args1, ethAccount[0])
+
+      totalUsers = await poba.totalUsers()
+      assert.equal(+totalUsers, 1)
     })
   })
 })

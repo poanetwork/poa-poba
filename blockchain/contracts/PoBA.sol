@@ -26,6 +26,9 @@ contract PoBA {
 
   mapping (address => User) public users;
 
+  // Stats:
+  uint64 public totalUsers;
+
   // Events:
   event LogBankAccountRegistered(address indexed wallet, bytes32 keccakIdentifier);
   event LogBankAccountUnregistered(address indexed wallet, bytes32 keccakIdentifier);
@@ -74,6 +77,7 @@ contract PoBA {
     if (!userExists(msg.sender)) {
       // new user
       users[msg.sender].creationBlock = block.number;
+      totalUsers += 1;
     }
 
     BankAccount memory ba;
@@ -119,6 +123,7 @@ contract PoBA {
 
     if (users[msg.sender].bankAccounts.length == 0) {
       delete users[msg.sender];
+      totalUsers -= 1;
     }
 
     emit LogBankAccountUnregistered(msg.sender, keccakIdentifier);
