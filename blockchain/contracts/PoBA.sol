@@ -28,6 +28,7 @@ contract PoBA {
 
   // Stats:
   uint64 public totalUsers;
+  uint64 public totalBankAccounts;
 
   // Events:
   event LogBankAccountRegistered(address indexed wallet, bytes32 keccakIdentifier);
@@ -89,15 +90,17 @@ contract PoBA {
     ba.creationBlock = block.number;
 
     bytes32 hash = keccak256(
-    abi.encodePacked(
-      msg.sender,
+      abi.encodePacked(
+        msg.sender,
         ba.accountNumber,
         ba.bankName
-    ));
+      )
+    );
     require(signerIsValid(hash, v, r, s));
     ba.keccakIdentifier = hash;
 
     users[msg.sender].bankAccounts.push(ba);
+    totalBankAccounts += 1;
 
     emit LogBankAccountRegistered(msg.sender, ba.keccakIdentifier);
   }
@@ -120,6 +123,7 @@ contract PoBA {
       users[msg.sender].bankAccounts[index] = users[msg.sender].bankAccounts[length - 1];
     }
     users[msg.sender].bankAccounts.length--;
+    totalBankAccounts -= 1;
 
     if (users[msg.sender].bankAccounts.length == 0) {
       delete users[msg.sender];

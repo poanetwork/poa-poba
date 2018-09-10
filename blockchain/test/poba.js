@@ -167,6 +167,23 @@ contract('bank account registration (success)', () => {
       assert.equal(+users, 1)
     })
   })
+
+  contract('', () => {
+    it('should increment totalBankAccounts value', async () => {
+      const poba = await PoBA.deployed()
+      let totalBankAccounts = await poba.totalBankAccounts()
+      assert.equal(+totalBankAccounts, 0)
+
+      const accountData = {
+        account: '1111222233330001',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(ethAccount[0], accountData)
+      await registerBankAccount(poba, args, ethAccount[0])
+      totalBankAccounts = await poba.totalBankAccounts()
+      assert.equal(+totalBankAccounts, 1)
+    })
+  })
 })
 
 contract('bank account registration (fail)', () => {
@@ -463,6 +480,26 @@ contract('bank account removal', accounts => {
 
       totalUsers = await poba.totalUsers()
       assert.equal(+totalUsers, 1)
+    })
+  })
+
+  contract('', () => {
+    it('should decrement totalBankAccounts value', async () => {
+      const poba = await PoBA.deployed()
+      const accountData = {
+        account: '1111222233330001',
+        institution: 'Chase'
+      }
+      const args = buildRegisterBankAccountArgs(ethAccount[0], accountData)
+      await registerBankAccount(poba, args, ethAccount[0])
+
+      let totalBankAccounts = await poba.totalBankAccounts()
+      assert.equal(+totalBankAccounts, 1)
+
+      await unregisterBankAccount(poba, args, ethAccount[0])
+
+      totalBankAccounts = await poba.totalBankAccounts()
+      assert.equal(+totalBankAccounts, 0)
     })
   })
 })
