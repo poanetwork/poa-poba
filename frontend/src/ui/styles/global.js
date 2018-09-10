@@ -49,6 +49,11 @@ css.global('p', {
   lineHeight: '24px'
 })
 
+css.global('a', {
+  color: '#5c34a2',
+  textDecoration: 'none'
+})
+
 css.global('p.main', {
   fontSize: '16px',
   lineHeight: '28px'

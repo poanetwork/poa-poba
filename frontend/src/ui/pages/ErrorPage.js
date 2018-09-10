@@ -23,20 +23,27 @@ class ErrorPage extends React.Component {
     let title = ''
     let message = ''
     if (this.state.error === 'noWeb3Render') {
-      title = 'No MetaMask found'
+      title = 'Nifty Wallet not found'
       message = (
         <span>
-          This application requires MetaMask extension for Google Chrome.
+          This application requires Nifty Wallet extension for Google Chrome.
           <br />
-          Please make sure you are running the latest version of Google Chrome and follow this link
-          to install MetaMask.
+          Please make sure you are running the latest version of Google Chrome and follow{' '}
+          <a
+            href="https://chrome.google.com/webstore/detail/nifty-wallet/jbdaocneiiinmjbjlgalhcelgbejmnid"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            this link
+          </a>{' '}
+          to install Nifty Wallet.
         </span>
       )
     }
 
     if (this.state.error === 'noUnlockedAccountRender') {
-      title = 'MetaMask account'
-      message = 'Please unlock your account in MetaMask and refresh the page first'
+      title = 'Nifty Wallet account'
+      message = 'Please unlock your account in Nifty Wallet and refresh the page first'
     }
 
     return (
