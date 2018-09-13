@@ -42,9 +42,20 @@ const getBankAccount = async (accessToken, accountId) => {
   return bankAccount
 }
 
+const getIdentity = async accessToken => {
+  try {
+    const identityResponse = await plaidClient.getIdentity(accessToken)
+    return identityResponse.identity
+  } catch (error) {
+    logger.error({ status: error.status_code }, 'Error getting identity')
+    throw Error(`[getIdentity] ${error.error_code}: ${error.error_message}`)
+  }
+}
+
 module.exports = {
   getAccessToken,
   getBankAccounts,
   getBankAccount,
-  getInstitutionById
+  getInstitutionById,
+  getIdentity
 }

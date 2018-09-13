@@ -13,6 +13,7 @@ contract PoBA {
   struct BankAccount {
     string accountNumber;
     string bankName;
+    string identityNames;
     uint256 attestationDate;
     bool attestationFact;
     bytes32 keccakIdentifier;
@@ -49,9 +50,9 @@ contract PoBA {
   function signerIsValid(bytes32 data, uint8 v, bytes32 r, bytes32 s)
   public constant returns (bool)
   {
-      bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-      bytes32 prefixed = keccak256(abi.encodePacked(prefix, data));
-      return (ecrecover(prefixed, v, r, s) == signer);
+    bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+    bytes32 prefixed = keccak256(abi.encodePacked(prefix, data));
+    return (ecrecover(prefixed, v, r, s) == signer);
   }
 
   function userExists(address wallet)
@@ -71,6 +72,7 @@ contract PoBA {
   function register(
     string account,
     string institution,
+    string names,
     uint8 v, bytes32 r, bytes32 s) public {
 
     require(bytes(account).length > 0);
@@ -87,6 +89,7 @@ contract PoBA {
 
     ba.accountNumber = account;
     ba.bankName = institution;
+    ba.identityNames = names;
     ba.attestationDate = now;
     ba.attestationFact = true;
     ba.creationBlock = block.number;
@@ -95,7 +98,8 @@ contract PoBA {
       abi.encodePacked(
         msg.sender,
         ba.accountNumber,
-        ba.bankName
+        ba.bankName,
+        ba.identityNames
       )
     );
     require(signerIsValid(hash, v, r, s));
@@ -165,11 +169,12 @@ contract PoBA {
   }
 
   function getBankAccounts(address _address, uint256 addressIndex) public constant
-  returns (string accountNumber, string bankName, uint256 attestationDate)
+  returns (string accountNumber, string bankName, string identityNames, uint256 attestationDate)
   {
     return (
     users[_address].bankAccounts[addressIndex].accountNumber,
     users[_address].bankAccounts[addressIndex].bankName,
+    users[_address].bankAccounts[addressIndex].identityNames,
     users[_address].bankAccounts[addressIndex].attestationDate
     );
   }
