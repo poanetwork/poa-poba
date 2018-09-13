@@ -19,7 +19,7 @@ const HelpPage = () => {
       <P>
         <strong>Step 3: Sign transaction & Finalize proof</strong>
         <br />
-        Sign transaction in Nifty Wallet to add your data to smart contract
+        Sign transaction in your Wallet to add your data to smart contract
       </P>
     </div>
   )

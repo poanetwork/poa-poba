@@ -23,27 +23,27 @@ class ErrorPage extends React.Component {
     let title = ''
     let message = ''
     if (this.state.error === 'noWeb3Render') {
-      title = 'Nifty Wallet not found'
+      title = 'Wallet not found'
       message = (
         <span>
-          This application requires Nifty Wallet extension for Google Chrome.
+          This application requires a web browser Wallet extension.
           <br />
-          Please make sure you are running the latest version of Google Chrome and follow{' '}
+          Check{' '}
           <a
-            href="https://chrome.google.com/webstore/detail/nifty-wallet/jbdaocneiiinmjbjlgalhcelgbejmnid"
+            href="https://poa.network/dapps?category=wallets"
             target="_blank"
             rel="noopener noreferrer"
           >
-            this link
+            POA Network Wallets{`'`} section
           </a>{' '}
-          to install Nifty Wallet.
+          for more information.
         </span>
       )
     }
 
     if (this.state.error === 'noUnlockedAccountRender') {
-      title = 'Nifty Wallet account'
-      message = 'Please unlock your account in Nifty Wallet and refresh the page first'
+      title = 'Wallet account'
+      message = 'Please unlock your account in your Wallet and then refresh the page.'
     }
 
     return (
