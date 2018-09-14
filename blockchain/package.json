@@ -2,7 +2,9 @@
   "name": "poa-poba-blockchain",
   "version": "0.0.1",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "npm run lint.es && npm run lint.contracts",
+    "lint.es": "eslint .",
+    "lint.contracts": "solhint contracts/*.sol",
     "migrate": "truffle migrate",
     "coverage": "NODE_ENV=test solidity-coverage",
     "test": "NODE_ENV=test truffle test --network test"
