@@ -111,12 +111,12 @@ contract PoBA {
     emit LogBankAccountRegistered(msg.sender, ba.keccakIdentifier);
   }
 
-  function unregisterBankAccount(string account, string institution)
+  function unregisterBankAccount(string account, string institution, string names)
   public checkUserExists(msg.sender)
   {
     bool found;
     uint256 index;
-    (found, index) = userBankAccountByBankAccount(msg.sender, account, institution);
+    (found, index) = userBankAccountByBankAccount(msg.sender, account, institution, names);
     require(found);
 
     // Store keccakIdentifier for logging purpose
@@ -140,14 +140,15 @@ contract PoBA {
   }
 
   // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
-  function userBankAccountByBankAccount(address wallet, string account, string institution)
+  function userBankAccountByBankAccount(address wallet, string account, string institution, string names)
   public view checkUserExists(wallet) returns(bool, uint256)
   {
     bytes32 keccakIdentifier = keccak256(
       abi.encodePacked(
         wallet,
         account,
-        institution
+        institution,
+        names
       ));
     return userBankAccountByKeccakIdentifier(wallet, keccakIdentifier);
   }
