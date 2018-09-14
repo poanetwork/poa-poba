@@ -15,6 +15,7 @@ const mockBankAccount = {
     wire_routing: '021000021'
   }
 }
+const mockNames = 'John Doe'
 const mockSign = {
   v: '0x1b',
   r: '0x9a4acff8fcc5fc48278482669d3db5a728a226c8f82bce2895208c59ca5637b9',
@@ -37,6 +38,9 @@ jest.mock('../controllers/accounts', () => ({
   }),
   getInstitutionById: jest.fn(() => {
     return { name: 'Chase' }
+  }),
+  getIdentity: jest.fn(() => {
+    return { names: [mockNames] }
   })
 }))
 jest.mock('web3', () =>
@@ -120,7 +124,7 @@ describe('[routes] accounts', () => {
         accountId: mockBankAccounts.numbers.ach[0].account_id
       })
       .then(res => {
-        expect(res.body).toEqual({ ...mockBankAccount, ...mockSign })
+        expect(res.body).toEqual({ ...mockBankAccount, identityNames: mockNames, ...mockSign })
         expect(res.status).toEqual(200)
       }))
 })
