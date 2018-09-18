@@ -47,7 +47,7 @@ class ErrorPage extends React.Component {
     }
 
     return (
-      <div style={pageLayoutStyles}>
+      <div className="error-page" style={pageLayoutStyles}>
         <WarningIcon />
         <H2 style={headingStyles}>{title}</H2>
         <P>{message}</P>

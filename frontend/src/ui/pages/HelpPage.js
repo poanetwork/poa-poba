@@ -4,7 +4,7 @@ import WithBackButton from './WithBackButton'
 
 const HelpPage = () => {
   return (
-    <div>
+    <div className="help-page">
       <H1>How it works?</H1>
       <P>
         <strong>Step 1: Connect Bank Account</strong>

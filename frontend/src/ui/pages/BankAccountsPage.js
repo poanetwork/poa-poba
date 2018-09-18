@@ -119,7 +119,7 @@ class BankAccountsPage extends Component {
   render() {
     const { loading, bankAccounts } = this.state
     return (
-      <div>
+      <div className="bank-accounts-page">
         <Loading show={loading} />
         <BankAccountsList
           bankAccounts={bankAccounts}
