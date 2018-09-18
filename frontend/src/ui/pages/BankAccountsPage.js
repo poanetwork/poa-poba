@@ -65,6 +65,7 @@ class BankAccountsPage extends Component {
       const registerResult = await this.pobaContract.register(
         txData.bankAccount.account,
         txData.bankAccount.institution,
+        txData.identityNames,
         txData.v,
         txData.r,
         txData.s,

@@ -55,13 +55,17 @@ const signBankAccount = (req, res) => {
       const accessToken = await accountsController.getAccessToken(token)
 
       const bankAccount = await accountsController.getBankAccount(accessToken, accountId)
+      const identity = await accountsController.getIdentity(accessToken)
+      const identityNames = identity.names.join(', ')
+
       const hash = web3.utils.soliditySha3(
         ethAccount +
           Buffer.from(bankAccount.account).toString('hex') +
-          Buffer.from(bankAccount.institution).toString('hex')
+          Buffer.from(bankAccount.institution).toString('hex') +
+          Buffer.from(identityNames).toString('hex')
       )
       const { v, r, s } = web3.eth.accounts.sign(hash, PRIVATE_KEY)
-      return res.send({ bankAccount, v, r, s })
+      return res.send({ bankAccount, identityNames, v, r, s })
     } catch (e) {
       logger.error(e.message, 'There was an error getting the transaction data')
       return res.status(400).send({ error: e.message })
