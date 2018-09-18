@@ -1,14 +1,13 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Main from '../Main'
+import Sidebar from '../Sidebar'
 
 configure({ adapter: new Adapter() })
 
-describe('<Main />', () => {
+describe('<Sidebar />', () => {
   it('renders correctly', () => {
-    const wrapper = mount(<Main />)
-
-    expect(wrapper.find('div')).toHaveLength(1)
+    const wrapper = mount(<Sidebar />)
+    expect(wrapper.find('.sidebar')).toHaveLength(1)
   })
 })

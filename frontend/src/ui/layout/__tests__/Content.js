@@ -1,14 +1,13 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Main from '../Main'
+import Content from '../Content'
 
 configure({ adapter: new Adapter() })
 
-describe('<Main />', () => {
+describe('<Content />', () => {
   it('renders correctly', () => {
-    const wrapper = mount(<Main />)
-
-    expect(wrapper.find('div')).toHaveLength(1)
+    const wrapper = mount(<Content />)
+    expect(wrapper.find('.content')).toHaveLength(1)
   })
 })
