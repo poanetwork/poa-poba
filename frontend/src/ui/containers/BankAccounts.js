@@ -23,7 +23,7 @@ class BankAccounts extends Component {
 
   async componentDidMount() {
     try {
-      this.pobaContract = await this.props.getPoBAContract()
+      this.PoBAContract = await this.props.getPoBAContract()
       await this.fetchBankAccounts(this.state.plaidToken)
     } catch (e) {
       console.error(ERROR_MSG_CONTRACT_NOT_DEPLOYED, e)
@@ -36,7 +36,7 @@ class BankAccounts extends Component {
     try {
       const { plaidToken, ethAccount } = this.state
       const txData = await this.PoBAServer.getSignedBankAccount(accountId, ethAccount, plaidToken)
-      const registerResult = await this.pobaContract.registerBankAccount(txData, ethAccount)
+      const registerResult = await this.PoBAContract.registerBankAccount(txData, ethAccount)
       if (registerResult) {
         successAlert()
         // @TODO: set flag in bankAccount to signal that it is verified
@@ -55,7 +55,7 @@ class BankAccounts extends Component {
   async fetchBankAccounts(token) {
     this.setState({ loading: true })
     const accounts = await this.PoBAServer.getBankAccounts(token)
-    const verifiedBankAccounts = await this.pobaContract.getVerifiedBankAccounts(
+    const verifiedBankAccounts = await this.PoBAContract.getVerifiedBankAccounts(
       this.state.ethAccount
     )
     const verifiedBankAccountsNumbers = verifiedBankAccounts.map(account => account[0])

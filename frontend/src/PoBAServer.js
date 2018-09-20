@@ -17,4 +17,3 @@ export const getSignedBankAccount = async (accountId, ethAccount, token) => {
 
   return result.data
 }
-

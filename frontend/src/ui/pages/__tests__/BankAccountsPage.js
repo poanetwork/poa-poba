@@ -16,7 +16,7 @@ describe('BankAccountsContainer', () => {
         }
       }
     }
-    const wrapper = shallow(<BankAccountsContainer { ...mockedProps } />)
+    const wrapper = shallow(<BankAccountsContainer {...mockedProps} />)
     expect(wrapper.find('BankAccounts')).toHaveLength(1)
   })
 })

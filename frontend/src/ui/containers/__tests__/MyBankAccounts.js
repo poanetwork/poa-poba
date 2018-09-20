@@ -16,10 +16,10 @@ describe('MyBankAccounts', () => {
       account: 'ACCOUNT',
       getPoBAContract: () => Promise.resolve(mockedPoBAContract)
     }
-    const wrapper = shallow(<MyBankAccounts { ...mockedProperties } />)
+    const wrapper = shallow(<MyBankAccounts {...mockedProperties} />)
     wrapper.instance().componentDidMount()
 
-    it('renders correctly when there are no verified bank accounts', (done) => {
+    it('renders correctly when there are no verified bank accounts', done => {
       expect(wrapper.find('VerifiedBankAccountsList')).toHaveLength(0)
       expect(wrapper.find('.no-results')).toHaveLength(1)
       done()
@@ -38,22 +38,20 @@ describe('MyBankAccounts', () => {
       account: 'ACCOUNT',
       getPoBAContract: () => Promise.resolve(mockedPoBAContract)
     }
-    const wrapper = mount(<MyBankAccounts { ...mockedProperties } />)
+    const wrapper = mount(<MyBankAccounts {...mockedProperties} />)
 
-    it('renders correctly when there are verified bank accounts', (done) => {
+    it('renders correctly when there are verified bank accounts', done => {
       wrapper.update()
       expect(wrapper.find('.no-results')).toHaveLength(0)
       done()
     })
 
-    it('invokes PoBAContract unregisterBankAccount accordingly', (done) => {
+    it('invokes PoBAContract unregisterBankAccount accordingly', done => {
       const removeButtonWrapper = wrapper.find('.verified-bank-account-list-item__remove-button')
       const spy = jest.spyOn(mockedPoBAContract, 'unregisterBankAccount')
       removeButtonWrapper.simulate('click')
       expect(spy).toHaveBeenCalled()
       done()
     })
-
   })
-
 })

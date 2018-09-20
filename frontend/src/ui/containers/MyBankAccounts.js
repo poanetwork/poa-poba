@@ -22,7 +22,7 @@ class MyBankAccounts extends Component {
 
   async componentDidMount() {
     try {
-      this.pobaContract = await this.props.getPoBAContract()
+      this.PoBAContract = await this.props.getPoBAContract()
       await this.getVerifiedBankAccounts(this.state.ethAccount)
     } catch (e) {
       console.error(ERROR_MSG_CONTRACT_NOT_DEPLOYED, e)
@@ -34,7 +34,7 @@ class MyBankAccounts extends Component {
     this.setState({ loading: true })
     try {
       const walletAddress = this.state.ethAccount
-      await this.pobaContract.unregisterBankAccount(bankAccount, walletAddress)
+      await this.PoBAContract.unregisterBankAccount(bankAccount, walletAddress)
       await this.getVerifiedBankAccounts(walletAddress)
     } catch (e) {
       errorAlert(ERROR_MSG_REMOVE_BANK_ACCOUNT)
@@ -47,7 +47,7 @@ class MyBankAccounts extends Component {
   async getVerifiedBankAccounts(ethAccount) {
     this.setState({ loading: true })
     try {
-      const verifiedBankAccountsData = await this.pobaContract.getVerifiedBankAccounts(ethAccount)
+      const verifiedBankAccountsData = await this.PoBAContract.getVerifiedBankAccounts(ethAccount)
       const verifiedBankAccounts = verifiedBankAccountsData.map(bankAccountData => ({
         account: bankAccountData[0],
         bankName: bankAccountData[1],

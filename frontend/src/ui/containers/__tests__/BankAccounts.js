@@ -1,5 +1,5 @@
 import React from 'react'
-import { configure, mount, shallow } from 'enzyme'
+import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import BankAccounts from '../BankAccounts'
 
@@ -31,16 +31,16 @@ describe('BankAccounts', () => {
     PoBAServer: mockedPoBAServer,
     getPoBAContract: () => Promise.resolve(mockedPoBAContract)
   }
-  const wrapper = mount(<BankAccounts { ...mockedProperties } />)
+  const wrapper = mount(<BankAccounts {...mockedProperties} />)
   wrapper.instance().componentDidMount()
 
-  it('should render the bank accounts list when the PoPA backend responds with back accounts', (done) => {
+  it('should render the bank accounts list when the PoPA backend responds with back accounts', done => {
     wrapper.update()
     expect(wrapper.find('.bank-account-list')).toHaveLength(1)
     done()
   })
 
-  it('should invoke backend\'s getSignedBankAccount & contract\'s registerBankAccount on Verify', (done) => {
+  it("should invoke backend's getSignedBankAccount & contract's registerBankAccount on Verify", done => {
     const spy = jest.spyOn(mockedPoBAServer, 'getSignedBankAccount')
     const verifyButtonWrapper = wrapper.find('.bank-account-list-item__verify')
     verifyButtonWrapper.simulate('click')
