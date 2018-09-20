@@ -34,10 +34,10 @@ const AccountInfo = ({ bankAccount }) => (
   </InfoWrapper>
 )
 
-const VerifyButton = glamorous.button(verifyButtonStyles)
+const VerifyButton = glamorous.button('bank-account-list-item__verify', verifyButtonStyles)
 const VerifiedMessage = glamorous.p(verifiedMessageStyles)
 
-export default ({ bankAccounts, onClick }) => (
+const BankAccountsList = ({ bankAccounts, onClick }) => (
   <BankAccountList>
     {bankAccounts.map((bankAccount, index) => (
       <BankAccountItem key={index}>
@@ -54,3 +54,5 @@ export default ({ bankAccounts, onClick }) => (
     ))}
   </BankAccountList>
 )
+
+export default BankAccountsList
