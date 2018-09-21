@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import BankAccounts from '../BankAccounts'
+import PlaidBankAccounts from '../PlaidBankAccounts'
 
 configure({ adapter: new Adapter() })
 
@@ -24,14 +24,14 @@ const mockedPoBAContract = {
   }
 }
 
-describe('BankAccounts', () => {
+describe('PlaidBankAccounts', () => {
   const mockedProperties = {
     account: 'ACCOUNT',
     plaidToken: 'PLAIDTOKEN',
     PoBAServer: mockedPoBAServer,
     getPoBAContract: () => Promise.resolve(mockedPoBAContract)
   }
-  const wrapper = mount(<BankAccounts {...mockedProperties} />)
+  const wrapper = mount(<PlaidBankAccounts {...mockedProperties} />)
   wrapper.instance().componentDidMount()
 
   it('should render the bank accounts list when the PoPA backend responds with back accounts', done => {

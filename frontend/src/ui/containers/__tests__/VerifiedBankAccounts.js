@@ -1,11 +1,11 @@
 import React from 'react'
 import { configure, mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import MyBankAccounts from '../MyBankAccounts'
+import VerifiedBankAccounts from '../VerifiedBankAccounts'
 
 configure({ adapter: new Adapter() })
 
-describe('MyBankAccounts', () => {
+describe('VerifiedBankAccounts', () => {
   describe('render when there are no verified bank accounts', () => {
     const mockedPoBAContract = {
       getVerifiedBankAccounts: async () => {
@@ -16,7 +16,7 @@ describe('MyBankAccounts', () => {
       account: 'ACCOUNT',
       getPoBAContract: () => Promise.resolve(mockedPoBAContract)
     }
-    const wrapper = shallow(<MyBankAccounts {...mockedProperties} />)
+    const wrapper = shallow(<VerifiedBankAccounts {...mockedProperties} />)
     wrapper.instance().componentDidMount()
 
     it('renders correctly when there are no verified bank accounts', done => {
@@ -38,7 +38,7 @@ describe('MyBankAccounts', () => {
       account: 'ACCOUNT',
       getPoBAContract: () => Promise.resolve(mockedPoBAContract)
     }
-    const wrapper = mount(<MyBankAccounts {...mockedProperties} />)
+    const wrapper = mount(<VerifiedBankAccounts {...mockedProperties} />)
 
     it('renders correctly when there are verified bank accounts', done => {
       wrapper.update()

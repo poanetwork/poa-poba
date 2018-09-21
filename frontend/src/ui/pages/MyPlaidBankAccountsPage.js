@@ -1,6 +1,6 @@
 import React from 'react'
 import WithBackButton from './WithBackButton'
-import BankAccounts from '../containers/BankAccounts'
+import PlaidBankAccounts from '../containers/PlaidBankAccounts'
 import getInstance from '../../PoBAContract'
 import { getBankAccounts, getSignedBankAccount } from '../../PoBAServer'
 
@@ -8,19 +8,21 @@ function generateGetPoBAContract(web3) {
   return async () => getInstance(web3.currentProvider)
 }
 
-export const BankAccountsContainer = props => {
+export const MyPlaidAccountsContainer = props => {
   const plaidToken = props.props.match.params.token
   const PoBAServer = {
     getBankAccounts,
     getSignedBankAccount
   }
-  const bankAccountProps = {
+  const plaidBankAccountsProps = {
     account: props.account,
     getPoBAContract: generateGetPoBAContract(props.web3),
     PoBAServer,
     plaidToken
   }
-  return <BankAccounts {...bankAccountProps} />
+  return <PlaidBankAccounts {...plaidBankAccountsProps} />
 }
 
-export default WithBackButton(BankAccountsContainer)
+const MyPlaidAccountsPage = WithBackButton(MyPlaidAccountsContainer)
+
+export default MyPlaidAccountsPage

@@ -1,13 +1,13 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import BankAccountsList from '../BankAccountsList'
+import PlaidBankAccountsList from '../PlaidBankAccountsList'
 
 configure({ adapter: new Adapter() })
 
-describe('<BankAccountList />', () => {
+describe('<PlaidBankAccountsList />', () => {
   it('renders correctly for 0 bank accounts', () => {
-    const wrapper = mount(<BankAccountsList bankAccounts={[]} />)
+    const wrapper = mount(<PlaidBankAccountsList bankAccounts={[]} />)
 
     expect(wrapper.find('div.bank-account-list')).toHaveLength(1)
     expect(wrapper.find('div.bank-account-list div.bank-account-item')).toHaveLength(0)
@@ -24,7 +24,7 @@ describe('<BankAccountList />', () => {
         institution: 'institutionName2'
       }
     ]
-    const wrapper = mount(<BankAccountsList bankAccounts={bankAccounts} />)
+    const wrapper = mount(<PlaidBankAccountsList bankAccounts={bankAccounts} />)
 
     expect(wrapper.find('div.bank-account-list')).toHaveLength(1)
     expect(wrapper.find('div.bank-account-list button')).toHaveLength(2)

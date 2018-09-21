@@ -7,7 +7,7 @@ const ERROR_MSG_CONTRACT_NOT_DEPLOYED = 'Contract is not deployed on this networ
 const ERROR_MSG_REMOVE_BANK_ACCOUNT = 'Error removing the verified bank account'
 const ERROR_MSG_GET_BANK_ACCOUNTS = 'Error getting verified bank accounts'
 
-class MyBankAccounts extends Component {
+class VerifiedBankAccounts extends Component {
   constructor(props) {
     super(props)
 
@@ -81,4 +81,4 @@ class MyBankAccounts extends Component {
   }
 }
 
-export default MyBankAccounts
+export default VerifiedBankAccounts

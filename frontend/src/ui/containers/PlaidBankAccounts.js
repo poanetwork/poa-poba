@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import Loading from '../presentational/Loading'
-import BankAccountsList from '../presentational/BankAccountsList'
+import PlaidBankAccountsList from '../presentational/PlaidBankAccountsList'
 import { errorAlert, successAlert } from '../presentational/alerts'
 
 const ERROR_MSG_CONTRACT_NOT_DEPLOYED = 'Contract is not deployed on this network'
 const ERROR_MSG_VERIFYING_BANK_ACCOUNT = 'There was a problem verifying the the bank account'
 
-class BankAccounts extends Component {
+class PlaidBankAccounts extends Component {
   constructor(props) {
     super(props)
 
@@ -74,7 +74,7 @@ class BankAccounts extends Component {
     return (
       <div className="bank-accounts-page">
         <Loading show={loading} />
-        <BankAccountsList
+        <PlaidBankAccountsList
           bankAccounts={bankAccounts}
           onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
         />
@@ -83,4 +83,4 @@ class BankAccounts extends Component {
   }
 }
 
-export default BankAccounts
+export default PlaidBankAccounts
