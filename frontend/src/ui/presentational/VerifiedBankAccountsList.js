@@ -36,7 +36,10 @@ const AccountInfo = ({ bankAccount }) => (
   </InfoWrapper>
 )
 
-const RemoveButton = glamorous.button(removeButtonStyles)
+const RemoveButton = glamorous.button(
+  'verified-bank-account-list-item__remove-button',
+  removeButtonStyles
+)
 const DatePragraph = glamorous.span(dateParagraphStyles)
 const VerifiedDate = ({ date }) => (
   <DateWrapper>

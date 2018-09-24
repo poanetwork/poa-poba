@@ -1,14 +1,13 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Logo from '../ui/layout/Logo'
+import Content from '../Content'
 
 configure({ adapter: new Adapter() })
 
-describe('<Logo />', () => {
+describe('<Content />', () => {
   it('renders correctly', () => {
-    const wrapper = mount(<Logo />)
-
-    expect(wrapper.find('a.poa-logo')).toHaveLength(1)
+    const wrapper = mount(<Content />)
+    expect(wrapper.find('.content')).toHaveLength(1)
   })
 })

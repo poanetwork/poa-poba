@@ -73,6 +73,37 @@ const data = {
       products: ['auth', 'balance', 'identity', 'transactions']
     },
     request_id: '9VpnU'
+  },
+  getIdentity: {
+    identity: {
+      addresses: [
+        {
+          accounts: ['Plaid Checking 0000'],
+          data: {
+            zip: '94114',
+            state: 'CA',
+            city: 'San Francisco',
+            street: '3819 Greenhaven Ln'
+          },
+          primary: true
+        }
+      ],
+      emails: [
+        {
+          primary: true,
+          type: 'personal',
+          data: 'kelly.walters30@example.com'
+        }
+      ],
+      names: ['Kelly Walters'],
+      phone_numbers: [
+        {
+          primary: true,
+          type: 'home',
+          data: '4673956022'
+        }
+      ]
+    }
   }
 }
 

@@ -9,8 +9,8 @@ import Section from './ui/layout/Section'
 import IndexPage from './ui/pages/IndexPage'
 import HelpPage from './ui/pages/HelpPage'
 import ErrorPage from './ui/pages/ErrorPage'
-import BankAccountsPage from './ui/pages/BankAccountsPage'
-import MyBankAccountsPage from './ui/pages/MyBankAccountsPage'
+import MyPlaidBankAccountsPage from './ui/pages/MyPlaidBankAccountsPage'
+import MyVerifiedBankAccountsPage from './ui/pages/MyVerifiedBankAccountsPage'
 import Web3Provider from './Web3Provider'
 
 const noWeb3Render = () => <ErrorPage error="noWeb3Render" />
@@ -22,11 +22,15 @@ const routesRender = (web3, accounts) => {
       <Route exact path="/help" component={() => <HelpPage />} />
       <Route
         path="/bankaccountslist/:token"
-        component={props => <BankAccountsPage props={props} web3={web3} account={accounts[0]} />}
+        component={props => (
+          <MyPlaidBankAccountsPage props={props} web3={web3} account={accounts[0]} />
+        )}
       />
       <Route
         path="/mybankaccountslist"
-        component={props => <MyBankAccountsPage props={props} web3={web3} account={accounts[0]} />}
+        component={props => (
+          <MyVerifiedBankAccountsPage props={props} web3={web3} account={accounts[0]} />
+        )}
       />
     </section>
   )

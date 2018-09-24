@@ -52,7 +52,10 @@
       "!**/node_modules/**",
       "!**/public/**",
       "!**/artifacts/**",
-      "!**/__tests__/*.js"
+      "!**/__tests__/*.js",
+      "!**/src/ui/styles/**/*.js",
+      "!**/src/index.js",
+      "!**/src/registerServiceWorker.js"
     ],
     "coverageThreshold": {
       "global": {
