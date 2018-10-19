@@ -9,52 +9,31 @@ import { howItWorksIconStyles, myAccountsIconStyles } from '../styles/icons'
 const HowItWorksIcon = glamorous.i(howItWorksIconStyles, align.iconRight)
 const MyAccountsIcon = glamorous.i(myAccountsIconStyles, align.iconRight)
 
-class IndexPage extends React.Component {
-  constructor(props) {
-    super(props)
+const IndexPage = () => (
+  <div>
+    <H1>Proof of bank account</H1>
+    <P className="main">
+      This ĐApp can be used to prove your ownership of a bank account in one of the supported banks.
+      A widget provided by <a href="https://plaid.com/">Plaid</a> is used to verify that you have
+      access to the bank account. Except for blockchain transaction fee to call the smart-contract,
+      there is no extra cost of the verifiaction process. If you have more questions, check out{' '}
+      <strong>How it works</strong> section.
+    </P>
+    <Link to="/help">
+      <button style={buttonStyle}>
+        How it works <HowItWorksIcon />
+      </button>
+    </Link>
+    <PlaidButton />
 
-    this.state = {
-      web3: null,
-      accounts: []
-    }
-  }
-
-  componentWillMount() {
-    const { web3, accounts } = this.props
-    this.setState({
-      web3,
-      accounts
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        <H1>Proof of bank account</H1>
-        <P className="main">
-          This ĐApp can be used to prove your ownership of a bank account in one of the supported
-          banks. A widget provided by <a href="https://plaid.com/">Plaid</a> is used to verify that
-          you have access to the bank account. Except for blockchain transaction fee to call the
-          smart-contract, there is no extra cost of the verifiaction process. If you have more
-          questions, check out <strong>How it works</strong> section.
-        </P>
-        <Link to="/help">
-          <button style={buttonStyle}>
-            How it works <HowItWorksIcon />
-          </button>
-        </Link>
-        <PlaidButton web3={this.state.web3} account={this.state.accounts[0]} />
-
-        <H2>My bank accounts</H2>
-        <P>To view the list of your verified bank accounts click the button below.</P>
-        <Link to="/mybankaccountslist">
-          <button style={buttonStyle}>
-            My Bank Accounts <MyAccountsIcon />
-          </button>
-        </Link>
-      </div>
-    )
-  }
-}
+    <H2>My bank accounts</H2>
+    <P>To view the list of your verified bank accounts click the button below.</P>
+    <Link to="/mybankaccountslist">
+      <button style={buttonStyle}>
+        My Bank Accounts <MyAccountsIcon />
+      </button>
+    </Link>
+  </div>
+)
 
 export default IndexPage

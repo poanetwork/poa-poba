@@ -5,4 +5,12 @@ export const pageLayoutStyles = {
   height: '100%'
 }
 
-export const headingStyles = { marginTop: '0' }
+export const headingStyles = {
+  lineHeight: 1.58,
+  marginBottom: '20px',
+  marginTop: '20px'
+}
+
+export const paragraphStyles = {
+  marginBottom: '20px'
+}
