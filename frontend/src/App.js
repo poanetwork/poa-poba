@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
+import { withWeb3 } from 'react-web3-provider'
 import Header from './ui/layout/Header'
 import Footer from './ui/layout/Footer'
 import Main from './ui/layout/Main'
@@ -11,58 +12,69 @@ import HelpPage from './ui/pages/HelpPage'
 import ErrorPage from './ui/pages/ErrorPage'
 import MyPlaidBankAccountsPage from './ui/pages/MyPlaidBankAccountsPage'
 import MyVerifiedBankAccountsPage from './ui/pages/MyVerifiedBankAccountsPage'
-import Web3Provider from './Web3Provider'
 
-const noWeb3Render = () => <ErrorPage error="noWeb3Render" />
-const noUnlockedAccountRender = () => <ErrorPage error="noUnlockedAccountRender" />
-const routesRender = (web3, accounts) => {
-  return (
-    <section className="h100percent">
-      <Route exact path="/" component={() => <IndexPage web3={web3} accounts={accounts} />} />
-      <Route exact path="/help" component={() => <HelpPage />} />
-      <Route
-        path="/bankaccountslist/:token"
-        component={props => (
-          <MyPlaidBankAccountsPage props={props} web3={web3} account={accounts[0]} />
-        )}
-      />
-      <Route
-        path="/mybankaccountslist"
-        component={props => (
-          <MyVerifiedBankAccountsPage props={props} web3={web3} account={accounts[0]} />
-        )}
-      />
-    </section>
-  )
+export class AppContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedAccount: null
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { web3, web3State } = this.props
+    if (web3State.isConnected !== prevProps.web3State.isConnected && web3) {
+      web3.eth.getAccounts().then(accounts => {
+        this.setState({
+          selectedAccount: accounts[0]
+        })
+      })
+    }
+  }
+
+  renderRoutes() {
+    const { web3 } = this.props
+    const { selectedAccount } = this.state
+    return (
+      <BrowserRouter>
+        <Route exact path="/" component={IndexPage} />
+        <Route exact path="/help" component={HelpPage} />
+        <Route
+          path="/bankaccountslist/:token"
+          component={props => (
+            <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
+          )}
+        />
+        <Route
+          path="/mybankaccountslist"
+          component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
+        />
+      </BrowserRouter>
+    )
+  }
+
+  render() {
+    const { web3 } = this.props
+    const { selectedAccount } = this.state
+
+    return (
+      <div className="App">
+        <Main>
+          <Sidebar />
+          <Content>
+            <Header />
+            <Section>
+              <section className="h100percent">
+                {!web3 || !selectedAccount ? <ErrorPage /> : this.renderRoutes()}
+              </section>
+            </Section>
+            <Footer />
+          </Content>
+        </Main>
+      </div>
+    )
+  }
 }
 
-const App = () => (
-  <div className="App">
-    <BrowserRouter>
-      <Main>
-        <Sidebar />
-        <Content>
-          <Header />
-          <Section>
-            <Web3Provider
-              render={({ web3, accounts }) => {
-                let content = null
-                if (!web3) {
-                  content = noWeb3Render()
-                } else if (!accounts || accounts.length === 0) {
-                  content = noUnlockedAccountRender()
-                } else {
-                  content = routesRender(web3, accounts)
-                }
-                return content
-              }}
-            />
-          </Section>
-          <Footer />
-        </Content>
-      </Main>
-    </BrowserRouter>
-  </div>
-)
-
+const App = withWeb3(AppContainer)
 export default App
