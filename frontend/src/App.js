@@ -37,18 +37,20 @@ export class AppContainer extends React.Component {
     const { selectedAccount } = this.state
     return (
       <BrowserRouter>
-        <Route exact path="/" component={IndexPage} />
-        <Route exact path="/help" component={HelpPage} />
-        <Route
-          path="/bankaccountslist/:token"
-          component={props => (
-            <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
-          )}
-        />
-        <Route
-          path="/mybankaccountslist"
-          component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
-        />
+        <section>
+          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/help" component={HelpPage} />
+          <Route
+            path="/bankaccountslist/:token"
+            component={props => (
+              <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
+            )}
+          />
+          <Route
+            path="/mybankaccountslist"
+            component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
+          />
+        </section>
       </BrowserRouter>
     )
   }
