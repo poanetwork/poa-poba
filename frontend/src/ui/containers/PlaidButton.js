@@ -9,7 +9,7 @@ import { rightArrowIconStyles } from '../styles/icons'
 const RightArrowIcon = glamorous.i(rightArrowIconStyles, align.iconRight)
 // React-plaid-link wraps its <button> in a div with display:block
 // the wrapper allows us to style accordingly and make it responsive
-const PlaidLinkWrapper = glamorous.span('plaid-link,wrapper', plaidLinkWrapperStyles)
+const PlaidLinkWrapper = glamorous.span('plaid-link-wrapper', plaidLinkWrapperStyles)
 
 class PlaidButton extends Component {
   constructor() {
