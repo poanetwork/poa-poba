@@ -53,6 +53,7 @@ export const headerStyles = {
 export const sectionStyles = {
   gridRowStart: '2',
   gridRowEnd: '2',
+  height: '100%',
   justifySelf: 'start',
   width: '100%',
   [`@media(min-width: ${breakpoints.md})`]: {

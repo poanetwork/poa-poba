@@ -2,12 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import glamorous, { P, H1, H2 } from 'glamorous'
 import PlaidButton from '../containers/PlaidButton'
-import buttonStyle from '../styles/button'
+import { responsiveButtonStyles } from '../styles/button'
 import align from '../styles/align'
 import { howItWorksIconStyles, myAccountsIconStyles } from '../styles/icons'
 
 const HowItWorksIcon = glamorous.i(howItWorksIconStyles, align.iconRight)
 const MyAccountsIcon = glamorous.i(myAccountsIconStyles, align.iconRight)
+const ResponsiveButton = glamorous.button(responsiveButtonStyles)
 
 const IndexPage = () => (
   <div>
@@ -20,18 +21,18 @@ const IndexPage = () => (
       <strong>How it works</strong> section.
     </P>
     <Link to="/help">
-      <button style={buttonStyle}>
+      <ResponsiveButton>
         How it works <HowItWorksIcon />
-      </button>
+      </ResponsiveButton>
     </Link>
     <PlaidButton />
 
     <H2>My bank accounts</H2>
     <P>To view the list of your verified bank accounts click the button below.</P>
     <Link to="/mybankaccountslist">
-      <button style={buttonStyle}>
+      <ResponsiveButton>
         My Bank Accounts <MyAccountsIcon />
-      </button>
+      </ResponsiveButton>
     </Link>
   </div>
 )

@@ -37,7 +37,7 @@ export class AppContainer extends React.Component {
     const { selectedAccount } = this.state
     return (
       <BrowserRouter>
-        <section>
+        <section className="h100percent">
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/help" component={HelpPage} />
           <Route

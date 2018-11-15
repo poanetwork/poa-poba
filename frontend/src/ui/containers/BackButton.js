@@ -2,16 +2,17 @@ import React from 'react'
 import glamorous from 'glamorous'
 
 import { Link } from 'react-router-dom'
-import buttonStyle from '../styles/button'
+import { responsiveButtonStyles } from '../styles/button'
 import align from '../styles/align'
 import { backIconStyles } from '../styles/icons'
 
 const BackIcon = glamorous.i(backIconStyles, align.iconRight)
+const ResponsiveButton = glamorous.button(responsiveButtonStyles)
 
 export default () => (
   <Link to="/">
-    <button style={buttonStyle}>
+    <ResponsiveButton>
       Back <BackIcon />
-    </button>
+    </ResponsiveButton>
   </Link>
 )
