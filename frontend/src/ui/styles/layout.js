@@ -13,11 +13,14 @@ export const mainStyles = {
 export const sidebarStyles = {
   backgroundImage: 'url("/images/pic@3x.jpg")',
   backgroundSize: 'cover',
-  [`@media(min-width: ${breakpoints.md})`]: {
-    width: '40%'
-  },
   [`@media(max-width: ${breakpoints.md})`]: {
     width: '0'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    width: '30%'
+  },
+  [`@media(min-width: ${breakpoints.lg})`]: {
+    width: '40%'
   }
 }
 
@@ -27,17 +30,21 @@ export const contentStyles = {
   gridTemplateColumns: '1fr',
   height: '100vh',
   overflow: 'auto',
-  [`@media(min-width: ${breakpoints.md})`]: {
-    gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
-    paddingLeft: '50px',
-    paddingRight: '50px',
-    width: '60%'
-  },
   [`@media(max-width: ${breakpoints.md})`]: {
     gridTemplateRows: `${headerHeight} 1fr 124px`,
     paddingLeft: '15px',
     paddingRight: '15px',
     width: '100%'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
+    paddingLeft: '50px',
+    paddingRight: '50px',
+    width: '70%'
+  },
+  [`@media(min-width: ${breakpoints.lg})`]: {
+    gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
+    width: '60%'
   }
 }
 
