@@ -65,11 +65,7 @@ export class AppContainer extends React.Component {
           <Sidebar />
           <Content>
             <Header />
-            <Section>
-              <section className="h100percent">
-                {!web3 || !selectedAccount ? <ErrorPage /> : this.renderRoutes()}
-              </section>
-            </Section>
+            <Section>{!web3 || !selectedAccount ? <ErrorPage /> : this.renderRoutes()}</Section>
             <Footer />
           </Content>
         </Main>
