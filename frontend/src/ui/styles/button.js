@@ -21,7 +21,7 @@ const buttonStyles = {
   textAlign: 'left',
   textTransform: 'none',
   ':hover': {
-    backgroundColor: '#34c3f8'
+    boxShadow: 'inset 0 0 0 1px #5c34a2'
   },
   ':focus': {
     outline: 'unset'
