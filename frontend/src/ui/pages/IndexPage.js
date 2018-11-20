@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import glamorous, { P, H2 } from 'glamorous'
+import glamorous, { P } from 'glamorous'
 import PlaidButton from '../containers/PlaidButton'
 import { responsiveButtonStyles } from '../styles/button'
 import align from '../styles/align'
