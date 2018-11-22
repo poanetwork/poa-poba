@@ -11,7 +11,6 @@ contract PoBA {
   }
 
   struct BankAccount {
-    string accountNumber;
     string bankName;
     string identityNames;
     uint256 attestationDate;
@@ -69,14 +68,13 @@ contract PoBA {
     emit LogSignerChanged(newSigner);
   }
 
-  function register(
-    string account,
+  function registerBankAccount(
     string institution,
     string names,
     uint8 v, bytes32 r, bytes32 s) public {
 
-    require(bytes(account).length > 0);
     require(bytes(institution).length > 0);
+    require(bytes(names).length > 0);
     require(users[msg.sender].bankAccounts.length < 2**256-1);
 
     if (!userExists(msg.sender)) {
@@ -87,21 +85,13 @@ contract PoBA {
 
     BankAccount memory ba;
 
-    ba.accountNumber = account;
     ba.bankName = institution;
     ba.identityNames = names;
     ba.attestationDate = now;
     ba.attestationFact = true;
     ba.creationBlock = block.number;
 
-    bytes32 hash = keccak256(
-      abi.encodePacked(
-        msg.sender,
-        ba.accountNumber,
-        ba.bankName,
-        ba.identityNames
-      )
-    );
+    bytes32 hash = keccak256(abi.encodePacked(msg.sender, ba.bankName, ba.identityNames));
     require(signerIsValid(hash, v, r, s));
     ba.keccakIdentifier = hash;
 
@@ -111,12 +101,12 @@ contract PoBA {
     emit LogBankAccountRegistered(msg.sender, ba.keccakIdentifier);
   }
 
-  function unregisterBankAccount(string account, string institution, string names)
+  function unregisterBankAccount(string institution, string names)
   public checkUserExists(msg.sender)
   {
     bool found;
     uint256 index;
-    (found, index) = userBankAccountByBankAccount(msg.sender, account, institution, names);
+    (found, index) = userBankAccountByBankAccount(msg.sender, institution, names);
     require(found);
 
     // Store keccakIdentifier for logging purpose
@@ -140,16 +130,10 @@ contract PoBA {
   }
 
   // returns (found/not found, index if found/0 if not found, confirmed/not confirmed)
-  function userBankAccountByBankAccount(address wallet, string account, string institution, string names)
+  function userBankAccountByBankAccount(address wallet, string institution, string names)
   public view checkUserExists(wallet) returns(bool, uint256)
   {
-    bytes32 keccakIdentifier = keccak256(
-      abi.encodePacked(
-        wallet,
-        account,
-        institution,
-        names
-      ));
+    bytes32 keccakIdentifier = keccak256(abi.encodePacked(wallet, institution, names));
     return userBankAccountByKeccakIdentifier(wallet, keccakIdentifier);
   }
 
@@ -165,18 +149,17 @@ contract PoBA {
     return (false, 0);
   }
 
-  function accountsLength(address _address) public constant returns (uint256) {
+  function userBankAccountsLength(address _address) public constant returns (uint256) {
     return users[_address].bankAccounts.length;
   }
 
-  function getBankAccounts(address _address, uint256 addressIndex) public constant
-  returns (string accountNumber, string bankName, string identityNames, uint256 attestationDate)
+  function getBankAccountsByAddress(address _address, uint256 addressIndex) public constant
+  returns (string bankName, string identityNames, uint256 attestationDate)
   {
     return (
-    users[_address].bankAccounts[addressIndex].accountNumber,
-    users[_address].bankAccounts[addressIndex].bankName,
-    users[_address].bankAccounts[addressIndex].identityNames,
-    users[_address].bankAccounts[addressIndex].attestationDate
+      users[_address].bankAccounts[addressIndex].bankName,
+      users[_address].bankAccounts[addressIndex].identityNames,
+      users[_address].bankAccounts[addressIndex].attestationDate
     );
   }
 }
