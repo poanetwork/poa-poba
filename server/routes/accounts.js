@@ -31,22 +31,6 @@ const getBankAccounts = (req, res) => {
   return bankAccounts(token)
 }
 
-const getSingleBankAccount = (req, res) => {
-  const { token, accountId } = req.params
-  logger.info('Getting single account details')
-  const bankAccounts = async publicToken => {
-    try {
-      const accessToken = await accountsController.getAccessToken(publicToken)
-      const account = await accountsController.getBankAccount(accessToken, accountId)
-      return res.send({ account })
-    } catch (e) {
-      logger.error(e.message, 'There was an error getting the transaction data 2')
-      return res.status(400).send({ error: e.message })
-    }
-  }
-  return bankAccounts(token)
-}
-
 const signBankAccount = (req, res) => {
   const { ethAccount, token, accountId } = req.body
   logger.info({ ethAccount }, 'Getting bank account')
@@ -79,6 +63,5 @@ const signBankAccount = (req, res) => {
 
 router.post('/sign-account', signBankAccount)
 router.get('/bank-accounts/:token', getBankAccounts)
-router.get('/bank-accounts/:token/:accountId', getSingleBankAccount)
 
 module.exports = router
