@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { P } from 'glamorous'
 import Loading from '../presentational/Loading'
 import PlaidBankAccountsList from '../presentational/PlaidBankAccountsList'
 import { errorAlert, successAlert } from '../presentational/alerts'
@@ -13,7 +14,7 @@ class PlaidBankAccounts extends Component {
     this.state = {
       ethAccount: props.account,
       plaidToken: props.plaidToken,
-      bankAccounts: [],
+      bankAccounts: null,
       loading: false
     }
     this.PoBAServer = this.props.PoBAServer
@@ -38,9 +39,8 @@ class PlaidBankAccounts extends Component {
       const txData = await this.PoBAServer.getSignedBankAccount(accountId, ethAccount, plaidToken)
       const registerResult = await this.PoBAContract.registerBankAccount(txData, ethAccount)
       if (registerResult) {
+        await this.fetchBankAccounts(this.state.plaidToken)
         successAlert()
-        // @TODO: set flag in bankAccount to signal that it is verified
-        // this.getVerifiedBankAccounts(this.state.ethAccount)
       } else {
         throw new Error(ERROR_MSG_VERIFYING_BANK_ACCOUNT)
       }
@@ -54,15 +54,21 @@ class PlaidBankAccounts extends Component {
 
   async fetchBankAccounts(token) {
     this.setState({ loading: true })
-    const accounts = await this.PoBAServer.getBankAccounts(token)
+    const accountsOfSelectedBank = await this.PoBAServer.getBankAccounts(token)
     const verifiedBankAccounts = await this.PoBAContract.getVerifiedBankAccounts(
       this.state.ethAccount
     )
-    const verifiedBankAccountsNumbers = verifiedBankAccounts.map(account => account[0])
-    const bankAccounts = accounts.map(account => {
-      const verified = !!verifiedBankAccountsNumbers.includes(account.account)
-      return Object.assign({ verified }, account)
-    })
+
+    const bankAccounts = []
+    if (accountsOfSelectedBank.length > 0) {
+      const bankAccount = accountsOfSelectedBank[0]
+      const selectedBankName = bankAccount.institution
+      const verified = verifiedBankAccounts.some(verifiedBankAccount => {
+        return verifiedBankAccount[0] === selectedBankName
+      })
+      bankAccounts.push(Object.assign({ verified }, bankAccount))
+    }
+
     this.setState({
       loading: false,
       bankAccounts
@@ -74,10 +80,19 @@ class PlaidBankAccounts extends Component {
     return (
       <div className="bank-accounts-page">
         <Loading show={loading} />
-        <PlaidBankAccountsList
-          bankAccounts={bankAccounts}
-          onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
-        />
+        {bankAccounts && bankAccounts.length > 0 ? (
+          <PlaidBankAccountsList
+            bankAccounts={bankAccounts}
+            onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+          />
+        ) : (
+          <P>
+            Plaid's API returned no bank accounts.
+            <br />
+            Please go back to the home page, repeat the process and select a different bank when
+            prompted with Plaid's login form.
+          </P>
+        )}
       </div>
     )
   }
