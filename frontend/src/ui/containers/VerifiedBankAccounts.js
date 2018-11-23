@@ -64,17 +64,19 @@ class VerifiedBankAccounts extends Component {
 
   render() {
     const { loading, verifiedBankAccounts } = this.state
+    const content =
+      verifiedBankAccounts.length > 0 ? (
+        <VerifiedBankAccountsList
+          bankAccounts={verifiedBankAccounts}
+          onClick={bankAccount => this.removeBankAccount(bankAccount)}
+        />
+      ) : (
+        <p className="no-results">Could not find bank accounts for the given address.</p>
+      )
     return (
       <div>
         <Loading show={loading} />
-        {verifiedBankAccounts.length > 0 ? (
-          <VerifiedBankAccountsList
-            bankAccounts={verifiedBankAccounts}
-            onClick={bankAccount => this.removeBankAccount(bankAccount)}
-          />
-        ) : (
-          <p className="no-results">Could not find bank accounts for the given address.</p>
-        )}
+        {loading ? null : content}
       </div>
     )
   }

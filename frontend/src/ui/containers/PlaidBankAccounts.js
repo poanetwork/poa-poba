@@ -54,45 +54,52 @@ class PlaidBankAccounts extends Component {
 
   async fetchBankAccounts(token) {
     this.setState({ loading: true })
-    const accountsOfSelectedBank = await this.PoBAServer.getBankAccounts(token)
-    const verifiedBankAccounts = await this.PoBAContract.getVerifiedBankAccounts(
-      this.state.ethAccount
-    )
-
     const bankAccounts = []
-    if (accountsOfSelectedBank.length > 0) {
-      const bankAccount = accountsOfSelectedBank[0]
-      const selectedBankName = bankAccount.institution
-      const verified = verifiedBankAccounts.some(verifiedBankAccount => {
-        return verifiedBankAccount[0] === selectedBankName
-      })
-      bankAccounts.push(Object.assign({ verified }, bankAccount))
-    }
 
-    this.setState({
-      loading: false,
-      bankAccounts
-    })
+    try {
+      const accountsOfSelectedBank = await this.PoBAServer.getBankAccounts(token)
+      const verifiedBankAccounts = await this.PoBAContract.getVerifiedBankAccounts(
+        this.state.ethAccount
+      )
+      if (accountsOfSelectedBank.length > 0) {
+        const bankAccount = accountsOfSelectedBank[0]
+        const selectedBankName = bankAccount.institution
+        const verified = verifiedBankAccounts.some(verifiedBankAccount => {
+          return verifiedBankAccount[0] === selectedBankName
+        })
+        bankAccounts.push(Object.assign({ verified }, bankAccount))
+      }
+    } catch (e) {
+      console.error(ERROR_MSG_VERIFYING_BANK_ACCOUNT, e)
+      errorAlert(ERROR_MSG_VERIFYING_BANK_ACCOUNT)
+    } finally {
+      this.setState({
+        loading: false,
+        bankAccounts
+      })
+    }
   }
 
   render() {
     const { loading, bankAccounts } = this.state
+    const content =
+      bankAccounts && bankAccounts.length > 0 ? (
+        <PlaidBankAccountsList
+          bankAccounts={bankAccounts}
+          onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
+        />
+      ) : (
+        <P>
+          Plaid's API returned no bank accounts.
+          <br />
+          Please go back to the home page, repeat the process and select a different bank when
+          prompted with Plaid's login form.
+        </P>
+      )
     return (
       <div className="bank-accounts-page">
         <Loading show={loading} />
-        {bankAccounts && bankAccounts.length > 0 ? (
-          <PlaidBankAccountsList
-            bankAccounts={bankAccounts}
-            onClick={bankAccount => this.chooseBankAccount(bankAccount.account_id)}
-          />
-        ) : (
-          <P>
-            Plaid's API returned no bank accounts.
-            <br />
-            Please go back to the home page, repeat the process and select a different bank when
-            prompted with Plaid's login form.
-          </P>
-        )}
+        {loading ? null : content}
       </div>
     )
   }
