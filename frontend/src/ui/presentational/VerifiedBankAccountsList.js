@@ -29,7 +29,7 @@ const InfoParagraph = glamorous.span(infoParagraphStyles)
 const AccountInfo = ({ bankAccount }) => (
   <InfoWrapper>
     <InfoParagraph>
-      {bankAccount.account}
+      {bankAccount.identityNames}
       <br />
       {bankAccount.bankName}
     </InfoParagraph>

@@ -49,10 +49,9 @@ class VerifiedBankAccounts extends Component {
     try {
       const verifiedBankAccountsData = await this.PoBAContract.getVerifiedBankAccounts(ethAccount)
       const verifiedBankAccounts = verifiedBankAccountsData.map(bankAccountData => ({
-        account: bankAccountData[0],
-        bankName: bankAccountData[1],
-        identityNames: bankAccountData[2].toString(),
-        verifiedDate: bankAccountData[3].toString()
+        bankName: bankAccountData[0],
+        identityNames: bankAccountData[1].toString(),
+        verifiedDate: bankAccountData[2].toString()
       }))
       this.setState({ verifiedBankAccounts })
     } catch (e) {
@@ -65,17 +64,19 @@ class VerifiedBankAccounts extends Component {
 
   render() {
     const { loading, verifiedBankAccounts } = this.state
+    const content =
+      verifiedBankAccounts.length > 0 ? (
+        <VerifiedBankAccountsList
+          bankAccounts={verifiedBankAccounts}
+          onClick={bankAccount => this.removeBankAccount(bankAccount)}
+        />
+      ) : (
+        <p className="no-results">Could not find bank accounts for the given address.</p>
+      )
     return (
       <div>
         <Loading show={loading} />
-        {verifiedBankAccounts.length > 0 ? (
-          <VerifiedBankAccountsList
-            bankAccounts={verifiedBankAccounts}
-            onClick={bankAccount => this.removeBankAccount(bankAccount)}
-          />
-        ) : (
-          <p className="no-results">Could not find bank accounts for the given address.</p>
-        )}
+        {loading ? null : content}
       </div>
     )
   }

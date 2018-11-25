@@ -18,25 +18,13 @@ const getBankAccounts = (req, res) => {
       const accounts = await accountsController.getBankAccounts(accessToken)
       const institutionId = accounts.item.institution_id
       accounts.item.institution = await accountsController.getInstitutionById(institutionId)
-      return res.send({ accounts })
+
+      const identity = await accountsController.getIdentity(accessToken)
+      const identityNames = identity.names.join(', ')
+
+      return res.send({ accounts, identityNames })
     } catch (e) {
       logger.error(e.message, 'There was an error getting the transaction data 1')
-      return res.status(400).send({ error: e.message })
-    }
-  }
-  return bankAccounts(token)
-}
-
-const getSingleBankAccount = (req, res) => {
-  const { token, accountId } = req.params
-  logger.info('Getting single account details')
-  const bankAccounts = async publicToken => {
-    try {
-      const accessToken = await accountsController.getAccessToken(publicToken)
-      const account = await accountsController.getBankAccount(accessToken, accountId)
-      return res.send({ account })
-    } catch (e) {
-      logger.error(e.message, 'There was an error getting the transaction data 2')
       return res.status(400).send({ error: e.message })
     }
   }
@@ -60,7 +48,6 @@ const signBankAccount = (req, res) => {
 
       const hash = web3.utils.soliditySha3(
         ethAccount +
-          Buffer.from(bankAccount.account).toString('hex') +
           Buffer.from(bankAccount.institution).toString('hex') +
           Buffer.from(identityNames).toString('hex')
       )
@@ -76,6 +63,5 @@ const signBankAccount = (req, res) => {
 
 router.post('/sign-account', signBankAccount)
 router.get('/bank-accounts/:token', getBankAccounts)
-router.get('/bank-accounts/:token/:accountId', getSingleBankAccount)
 
 module.exports = router

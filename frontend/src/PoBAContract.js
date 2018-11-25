@@ -22,10 +22,10 @@ class PoBAContract {
   async getVerifiedBankAccounts(walletAddress) {
     const promises = []
     try {
-      const accountsLengthResult = await this.contract.accountsLength(walletAddress)
+      const accountsLengthResult = await this.contract.userBankAccountsLength(walletAddress)
       const accountsLength = accountsLengthResult.c[0]
       for (let index = 0; index < accountsLength; index++) {
-        promises.push(this.contract.getBankAccounts(walletAddress, index))
+        promises.push(this.contract.getBankAccountsByAddress(walletAddress, index))
       }
     } catch (e) {
       console.error('Error getting verified bank accounts', e)
@@ -34,8 +34,7 @@ class PoBAContract {
   }
 
   async registerBankAccount(args, walletAddress) {
-    return this.contract.register(
-      args.bankAccount.account,
+    return this.contract.registerBankAccount(
       args.bankAccount.institution,
       args.identityNames,
       args.v,
@@ -48,12 +47,11 @@ class PoBAContract {
   async unregisterBankAccount(args, walletAddress) {
     // Default estimation of gas is too low, multiply it by 2
     const gasEstimate = await this.contract.unregisterBankAccount.estimateGas(
-      args.account,
       args.bankName,
       args.identityNames,
       { from: walletAddress }
     )
-    return this.contract.unregisterBankAccount(args.account, args.bankName, args.identityNames, {
+    return this.contract.unregisterBankAccount(args.bankName, args.identityNames, {
       from: walletAddress,
       gas: gasEstimate * 2
     })

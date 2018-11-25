@@ -25,7 +25,6 @@ describe('PlaidButton', () => {
     wrapper.setState({
       plaidToken: 'something'
     })
-    console.warn(wrapper.html().toString())
     expect(wrapper.find('Redirect')).toHaveLength(1)
     done()
   })
