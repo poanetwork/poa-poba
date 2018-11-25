@@ -17,6 +17,8 @@ const fadeOut = css.keyframes({
 })
 
 const LoadingContainer = glamorous.div('loading-container', {
+  display: 'flex',
+  justifyContent: 'center',
   position: 'fixed',
   zIndex: 1000000,
   left: 0,
@@ -29,13 +31,12 @@ const LoadingContainer = glamorous.div('loading-container', {
 const LoadingInner = glamorous.div('loading-inner', {
   display: 'flex',
   justifyContent: 'space-between',
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
   width: '234px',
-  margin: '-30px 0 0 -81.5px',
+  flexGrow: 0,
+  flexShrink: 0,
+  alignSelf: 'center',
+  position: 'relative',
   paddingTop: '50px',
-
   '&:before': {
     content: "''",
     position: 'absolute',

@@ -15,13 +15,16 @@ const TelegramIcon = glamorous.i(telegramIconStyles)
 const GithubIcon = glamorous.i(githubIconStyles)
 
 const socialAnchorStyles = {
-  marginLeft: '20px',
+  marginLeft: '10px',
+  marginRight: '10px',
   lineHeight: footerHeight,
   height: footerHeight
 }
 
+const SocialContainer = glamorous.p('social-container', socialsStyles)
+
 const Socials = () => (
-  <p className="social-container" style={socialsStyles}>
+  <SocialContainer>
     <a
       className="social-item"
       href="https://twitter.com/poanetwork"
@@ -58,7 +61,7 @@ const Socials = () => (
     >
       <GithubIcon />
     </a>
-  </p>
+  </SocialContainer>
 )
 
 export default Socials

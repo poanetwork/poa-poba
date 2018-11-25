@@ -3,10 +3,13 @@ import { Redirect } from 'react-router-dom'
 import glamorous from 'glamorous'
 import PlaidLink from 'react-plaid-link'
 import align from '../styles/align'
-import { plaidButtonStyles } from '../styles/button'
+import { plaidButtonStyles, plaidLinkWrapperStyles } from '../styles/button'
 import { rightArrowIconStyles } from '../styles/icons'
 
 const RightArrowIcon = glamorous.i(rightArrowIconStyles, align.iconRight)
+// React-plaid-link wraps its <button> in a div with display:block
+// the wrapper allows us to style accordingly and make it responsive
+const PlaidLinkWrapper = glamorous.span('plaid-link-wrapper', plaidLinkWrapperStyles)
 
 class PlaidButton extends Component {
   constructor() {
@@ -29,7 +32,7 @@ class PlaidButton extends Component {
     return plaidToken ? (
       <Redirect to={bankAccountsListState} />
     ) : (
-      <span className="plaid-link-wrapper">
+      <PlaidLinkWrapper>
         <PlaidLink
           clientName="Proof of Bank Account"
           env={process.env.REACT_APP_PLAID_ENV}
@@ -41,7 +44,7 @@ class PlaidButton extends Component {
         >
           Continue <RightArrowIcon />
         </PlaidLink>
-      </span>
+      </PlaidLinkWrapper>
     )
   }
 }

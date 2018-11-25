@@ -1,10 +1,5 @@
 import { css } from 'glamor'
 
-// react-plaid-link wraps its <button> in a div with display:block
-css.global('.plaid-link-wrapper > div', {
-  display: 'inline-block'
-})
-
 css.global('*', {
   boxSizing: 'border-box'
 })

@@ -2,6 +2,7 @@ import React from 'react'
 import { configure, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import WithBackButton from '../WithBackButton'
+import BackButton from '../../containers/BackButton'
 
 configure({ adapter: new Adapter() })
 
@@ -23,7 +24,7 @@ describe('WithBackButton high order component', () => {
     expect(WrappedContentShallow.find('.with-back-button-wrapped-content')).toHaveLength(1)
 
     // Check that the back button is rendered too (at a specific position)
-    const BackButtonShallow = WithBackButtonShallow.childAt(1).shallow()
-    expect(BackButtonShallow.find('button')).toHaveLength(1)
+    const BackButtonShallow = WithBackButtonShallow.childAt(1)
+    expect(BackButtonShallow.find(BackButton)).toHaveLength(1)
   })
 })

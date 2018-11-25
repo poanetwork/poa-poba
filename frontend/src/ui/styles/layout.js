@@ -1,4 +1,4 @@
-import { headerHeight, footerHeight } from './constants'
+import { headerHeight, footerHeight, breakpoints } from './constants'
 
 // "main" wraps "sidebar" & "content" in the markup
 export const mainStyles = {
@@ -12,20 +12,40 @@ export const mainStyles = {
 
 export const sidebarStyles = {
   backgroundImage: 'url("/images/pic@3x.jpg")',
-  width: '40%',
-  backgroundSize: 'cover'
+  backgroundSize: 'cover',
+  [`@media(max-width: ${breakpoints.md})`]: {
+    width: '0'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    width: '30%'
+  },
+  [`@media(min-width: ${breakpoints.lg})`]: {
+    width: '40%'
+  }
 }
 
 // "content" wraps "header", "section" & "footer" in the markup
 export const contentStyles = {
   display: 'grid',
-  gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
   gridTemplateColumns: '1fr',
   height: '100vh',
-  width: '60%',
-  paddingLeft: '50px',
-  paddingRight: '50px',
-  overflow: 'auto'
+  overflow: 'auto',
+  [`@media(max-width: ${breakpoints.md})`]: {
+    gridTemplateRows: `${headerHeight} 1fr 124px`,
+    paddingLeft: '15px',
+    paddingRight: '15px',
+    width: '100%'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
+    paddingLeft: '50px',
+    paddingRight: '50px',
+    width: '70%'
+  },
+  [`@media(min-width: ${breakpoints.lg})`]: {
+    gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
+    width: '60%'
+  }
 }
 
 export const headerStyles = {
@@ -40,9 +60,12 @@ export const headerStyles = {
 export const sectionStyles = {
   gridRowStart: '2',
   gridRowEnd: '2',
+  height: '100%',
   justifySelf: 'start',
   width: '100%',
-  maxWidth: '600px'
+  [`@media(min-width: ${breakpoints.md})`]: {
+    maxWidth: '600px'
+  }
 }
 
 // "footer" wraps "footerText" and "socials" in markup
@@ -50,26 +73,43 @@ export const footerStyles = {
   gridRowStart: '3',
   gridRowEnd: '3',
   alignSelf: 'end',
+  height: '100%',
   width: '100%',
-  maxWidth: '600px',
-  marginTop: '80px',
-  display: 'flex'
+  display: 'flex',
+  [`@media(max-width: ${breakpoints.md})`]: {
+    padding: '40px 0 20px 0',
+    flexDirection: 'column'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    maxWidth: '600px'
+  }
 }
 
 export const footerTextStyles = {
   color: '#5c34a2',
-  lineHeight: footerHeight,
   marginBottom: 0,
-  textAlign: 'left',
   fontSize: '12px',
   margin: 0,
   flexGrow: 1,
-  flexShrink: 0
+  flexShrink: 0,
+  [`@media(min-width: ${breakpoints.md})`]: {
+    lineHeight: footerHeight,
+    textAlign: 'left'
+  },
+  [`@media(max-width: ${breakpoints.md})`]: {
+    lineHeight: '24px',
+    textAlign: 'center'
+  }
 }
 
 export const socialsStyles = {
   flexGrow: 1,
   flexShrink: 0,
   marginBottom: 0,
-  textAlign: 'right'
+  [`@media(min-width: ${breakpoints.md})`]: {
+    textAlign: 'right'
+  },
+  [`@media(max-width: ${breakpoints.md})`]: {
+    textAlign: 'center'
+  }
 }

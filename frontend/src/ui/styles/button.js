@@ -1,7 +1,7 @@
+import { breakpoints } from './constants'
 import colors from './colors'
 
 const buttonStyles = {
-  width: '200px',
   height: '44px',
   padding: '0 15px',
   marginRight: '20px',
@@ -20,12 +20,22 @@ const buttonStyles = {
   letterSpacing: 'normal',
   textAlign: 'left',
   textTransform: 'none',
-  // float: 'left',
   ':hover': {
-    backgroundColor: '#34c3f8'
+    boxShadow: 'inset 0 0 0 1px #5c34a2'
   },
   ':focus': {
     outline: 'unset'
+  }
+}
+
+export const responsiveButtonStyles = {
+  ...buttonStyles,
+  [`@media(max-width: ${breakpoints.md})`]: {
+    width: '100%',
+    marginBottom: '16px'
+  },
+  [`@media(min-width: ${breakpoints.md})`]: {
+    width: '200px'
   }
 }
 
@@ -34,7 +44,15 @@ export const plaidButtonStyles = {
   backgroundColor: colors.primary,
   boxShadow: '0px 5px 10px 0 rgba(92, 52, 162, 0.3)',
   border: `solid 1px ${colors.primary}`,
-  color: '#ffffff'
+  color: '#ffffff',
+  width: '100%'
+}
+
+export const plaidLinkWrapperStyles = {
+  [`@media(min-width: ${breakpoints.md})`]: {
+    display: 'inline-block',
+    width: '200px'
+  }
 }
 
 export const accountItemListButtonStyles = {
