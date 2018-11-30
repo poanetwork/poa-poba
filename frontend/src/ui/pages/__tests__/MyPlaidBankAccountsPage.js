@@ -5,18 +5,14 @@ import { MyPlaidAccountsContainer } from '../MyPlaidBankAccountsPage'
 
 configure({ adapter: new Adapter() })
 
+jest.mock('../../context/PlaidContext', () => {
+  return {
+    PlaidContextConsumer: args => console.error(args)
+  }
+})
 describe('MyPlaidAccountsContainer', () => {
   it('shallow renders correctly (renders the wrapped PlaidBankAccounts)', () => {
-    const mockedProps = {
-      props: {
-        match: {
-          params: {
-            token: 'FAKEPLAIDTOKEN'
-          }
-        }
-      }
-    }
-    const wrapper = shallow(<MyPlaidAccountsContainer {...mockedProps} />)
+    const wrapper = shallow(<MyPlaidAccountsContainer />)
     expect(wrapper.find('PlaidBankAccounts')).toHaveLength(1)
   })
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { withWeb3 } from 'react-web3-provider'
+import { PlaidContextProvider, PlaidContextManager } from './ui/context/PlaidContext'
 import Header from './ui/layout/Header'
 import Footer from './ui/layout/Footer'
 import Main from './ui/layout/Main'
@@ -17,7 +18,8 @@ export class AppContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedAccount: null
+      selectedAccount: null,
+      plaidContextManager: new PlaidContextManager()
     }
   }
 
@@ -34,24 +36,26 @@ export class AppContainer extends React.Component {
 
   renderRoutes() {
     const { web3 } = this.props
-    const { selectedAccount } = this.state
+    const { selectedAccount, plaidContextManager } = this.state
     return (
-      <BrowserRouter>
-        <section className="h100percent">
-          <Route exact path="/" component={IndexPage} />
-          <Route exact path="/help" component={HelpPage} />
-          <Route
-            path="/bankaccountslist/:token"
-            component={props => (
-              <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
-            )}
-          />
-          <Route
-            path="/mybankaccountslist"
-            component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
-          />
-        </section>
-      </BrowserRouter>
+      <PlaidContextProvider value={plaidContextManager}>
+        <BrowserRouter>
+          <section className="h100percent">
+            <Route exact path="/" component={IndexPage} />
+            <Route exact path="/help" component={HelpPage} />
+            <Route
+              path="/bankaccountslist"
+              component={props => (
+                <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
+              )}
+            />
+            <Route
+              path="/mybankaccountslist"
+              component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
+            />
+          </section>
+        </BrowserRouter>
+      </PlaidContextProvider>
     )
   }
 
