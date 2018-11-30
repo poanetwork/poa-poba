@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import glamorous, { P } from 'glamorous'
-import PlaidButton from '../containers/PlaidButton'
+import { PlaidContextButton } from '../containers/PlaidButton'
 import { responsiveButtonStyles } from '../styles/button'
 import align from '../styles/align'
 import { howItWorksIconStyles, myAccountsIconStyles } from '../styles/icons'
@@ -49,7 +49,7 @@ const IndexPage = () => (
         How it works <HowItWorksIcon />
       </ResponsiveButton>
     </Link>
-    <PlaidButton />
+    <PlaidContextButton />
 
     <ResponsiveH2>My bank accounts</ResponsiveH2>
     <P>To view the list of your verified bank accounts click the button below.</P>
