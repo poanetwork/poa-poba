@@ -49,9 +49,10 @@ class VerifiedBankAccounts extends Component {
     try {
       const verifiedBankAccountsData = await this.PoBAContract.getVerifiedBankAccounts(ethAccount)
       const verifiedBankAccounts = verifiedBankAccountsData.map(bankAccountData => ({
-        bankName: bankAccountData[0],
-        identityNames: bankAccountData[1].toString(),
-        verifiedDate: bankAccountData[2].toString()
+        keccakIdentifier: bankAccountData[0],
+        bankName: bankAccountData[1],
+        identityNames: bankAccountData[2].toString(),
+        verifiedDate: bankAccountData[3].toString()
       }))
       this.setState({ verifiedBankAccounts })
     } catch (e) {

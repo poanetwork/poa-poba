@@ -17,6 +17,18 @@ export const getSignedBankAccount = async (accountId, ethAccount, token) => {
     ethAccount,
     token
   })
+  return result.data
+}
 
+export const generateErc735Claim = async (
+  ethAccount,
+  keccakIdentifier,
+  identityContractAddress
+) => {
+  const result = await axios.post('/api/issueErc735Claim', {
+    ethAccount,
+    keccakIdentifier,
+    identityContractAddress
+  })
   return result.data
 }

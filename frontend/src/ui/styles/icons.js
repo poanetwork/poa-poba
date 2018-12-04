@@ -32,6 +32,24 @@ export const backIconStyles = {
   backgroundImage: `url("/images/svg/back.svg")`
 }
 
+export const removeIconStyles = {
+  ...baseSvgIconButtonStyles,
+  minHeight: '18px',
+  backgroundImage: `url("/images/svg/remove.svg")`,
+  ':hover': {
+    backgroundImage: `url("/images/svg/remove-purple.svg")`
+  }
+}
+
+export const generateClaimIconStyles = {
+  ...baseSvgIconButtonStyles,
+  minHeight: '18px',
+  backgroundImage: `url("/images/svg/add.svg")`,
+  ':hover': {
+    backgroundImage: `url("/images/svg/add-purple.svg")`
+  }
+}
+
 // Account items' icons styles
 const baseAccountIconStyles = {
   ...baseSvgIconStyles,
