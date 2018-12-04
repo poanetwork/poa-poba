@@ -1,4 +1,5 @@
 import React from 'react'
+import { getPlaidToken } from '../context/PlaidAuthData'
 import WithBackButton from './WithBackButton'
 import PlaidBankAccounts from '../containers/PlaidBankAccounts'
 import getInstance from '../../PoBAContract'
@@ -9,7 +10,7 @@ function generateGetPoBAContract(web3) {
 }
 
 export const MyPlaidAccountsContainer = props => {
-  const plaidToken = props.props.match.params.token
+  const plaidToken = getPlaidToken()
   const PoBAServer = {
     getBankAccounts,
     getSignedBankAccount

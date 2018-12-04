@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import glamorous from 'glamorous'
 import PlaidLink from 'react-plaid-link'
+import { setPlaidToken } from '../context/PlaidAuthData'
 import align from '../styles/align'
 import { plaidButtonStyles, plaidLinkWrapperStyles } from '../styles/button'
 import { rightArrowIconStyles } from '../styles/icons'
@@ -15,18 +16,17 @@ class PlaidButton extends Component {
   constructor() {
     super()
     this.state = { plaidToken: null }
-    this.redirectToBankAccountsPage = this.redirectToBankAccountsPage.bind(this)
+    this.setPlaidToken = this.setPlaidToken.bind(this)
   }
 
-  redirectToBankAccountsPage(token) {
-    this.setState({ plaidToken: token })
+  setPlaidToken(plaidToken) {
+    setPlaidToken(plaidToken)
+    this.setState({ plaidToken })
   }
 
   render() {
     const { plaidToken } = this.state
-    const bankAccountsListState = {
-      pathname: '/bankaccountslist/' + plaidToken
-    }
+    const bankAccountsListState = { pathname: '/bankaccountslist' }
 
     // Redirect to list of bank accounts after successful plaid token fetch
     return plaidToken ? (
@@ -39,7 +39,7 @@ class PlaidButton extends Component {
           institution={null}
           publicKey={process.env.REACT_APP_PLAID_PUBLIC_KEY}
           product={['auth']}
-          onSuccess={this.redirectToBankAccountsPage}
+          onSuccess={this.setPlaidToken}
           style={plaidButtonStyles}
         >
           Continue <RightArrowIcon />
