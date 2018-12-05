@@ -10,6 +10,18 @@ jest.mock('react-router-dom', () => {
   }
 })
 
+// Fake localStorage
+const localStorage = {
+  setItem(key, value) {
+    this.keyValues = {}
+    this.keyValues[key] = value
+  },
+  getItem(key) {
+    return this.keyValues[key]
+  }
+}
+window.localStorage = localStorage
+
 configure({ adapter: new Adapter() })
 
 describe('PlaidButton', () => {

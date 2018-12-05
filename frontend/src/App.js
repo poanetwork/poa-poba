@@ -42,10 +42,8 @@ export class AppContainer extends React.Component {
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/help" component={HelpPage} />
           <Route
-            path="/bankaccountslist/:token"
-            component={props => (
-              <MyPlaidBankAccountsPage props={props} web3={web3} account={selectedAccount} />
-            )}
+            path="/bankaccountslist"
+            component={() => <MyPlaidBankAccountsPage web3={web3} account={selectedAccount} />}
           />
           <Route
             path="/mybankaccountslist"
