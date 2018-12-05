@@ -5,6 +5,11 @@ import VerifiedBankAccounts from '../VerifiedBankAccounts'
 
 configure({ adapter: new Adapter() })
 
+// Mock react-router-dom Link to prevent error of WithBackButton wrapped page
+jest.mock('react-router-dom', () => ({
+  Link: () => null
+}))
+
 describe('VerifiedBankAccounts', () => {
   describe('render when there are no verified bank accounts', () => {
     const mockedPoBAContract = {
