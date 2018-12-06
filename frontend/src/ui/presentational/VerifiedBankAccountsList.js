@@ -48,7 +48,7 @@ const RemoveButton = glamorous.span(
   'verified-bank-account-list-item__remove-button',
   removeButtonStyles
 )
-const GenerateClaimButton = glamorous.a(
+const GenerateClaimButton = glamorous.span(
   'verified-bank-account-list-item__generate-claim-button',
   generateClaimButtonStyles
 )
@@ -67,12 +67,12 @@ const VerifiedBankAccountListItem = ({ bankAccount, onClick }) => (
   <BankAccountItem>
     <VerifiedIcon />
     <AccountInfo bankAccount={bankAccount} />
-    <GenerateClaimButton>
+    <GenerateClaimButton title="Add claim to identity">
       <Link to={`/add-claim-to-identity/${bankAccount.keccakIdentifier}`}>
         <GenerateClaimIcon />
       </Link>
     </GenerateClaimButton>
-    <RemoveButton onClick={() => onClick(bankAccount)}>
+    <RemoveButton onClick={() => onClick(bankAccount)} title="Remove bank account">
       <RemoveIcon />
     </RemoveButton>
     <VerifiedDate date={bankAccount.verifiedDate} />
