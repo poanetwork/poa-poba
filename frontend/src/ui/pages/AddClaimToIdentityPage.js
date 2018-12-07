@@ -2,6 +2,7 @@ import React from 'react'
 import glamorous, { P } from 'glamorous'
 import WithBackButton from './WithBackButton'
 import GenerateErc735ClaimForm from '../containers/GenerateErc735ClaimForm'
+import AddClaimToIdentityContractButton from '../containers/AddClaimToIdentityContractButton'
 import Erc735ClaimContent from '../presentational/Erc735ClaimContent'
 import { generateErc735Claim } from '../../PoBAServer'
 import { breakpoints } from '../styles/constants'
@@ -28,25 +29,43 @@ const Erc735ClaimSection = glamorous.section('erc-735-claim-section', erc735Clai
 class BaseAddClaimToIdentityPage extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { erc735Claim: null }
+    this.state = {
+      erc735Claim: null,
+      identityContractAddress: ''
+    }
     this.setErc735Claim = this.setErc735Claim.bind(this)
+    this.onIdentityContractAddressChange = this.onIdentityContractAddressChange.bind(this)
   }
 
   setErc735Claim(erc735Claim) {
     this.setState({ erc735Claim })
   }
 
+  onIdentityContractAddressChange(event) {
+    const baseState = { identityContractAddress: event.target.value }
+    // If identityContractAddress changes, the claim is invalid. Clear it
+    this.setState(this.state.erc735Claim ? { ...baseState, erc735Claim: null } : baseState)
+  }
+
   render() {
     const { web3, account, match } = this.props
     const { keccakIdentifier } = match.params
+    const { erc735Claim, identityContractAddress } = this.state
     const generateErc735ClaimFormProps = {
       web3,
       account,
       keccakIdentifier,
       PoBAServer,
+      identityContractAddress,
+      onIdentityContractAddressChange: this.onIdentityContractAddressChange,
       onErc735ClaimGenerated: this.setErc735Claim
     }
-    const { erc735Claim } = this.state
+    const addClaimToIdentityContractButtonProps = {
+      web3,
+      identityContractAddress,
+      erc735Claim,
+      fromWallet: account
+    }
     return (
       <div className="add-claim-to-identity-page">
         <ResponsiveH1>Add claim to identity contract</ResponsiveH1>
@@ -58,6 +77,7 @@ class BaseAddClaimToIdentityPage extends React.Component {
           <GenerateErc735ClaimForm {...generateErc735ClaimFormProps} />
           <Erc735ClaimContent erc735Claim={erc735Claim} />
         </Erc735ClaimSection>
+        <AddClaimToIdentityContractButton {...addClaimToIdentityContractButtonProps} />
       </div>
     )
   }

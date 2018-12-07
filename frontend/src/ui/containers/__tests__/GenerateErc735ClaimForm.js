@@ -46,9 +46,13 @@ describe('GenerateErc735ClaimForm', async () => {
     expect(spy).not.toHaveBeenCalled()
   })
   it('should invoke generateErc735Claim when identity contract address is valid and the form is submitted', () => {
-    const wrapper = mount(<GenerateErc735ClaimForm {...mockedProperties} />)
     const identityContractAddress = '0x92970dbD5C0Ee6b439422bFd7cD71e1DDA921A03'
-    wrapper.setState({ identityContractAddress })
+    const props = {
+      ...mockedProperties,
+      identityContractAddress,
+      onIdentityContractAddressChange: () => true
+    }
+    const wrapper = mount(<GenerateErc735ClaimForm {...props} />)
     wrapper.find('form').simulate('submit', { preventDefault: () => true })
     expect(mockedPoBAServer.generateErc735Claim).toHaveBeenCalledWith(
       mockedProperties.account,

@@ -21,23 +21,12 @@ class GenerateErc735ClaimForm extends Component {
   constructor(props) {
     super(props)
 
-    const { account, keccakIdentifier, PoBAServer } = props
-    this.state = {
-      account,
-      keccakIdentifier,
-      loading: false,
-      identityContractAddress: '',
-      erc735Claim: null
-    }
+    const { PoBAServer } = props
+    this.state = { loading: false }
     this.PoBAServer = PoBAServer
 
-    this.onIdentityContractAddressChange = this.onIdentityContractAddressChange.bind(this)
     this.onSubmitGenerateClaimForm = this.onSubmitGenerateClaimForm.bind(this)
     this.generateErc735Claim = this.generateErc735Claim.bind(this)
-  }
-
-  onIdentityContractAddressChange(event) {
-    this.setState({ identityContractAddress: event.target.value })
   }
 
   async onSubmitGenerateClaimForm(event) {
@@ -46,8 +35,7 @@ class GenerateErc735ClaimForm extends Component {
       return
     }
 
-    const { web3 } = this.props
-    const { identityContractAddress } = this.state
+    const { web3, identityContractAddress } = this.props
     if (!identityContractAddress || !web3.utils.isAddress(identityContractAddress)) {
       warningAlert('Please provide a valid IDENTITY CONTRACT ADDRESS')
       return
@@ -64,8 +52,12 @@ class GenerateErc735ClaimForm extends Component {
   }
 
   async generateErc735Claim() {
-    const { onErc735ClaimGenerated } = this.props
-    const { account, keccakIdentifier, identityContractAddress } = this.state
+    const {
+      identityContractAddress,
+      account,
+      keccakIdentifier,
+      onErc735ClaimGenerated
+    } = this.props
     const res = await this.PoBAServer.generateErc735Claim(
       account,
       keccakIdentifier,
@@ -83,7 +75,8 @@ class GenerateErc735ClaimForm extends Component {
   }
 
   render() {
-    const { loading, identityContractAddress } = this.state
+    const { onIdentityContractAddressChange, identityContractAddress } = this.props
+    const { loading } = this.state
     return (
       <div className="generate-erc-735-claim-form">
         <Loading show={loading} />
@@ -94,7 +87,7 @@ class GenerateErc735ClaimForm extends Component {
               type="text"
               name="identityContractAddress"
               value={identityContractAddress}
-              onChange={this.onIdentityContractAddressChange}
+              onChange={onIdentityContractAddressChange}
               style={identityContractAddressInputStyles}
               disabled={loading}
             />
