@@ -2,6 +2,7 @@ import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import AddClaimToIdentityPage from '../AddClaimToIdentityPage'
+import Erc735ClaimContent from '../../presentational/Erc735ClaimContent'
 
 configure({ adapter: new Adapter() })
 
@@ -24,5 +25,6 @@ describe('AddClaimToIdentityPage', () => {
   it('renders/mounts correctly', () => {
     const wrapper = mount(<AddClaimToIdentityPage {...mockedProps} />)
     expect(wrapper.find('.add-claim-to-identity-page')).toHaveLength(1)
+    expect(wrapper.find(Erc735ClaimContent)).toHaveLength(1)
   })
 })

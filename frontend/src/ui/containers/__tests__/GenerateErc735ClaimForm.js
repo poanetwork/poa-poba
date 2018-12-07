@@ -3,25 +3,26 @@ import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Web3 from 'web3'
 import GenerateErc735ClaimForm from '../GenerateErc735ClaimForm'
-import Erc735ClaimContent from '../../presentational/Erc735ClaimContent'
 
 configure({ adapter: new Adapter() })
 
+const mockedErc735ClaimData = {
+  issuerAddress: '0x...',
+  signature: '0x...',
+  data: '0x...',
+  uri: 'something'
+}
 const mockedPoBAServer = {
   generateErc735Claim: () => {
-    return Promise.resolve({
-      issuerAddress: '0x...',
-      signature: '0x...',
-      data: '0x...',
-      uri: 'something'
-    })
+    return Promise.resolve(mockedErc735ClaimData)
   }
 }
 const mockedProperties = {
   account: 'ACCOUNT',
   keccakIdentifier: 'KECCAKIDENTIFIER',
   PoBAServer: mockedPoBAServer,
-  web3: new Web3()
+  web3: new Web3(),
+  onErc735ClaimGenerated: jest.fn()
 }
 
 describe('GenerateErc735ClaimForm', async () => {
@@ -29,7 +30,6 @@ describe('GenerateErc735ClaimForm', async () => {
     const wrapper = mount(<GenerateErc735ClaimForm {...mockedProperties} />)
     expect(wrapper.find('.generate-erc-735-claim-form')).toHaveLength(1)
     expect(wrapper.find('form')).toHaveLength(1)
-    expect(wrapper.find(Erc735ClaimContent)).toHaveLength(1)
   })
   it('should not allow to submit the form if identity address contract is empty', () => {
     const wrapper = mount(<GenerateErc735ClaimForm {...mockedProperties} />)
@@ -55,5 +55,19 @@ describe('GenerateErc735ClaimForm', async () => {
       mockedProperties.keccakIdentifier,
       identityContractAddress
     )
+  })
+  it('should invoke onErc735ClaimGenerated when after the form got submitted and the claim was successfully generated', () => {
+    const wrapper = mount(<GenerateErc735ClaimForm {...mockedProperties} />)
+    const identityContractAddress = '0x92970dbD5C0Ee6b439422bFd7cD71e1DDA921A03'
+    wrapper.setState({ identityContractAddress })
+    wrapper.find('form').simulate('submit', { preventDefault: () => true })
+    expect(mockedProperties.onErc735ClaimGenerated).toHaveBeenCalledWith({
+      type: 7,
+      scheme: 1,
+      issuer: mockedErc735ClaimData.issuerAddress,
+      signature: mockedErc735ClaimData.signature,
+      data: mockedErc735ClaimData.data,
+      uri: mockedErc735ClaimData.uri
+    })
   })
 })

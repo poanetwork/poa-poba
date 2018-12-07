@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import glamorous from 'glamorous'
 import Loading from '../presentational/Loading'
 import { warningAlert, errorAlert } from '../presentational/alerts'
-import Erc735ClaimContent from '../presentational/Erc735ClaimContent'
-// import IdentityContractAddressControl from '../presentational/IdentityContractAddressControl'
 import { rightArrowIconStyles } from '../styles/icons'
 import { generateErc735ClaimButtonStyles } from '../styles/button'
 import {
@@ -66,6 +64,7 @@ class GenerateErc735ClaimForm extends Component {
   }
 
   async generateErc735Claim() {
+    const { onErc735ClaimGenerated } = this.props
     const { account, keccakIdentifier, identityContractAddress } = this.state
     const res = await this.PoBAServer.generateErc735Claim(
       account,
@@ -80,11 +79,11 @@ class GenerateErc735ClaimForm extends Component {
       data: res.data,
       uri: res.uri
     }
-    this.setState({ erc735Claim })
+    onErc735ClaimGenerated(erc735Claim)
   }
 
   render() {
-    const { loading, identityContractAddress, erc735Claim } = this.state
+    const { loading, identityContractAddress } = this.state
     return (
       <div className="generate-erc-735-claim-form">
         <Loading show={loading} />
@@ -104,7 +103,6 @@ class GenerateErc735ClaimForm extends Component {
             </SubmitButton>
           </IdentityContractAddressControlWrapper>
         </form>
-        <Erc735ClaimContent erc735Claim={erc735Claim} />
       </div>
     )
   }
