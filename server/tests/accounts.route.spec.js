@@ -17,9 +17,9 @@ const mockBankAccount = {
 }
 const mockNames = 'John Doe'
 const mockSign = {
-  v: '0x1b',
-  r: '0x9a4acff8fcc5fc48278482669d3db5a728a226c8f82bce2895208c59ca5637b9',
-  s: '0x5d4cebac0a90b14321cd54ea51e74d37761f0cb665b62dd596b8eab2da8c08b4'
+  v: '0x1c',
+  r: '0xf28184b042e25dbf1ef73ac46659bbce39593fc389b4f0f5468eb002dfe3636c',
+  s: '0x59e00c36925ac54d0df1b6c6cc982be7765decd10177bb22a9dd3b83106065d1'
 }
 
 jest.mock('../controllers/accounts', () => ({
@@ -43,20 +43,6 @@ jest.mock('../controllers/accounts', () => ({
     return { names: [mockNames] }
   })
 }))
-jest.mock('web3', () =>
-  jest.fn().mockImplementation(() => ({
-    utils: {
-      soliditySha3: jest.fn(
-        () => '0xc20eab54de62a1151b630cc74fdfc40cf58e919325e294aa124a6ec3b52f542f'
-      )
-    },
-    eth: {
-      accounts: {
-        sign: jest.fn(() => mockSign)
-      }
-    }
-  }))
-)
 
 describe('[routes] accounts', () => {
   it('should return all bank accounts', () =>
