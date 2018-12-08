@@ -38,7 +38,7 @@ css.global('h2', {
 css.global('p', {
   color: '#777777',
   marginTop: 0,
-  marginBottom: '40px',
+  marginBottom: '14px',
   align: 'left',
   fontSize: '14px',
   lineHeight: '24px'
@@ -49,9 +49,14 @@ css.global('a', {
   textDecoration: 'none'
 })
 
-css.global('p.main', {
+css.global('p.home-main', {
   fontSize: '16px',
-  lineHeight: '28px'
+  lineHeight: '28px',
+  marginBottom: '37px'
+})
+
+css.global('p.home-secondary', {
+  marginBottom: '27px'
 })
 
 css.global('.h100percent', {
