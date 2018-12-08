@@ -4,11 +4,15 @@ import { executeAddClaimOnIdentityContract } from '../utils/erc725'
 import Loading from '../presentational/Loading'
 import { successAlert, errorAlert } from '../presentational/alerts'
 import align from '../styles/align'
-import { responsiveButtonStyles } from '../styles/button'
+import { responsiveButtonStyles, plaidButtonStyles } from '../styles/button'
 import { rightArrowIconStyles } from '../styles/icons'
 
 const ArroIcon = glamorous.i(rightArrowIconStyles, align.iconRight)
-const ResponsiveButton = glamorous.button(responsiveButtonStyles)
+const addClaimButtonStyles = {
+  ...responsiveButtonStyles,
+  ...plaidButtonStyles
+}
+const ResponsiveButton = glamorous.button(addClaimButtonStyles)
 
 class AddClaimToIdentityContractButton extends React.Component {
   constructor(props) {
@@ -57,7 +61,7 @@ class AddClaimToIdentityContractButton extends React.Component {
       <React.Fragment>
         <Loading show={loading} />
         <ResponsiveButton disabled={!erc735Claim} onClick={this.invokeExcuteAddClaim}>
-          Add Claim To Identity <ArroIcon />
+          Add To Identity <ArroIcon />
         </ResponsiveButton>
       </React.Fragment>
     )

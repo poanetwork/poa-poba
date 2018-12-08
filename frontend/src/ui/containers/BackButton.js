@@ -9,8 +9,8 @@ import { backIconStyles } from '../styles/icons'
 const BackIcon = glamorous.i(backIconStyles, align.iconRight)
 const ResponsiveButton = glamorous.button(responsiveButtonStyles)
 
-export default () => (
-  <Link to="/">
+export default ({ to = '/' }) => (
+  <Link to={to}>
     <ResponsiveButton>
       Back <BackIcon />
     </ResponsiveButton>

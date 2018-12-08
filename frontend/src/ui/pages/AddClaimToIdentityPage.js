@@ -1,6 +1,11 @@
 import React from 'react'
 import glamorous, { P } from 'glamorous'
-import WithBackButton from './WithBackButton'
+import {
+  withBackButtonStyles,
+  withBackButtonWrappedContentStyles,
+  backButtonStyles
+} from '../styles/withBackButton'
+import BackButton from '../containers/BackButton'
 import GenerateErc735ClaimForm from '../containers/GenerateErc735ClaimForm'
 import AddClaimToIdentityContractButton from '../containers/AddClaimToIdentityContractButton'
 import Erc735ClaimContent from '../presentational/Erc735ClaimContent'
@@ -25,6 +30,13 @@ const ResponsiveH1 = glamorous.h1({
 })
 
 const Erc735ClaimSection = glamorous.section('erc-735-claim-section', erc735ClaimSectionStyles)
+// We need to add AddClaimToIdentityContractButton next to the BackButton, see
+// the render method in the component below
+const WithBackButton = glamorous.div('with-back-button', withBackButtonStyles)
+const WithBackButtonWrappedContent = glamorous.div(
+  'with-back-button-wrapped-content',
+  withBackButtonWrappedContentStyles
+)
 
 class BaseAddClaimToIdentityPage extends React.Component {
   constructor(props) {
@@ -67,21 +79,28 @@ class BaseAddClaimToIdentityPage extends React.Component {
       fromWallet: account
     }
     return (
-      <div className="add-claim-to-identity-page">
-        <ResponsiveH1>Add claim to identity contract</ResponsiveH1>
-        <P>
-          Enter the address of your ERC-725 identity contract, generate the data needed for an
-          claim, and finally add it to your identity contract.
-        </P>
-        <Erc735ClaimSection>
-          <GenerateErc735ClaimForm {...generateErc735ClaimFormProps} />
-          <Erc735ClaimContent erc735Claim={erc735Claim} />
-        </Erc735ClaimSection>
-        <AddClaimToIdentityContractButton {...addClaimToIdentityContractButtonProps} />
-      </div>
+      <WithBackButton>
+        <WithBackButtonWrappedContent>
+          <div className="add-claim-to-identity-page">
+            <ResponsiveH1>Add claim to identity contract</ResponsiveH1>
+            <P>
+              Enter the address of your ERC-725 identity contract, generate the data needed for an
+              claim, and finally add it to your identity contract.
+            </P>
+            <Erc735ClaimSection>
+              <GenerateErc735ClaimForm {...generateErc735ClaimFormProps} />
+              <Erc735ClaimContent erc735Claim={erc735Claim} />
+            </Erc735ClaimSection>
+          </div>
+        </WithBackButtonWrappedContent>
+        <section>
+          <BackButton style={{ backButtonStyles }} to="/mybankaccountslist" />
+          <AddClaimToIdentityContractButton {...addClaimToIdentityContractButtonProps} />
+        </section>
+      </WithBackButton>
     )
   }
 }
 
 // @TODO: should add the "Add To Identity" button next to "Back"
-export default WithBackButton(BaseAddClaimToIdentityPage)
+export default BaseAddClaimToIdentityPage
