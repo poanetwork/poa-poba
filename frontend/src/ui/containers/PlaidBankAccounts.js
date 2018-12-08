@@ -65,7 +65,7 @@ class PlaidBankAccounts extends Component {
         const bankAccount = accountsOfSelectedBank[0]
         const selectedBankName = bankAccount.institution
         const verified = verifiedBankAccounts.some(verifiedBankAccount => {
-          return verifiedBankAccount[0] === selectedBankName
+          return verifiedBankAccount[1] === selectedBankName
         })
         bankAccounts.push(Object.assign({ verified }, bankAccount))
       }

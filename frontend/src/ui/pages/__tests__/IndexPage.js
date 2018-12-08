@@ -12,6 +12,7 @@ describe('IndexPage', () => {
       accounts: [null]
     }
     const wrapper = shallow(<IndexPage {...props} />)
-    expect(wrapper.find('.main')).toHaveLength(1)
+    expect(wrapper.find('.home-main')).toHaveLength(1)
+    expect(wrapper.find('.home-secondary')).toHaveLength(1)
   })
 })

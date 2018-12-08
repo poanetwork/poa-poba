@@ -37,7 +37,7 @@ const ResponsiveH2 = glamorous.h2({
 const IndexPage = () => (
   <div>
     <ResponsiveH1>Proof of bank account</ResponsiveH1>
-    <P className="main">
+    <P className="home-main">
       This ĐApp can be used to prove your ownership of a bank account in one of the supported banks.
       A widget provided by <a href="https://plaid.com/">Plaid</a> is used to verify that you have
       access to the bank account. Except for blockchain transaction fee to call the smart-contract,
@@ -52,7 +52,9 @@ const IndexPage = () => (
     <PlaidButton />
 
     <ResponsiveH2>My bank accounts</ResponsiveH2>
-    <P>To view the list of your verified bank accounts click the button below.</P>
+    <P className="home-secondary">
+      To view the list of your verified bank accounts click the button below.
+    </P>
     <Link to="/mybankaccountslist">
       <ResponsiveButton>
         My Bank Accounts <MyAccountsIcon />

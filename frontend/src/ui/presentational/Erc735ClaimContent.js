@@ -1,13 +1,26 @@
 import React from 'react'
-import { P } from 'glamorous'
+import glamorous, { P } from 'glamorous'
+import {
+  erc735ClaimContentSectionStyles,
+  erc735ClaimContentStyles,
+  instructionsStyles,
+  monospacedTextStyles
+} from '../styles/addClaimToIdentity'
+
+const Erc735ClaimSection = glamorous.section(erc735ClaimContentSectionStyles)
+const Instructions = glamorous.div(instructionsStyles)
+const Erc735Content = glamorous.pre(erc735ClaimContentStyles)
+const MonospacedText = glamorous.span(monospacedTextStyles)
 
 // @TODO: add "monospaced-text" styles
 const Erc735ClaimContent = ({ erc735Claim }) => {
   if (!erc735Claim) {
     return (
-      <P>
-        ERC-735 claim data <i>will appear here once it is generated</i>.
-      </P>
+      <Erc735ClaimSection>
+        <P>
+          ERC-735 claim data <i>will appear here once it is generated</i>.
+        </P>
+      </Erc735ClaimSection>
     )
   }
 
@@ -15,16 +28,15 @@ const Erc735ClaimContent = ({ erc735Claim }) => {
     '...'}\nsignature: ${erc735Claim.signature || '...'}\ndata: ${erc735Claim.data ||
     '...'}\nuri: ${erc735Claim.uri || '...'}`
   return (
-    <section>
+    <Erc735ClaimSection>
       <P>ERC-735 claim data generated:</P>
-      <pre className="erc735-claim-data">{erc735ClaimContent}</pre>
-      <div className="small-c-copy">
+      <Erc735Content className="erc735-claim-content">{erc735ClaimContent}</Erc735Content>
+      <Instructions>
         Click on "Add To Identity" and sign the transaction to{' '}
-        <span className="monospaced-text">execute</span> an{' '}
-        <span className="monospaced-text">addClaim</span> on the specified identity contract using
-        the data above.
-      </div>
-    </section>
+        <MonospacedText>execute</MonospacedText> an <MonospacedText>addClaim</MonospacedText> on the
+        specified identity contract using the data above.
+      </Instructions>
+    </Erc735ClaimSection>
   )
 }
 
