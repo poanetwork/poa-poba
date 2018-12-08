@@ -52,7 +52,9 @@ export const executeAddClaimOnIdentityContract = async (
   claim,
   cb
 ) => {
-  const identityContract = new web3.eth.Contract(CLAIMHOLDERABI, identityContractAddress)
+  const identityContract = new web3.eth.Contract(CLAIMHOLDERABI, identityContractAddress, {
+    from: fromWallet
+  })
   const addClaimABI = await identityContract.methods
     .addClaim(
       CLAIM_TYPES_KYC,
