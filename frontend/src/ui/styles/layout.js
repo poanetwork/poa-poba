@@ -29,12 +29,13 @@ export const contentStyles = {
   display: 'grid',
   gridTemplateColumns: '1fr',
   height: '100vh',
-  overflow: 'auto',
+  overflowY: 'auto',
   [`@media(max-width: ${breakpoints.md})`]: {
+    alignContent: 'stretch',
+    gridTemplateColumns: `repeat(auto-fill, minmax(97%, 98%))`,
     gridTemplateRows: `${headerHeight} 1fr 124px`,
     paddingLeft: '15px',
-    paddingRight: '15px',
-    width: '100%'
+    paddingRight: '15px'
   },
   [`@media(min-width: ${breakpoints.md})`]: {
     gridTemplateRows: `${headerHeight} 1fr ${footerHeight}`,
