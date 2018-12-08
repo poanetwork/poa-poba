@@ -30,7 +30,7 @@ const Erc735ClaimContent = ({ erc735Claim }) => {
   return (
     <Erc735ClaimSection>
       <P>ERC-735 claim data generated:</P>
-      <Erc735Content>{erc735ClaimContent}</Erc735Content>
+      <Erc735Content className="erc735-claim-content">{erc735ClaimContent}</Erc735Content>
       <Instructions>
         Click on "Add To Identity" and sign the transaction to{' '}
         <MonospacedText>execute</MonospacedText> an <MonospacedText>addClaim</MonospacedText> on the

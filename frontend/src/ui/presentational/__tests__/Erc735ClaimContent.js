@@ -19,6 +19,6 @@ describe('<Erc725ClaimContent />', () => {
       uri: 'something'
     }
     const wrapper = mount(<Erc725ClaimContent erc735Claim={erc735Claim} />)
-    expect(wrapper.find('.erc735-claim-data')).toHaveLength(1)
+    expect(wrapper.find('pre.erc735-claim-content')).toHaveLength(1)
   })
 })

@@ -8,11 +8,12 @@ configure({ adapter: new Adapter() })
 const mockedPoBAServer = {
   getSignedBankAccount: () => null,
   getBankAccounts: () => {
-    const mockedAccount = {
-      account: 'ACCOUNT',
-      institution: 'BANK'
-    }
-    return Promise.resolve([mockedAccount])
+    return Promise.resolve([
+      {
+        institution: 'BANK',
+        identityNames: 'IDENTITYNAMES'
+      }
+    ])
   }
 }
 const mockedPoBAContract = {
