@@ -1,5 +1,17 @@
 const request = require('supertest')
 const app = require('../app')
+const mocks = require('./utils/mocks')
+
+// The following block is needed to prevent the error 'Missing Plaid "client_id"'
+// because of the import/require of the whole app
+const mockToken = 'public-token-de3ce8ef-33f8-452c-a685-8671031fc0f6'
+const mockAccessToken = mocks.exchangePublicToken.access_token
+jest.mock('../controllers/accounts', () => ({
+  getAccessToken: jest.fn(token => {
+    if (token === mockToken) return mockAccessToken
+    throw new Error('[getAccessToken] INVALID_TOKEN: Error exchanging public token')
+  })
+}))
 
 const ENDPOINT = `/api/issueErc735Claim`
 const validValues = {
