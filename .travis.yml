@@ -10,7 +10,7 @@ after_success:
 
 env:
   global:
-    - PRIVATE_KEY=0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5c88000
+    - PRIVATE_KEY=0x3daa79a26454a5528a3523f9e6345efdbd636e63f8c24a835204e6ccb5c88f9e
     - POBA_ERC725_CONTRACT_ADDRESS=0xf1d915a7ad20251e2d5d399368be708a4186dcbb
     - POBA_ERC725_URI=http://poba.poa.network
     - RPC=http://localhost:8545
