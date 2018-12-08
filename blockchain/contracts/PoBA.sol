@@ -1,7 +1,9 @@
 pragma solidity ^0.4.4;
 
+import "./KeyHolder.sol";
 
-contract PoBA {
+
+contract PoBA is KeyHolder {
   address public owner;
   address public signer;
 
