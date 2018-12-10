@@ -32,7 +32,6 @@ const issueErc735Claim = (req, res) => {
 
       const bankAccount = await getBankAccountDetails(ethAccount, keccakIdentifier)
       const { signature, bankAccountSha3 } = erc735Claim.getErc735Signature(
-        ethAccount,
         bankAccount,
         identityContractAddress
       )

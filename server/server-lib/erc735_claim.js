@@ -12,14 +12,15 @@ const getAllTextDetailsFromBankAccount = bankAccountDetails => {
   return bankAccountDetailsValues.join(',')
 }
 
-const getErc735Signature = (ethAccount, bankAccount, destinationClaimHolderAddress) => {
+const getErc735Signature = (bankAccount, destinationClaimHolderAddress) => {
   const bankAccountSha3 = web3.utils.soliditySha3(getAllTextDetailsFromBankAccount(bankAccount))
 
+  // The following recoverProcess is what should be done in solidity. Check the contract "ClaimVerifier.sol":
+  // https://github.com/FractalBlockchain/erc725/blob/e458b7cd99b0f0a40684c6245ce0e0f38126d705/contracts/ClaimVerifier.sol#L46
   const hash = web3.utils.soliditySha3(
-    ethAccount +
-      Buffer.from(destinationClaimHolderAddress).toString('hex') +
-      Buffer.from(CLAIM_TYPE_KYC_UINT256).toString('hex') +
-      Buffer.from(bankAccountSha3.substr(2), 'hex')
+    destinationClaimHolderAddress,
+    CLAIM_TYPE_KYC_UINT256,
+    bankAccountSha3
   )
 
   const { signature } = web3.eth.accounts.sign(hash, PRIVATE_KEY)

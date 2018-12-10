@@ -13,7 +13,6 @@ describe('erc735_claim', () => {
     CLAIM_TYPE_KYC_UINT256
   } = erc735Claim
 
-  const ethAccount = '0xF2C0Ba003fE46BE0A567906064fb44136Bb250CB'
   const bankAccount = {
     bankName: 'Chase',
     identityNames: 'John Doe'
@@ -26,8 +25,8 @@ describe('erc735_claim', () => {
     })
   })
   describe('getErc735Signature', () => {
-    it('should return an object with signature and bankAccountSha3 attributes, given an ethAccount, bankAccount and destinationClaimHolderAddress', () => {
-      const result = getErc735Signature(ethAccount, bankAccount, destinationClaimHolderAddress)
+    it('should return an object with signature and bankAccountSha3 attributes, given an the bankAccount and destinationClaimHolderAddress', () => {
+      const result = getErc735Signature(bankAccount, destinationClaimHolderAddress)
       expect(result.signature).toBeTruthy()
       expect(result.bankAccountSha3).toBeTruthy()
     })
@@ -35,12 +34,14 @@ describe('erc735_claim', () => {
       // Hardcoded address of the given private key in .evn.example
       const address = '0x92970dbd5c0ee6b439422bfd7cd71e1dda921a03'
 
-      const r = getErc735Signature(ethAccount, bankAccount, destinationClaimHolderAddress)
+      const r = getErc735Signature(bankAccount, destinationClaimHolderAddress)
+
+      // The following recoverProcess is what should be done in solidity. Check the contract "ClaimVerifier.sol":
+      // https://github.com/FractalBlockchain/erc725/blob/e458b7cd99b0f0a40684c6245ce0e0f38126d705/contracts/ClaimVerifier.sol#L46
       const hash = web3.utils.soliditySha3(
-        ethAccount +
-          Buffer.from(destinationClaimHolderAddress).toString('hex') +
-          Buffer.from(CLAIM_TYPE_KYC_UINT256).toString('hex') +
-          Buffer.from(r.bankAccountSha3.substr(2), 'hex')
+        destinationClaimHolderAddress,
+        CLAIM_TYPE_KYC_UINT256,
+        r.bankAccountSha3
       )
       const recoveredAddress = await web3.eth.accounts.recover(hash, r.signature)
 
