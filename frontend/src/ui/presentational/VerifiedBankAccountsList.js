@@ -2,7 +2,12 @@ import React from 'react'
 import glamorous from 'glamorous'
 import Moment from 'react-moment'
 import 'moment-timezone'
-import { verifiedAcountIconStyles } from '../styles/icons'
+import { Link } from 'react-router-dom'
+import {
+  verifiedAcountIconStyles,
+  removeIconStyles,
+  generateClaimIconStyles
+} from '../styles/icons'
 import {
   bankAccountListStyles,
   bankAccountItemListStyles,
@@ -10,7 +15,8 @@ import {
   infoParagraphStyles,
   dateWrapperStyles,
   dateParagraphStyles,
-  removeButtonStyles
+  removeButtonStyles,
+  generateClaimButtonStyles
 } from '../styles/bankAccountItemListStyles'
 
 const DATE_FORMAT = 'DD MMM YYYY'
@@ -36,9 +42,15 @@ const AccountInfo = ({ bankAccount }) => (
   </InfoWrapper>
 )
 
-const RemoveButton = glamorous.button(
+const RemoveIcon = glamorous.i(removeIconStyles)
+const GenerateClaimIcon = glamorous.i(generateClaimIconStyles)
+const RemoveButton = glamorous.span(
   'verified-bank-account-list-item__remove-button',
   removeButtonStyles
+)
+const GenerateClaimButton = glamorous.span(
+  'verified-bank-account-list-item__generate-claim-button',
+  generateClaimButtonStyles
 )
 const DatePragraph = glamorous.span(dateParagraphStyles)
 const VerifiedDate = ({ date }) => (
@@ -55,7 +67,14 @@ const VerifiedBankAccountListItem = ({ bankAccount, onClick }) => (
   <BankAccountItem>
     <VerifiedIcon />
     <AccountInfo bankAccount={bankAccount} />
-    <RemoveButton onClick={() => onClick(bankAccount)}>Remove</RemoveButton>
+    <GenerateClaimButton title="Add claim to identity">
+      <Link to={`/add-claim-to-identity/${bankAccount.keccakIdentifier}`}>
+        <GenerateClaimIcon />
+      </Link>
+    </GenerateClaimButton>
+    <RemoveButton onClick={() => onClick(bankAccount)} title="Remove bank account">
+      <RemoveIcon />
+    </RemoveButton>
     <VerifiedDate date={bankAccount.verifiedDate} />
   </BankAccountItem>
 )

@@ -12,6 +12,7 @@ import HelpPage from './ui/pages/HelpPage'
 import ErrorPage from './ui/pages/ErrorPage'
 import MyPlaidBankAccountsPage from './ui/pages/MyPlaidBankAccountsPage'
 import MyVerifiedBankAccountsPage from './ui/pages/MyVerifiedBankAccountsPage'
+import AddClaimToIdentityPage from './ui/pages/AddClaimToIdentityPage'
 
 export class AppContainer extends React.Component {
   constructor(props) {
@@ -47,6 +48,12 @@ export class AppContainer extends React.Component {
           <Route
             path="/mybankaccountslist"
             component={() => <MyVerifiedBankAccountsPage web3={web3} account={selectedAccount} />}
+          />
+          <Route
+            path="/add-claim-to-identity/:keccakIdentifier"
+            component={props => (
+              <AddClaimToIdentityPage web3={web3} account={selectedAccount} match={props.match} />
+            )}
           />
         </section>
       </BrowserRouter>

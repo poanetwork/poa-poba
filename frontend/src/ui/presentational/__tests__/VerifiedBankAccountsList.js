@@ -5,6 +5,11 @@ import VerifiedBankAccountsList from '../VerifiedBankAccountsList'
 
 configure({ adapter: new Adapter() })
 
+// Mock react-router-dom Link to prevent error of WithBackButton wrapped page
+jest.mock('react-router-dom', () => ({
+  Link: () => null
+}))
+
 describe('<VerifiedBankAccountsList />', () => {
   it('renders correctly for 0 accounts', () => {
     const wrapper = mount(<VerifiedBankAccountsList bankAccounts={[]} />)

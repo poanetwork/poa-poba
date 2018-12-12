@@ -53,13 +53,14 @@ export const bankAccountItemListStyles = {
     gridTemplateAreas: `
       'icon'
       'info'
+      'generateClaim'
       'remove'
       'date'`
   },
   [`@media(min-width: ${breakpoints.xs})`]: {
     ...baseAccountItemListHorizontalGridStyles,
-    gridTemplateColumns: '80px auto 100px 120px',
-    gridTemplateAreas: `'icon info remove date'`
+    gridTemplateColumns: '80px auto 40px 40px 120px',
+    gridTemplateAreas: `'icon info generateClaim remove date'`
   }
 }
 export const unverifiedBankAccountItemListStyles = {
@@ -127,10 +128,17 @@ export const verifyButtonStyles = {
     margin: '0'
   }
 }
+export const generateClaimButtonStyles = {
+  gridArea: 'generateClaim',
+  textAlign: 'center',
+  [`@media(max-width: ${breakpoints.xs})`]: {
+    justifySelf: 'center',
+    margin: '0'
+  }
+}
 export const removeButtonStyles = {
-  ...accountItemListButtonStyles,
   gridArea: 'remove',
-  width: '73px',
+  textAlign: 'center',
   [`@media(max-width: ${breakpoints.xs})`]: {
     justifySelf: 'center',
     margin: '0'

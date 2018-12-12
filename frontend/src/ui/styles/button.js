@@ -75,4 +75,17 @@ export const accountItemListButtonStyles = {
   }
 }
 
+export const generateErc735ClaimButtonStyles = {
+  backgroundColor: colors.primary,
+  border: 'none',
+  borderBottomRightRadius: '3px',
+  borderTopRightRadius: '3px',
+  height: '43px',
+  width: '43px',
+  verticalAlign: 'bottom',
+  ':hover': {
+    cursor: 'pointer'
+  }
+}
+
 export default buttonStyles

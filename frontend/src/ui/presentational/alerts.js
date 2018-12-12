@@ -15,3 +15,11 @@ export function errorAlert(msg = 'There was a problem registering your bank acco
     type: 'error'
   })
 }
+
+export function warningAlert(msg) {
+  sweetAlert2({
+    title: 'Proof of Bank Account',
+    html: msg,
+    type: 'warning'
+  })
+}

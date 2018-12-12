@@ -1,7 +1,9 @@
 pragma solidity ^0.4.4;
 
+import "./KeyHolder.sol";
 
-contract PoBA {
+
+contract PoBA is KeyHolder {
   address public owner;
   address public signer;
 
@@ -154,9 +156,10 @@ contract PoBA {
   }
 
   function getBankAccountsByAddress(address _address, uint256 addressIndex) public constant
-  returns (string bankName, string identityNames, uint256 attestationDate)
+  returns (bytes32 keccakIdentifier, string bankName, string identityNames, uint256 attestationDate)
   {
     return (
+      users[_address].bankAccounts[addressIndex].keccakIdentifier,
       users[_address].bankAccounts[addressIndex].bankName,
       users[_address].bankAccounts[addressIndex].identityNames,
       users[_address].bankAccounts[addressIndex].attestationDate
